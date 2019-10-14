@@ -57,14 +57,14 @@ public abstract class AbstractAlgorithm {
      * Setter method for {@link #parallelizable}
      * @param parallelizable
      */
-    public void setParallelizable(boolean parallelizable) {
-        this.parallelizable &= parallelizable;
+    public void setParallelizable(ParallelExecution parallelizable) {
+        this.parallelizable = parallelizable;
     }
 
     /**
      * False by default, since a lot of parameter optimization algortihms build on the result of previous trials.  execution of parallelizable can be switched on by setting this member to true in the subclasses.
      */
-    protected boolean parallelizable = false;
+    protected ParallelExecution parallelizable = ParallelExecution.SERIAL;
 
 
 
@@ -144,10 +144,11 @@ public abstract class AbstractAlgorithm {
 
         boolean terminated = false;
         long startTime = System.currentTimeMillis();
+        //todo maybe remove the parallel ones
         while (!terminated ) {
 
             try{
-                if(this.parallelizable){
+                if(this.parallelizable == ParallelExecution.PARALLEL ){
 
                     int threads = Runtime.getRuntime().availableProcessors();
                     ExecutorService pool = Executors.newFixedThreadPool(threads);
@@ -156,51 +157,72 @@ public abstract class AbstractAlgorithm {
                     try {
                         for (int i = 0; i < this.config.getIterationCount().get(); ++i) {
                             synchronized (this) {
+                                //check and penalize not allowed parameter setups
                                 if (!configAllowed(config.getScriptParametersReference())) {
                                     config.setObjectiveContainer(ObjectiveContainer.setBadObjectiveValue(config.getObjectiveContainerReference()));
                                     config.getLandscapeReference().add(new IterationResult(config.getScriptParametersReference(), config.getObjectiveContainerReference(), startTime, timeDelta));
                                 }
+
+
+
+                                // create the trial object to execute
                                 Trial t = new Trial(config.getBaseCommand(), false, "", config.getObjectiveContainerReference(), Param.cloneParamList(this.config.getScriptParametersReference()), startTime, timeDelta,this.config.getPublicFolderLocation());
-                                if(config.getDistributedMode())
-                                    toSend.add(t);
-                                else
-                                    set.add(pool.submit(t));
-                                System.out.println();
+
+                                addToTaskList(pool, set, toSend, t);
                                 updateParameters(config.getScriptParametersReference(), config.getLandscapeReference()/*, config.getOptimizerParameters()*/);
                                 Main.getLogger().info( "PARAMETERS Parallel EXEC" + config.getScriptParametersReference().toString());
                             }
                         }
                         //distributed mode branch
                         if(config.getDistributedMode()){
-                            for(Trial t :toSend) {
-                                Gson gson1 = new GsonBuilder().setPrettyPrinting().create();
-                                this.config.getCommunicationObject().publish(gson1.toJson(t, Trial.class),Main.getDistributedApplicationId());
-                            }
-                            final Gson gson = new Gson(); 
-                            this.config.getCommunicationObject().distribute(toSend.stream().map(t-> gson.toJson(t,Trial.class)).collect(Collectors.toList()),Main.getDistributedApplicationId());
-
-                            while(config.getLandscapeReference().size()<toSend.size()) {
-                                // TODO: 2018. 10. 05. hardcoded id
-                                config.getLandscapeReference().addAll(config.getCommunicationObject().receive(Main.getDistributedApplicationId()).stream().map(t -> IterationResult.deserializeIterationResults(t)).collect(Collectors.toList()));
-                                System.out.println("COORD RECIEVING "+toSend.size() +" / "+config.getLandscapeReference().size());
-                                Thread.sleep(500);
-                                this.config.setIterationCounter(config.getLandscapeReference().size());
-                            }
-                            // TODO: 2018. 12. 14. should not shot down here 
-                            this.config.getCommunicationObject().publish("STOP",Main.getDistributedApplicationId());
+                            executeInDistributedSystem(toSend);
 
                         }
 
-                        for (Future<IterationResult> future : set) {
-                            IterationResult ir = future.get();
-                            Main.getLogger().info( "GETTING RESULT FROM " + ir.getCSVString());
-                            this.config.setIterationCounter(this.config.getIterationCounter() + 1);
-                            this.config.getLandscapeReference().add(ir);
-                            if (this.config.getSavingFrequence() != -1 && this.config.getIterationCounter() % this.config.getSavingFrequence() == 0) {
-                                String saveFileName1 = saveFileName.replace(experimetDir, backupDir).replace(".json", "_" + this.config.getIterationCounter() + ".json");
-                                writeResultFile(saveFileName1);
+                        readAndSaveResults(experimetDir, backupDir, saveFileName, set);
+
+                    }catch (ExecutionException e){
+                        throw new ImplementationException("Parallelization failed : "+e.getStackTrace() );
+                    }finally {
+                        pool.shutdown();
+                    }
+                    config.setIterationCounter(config.getIterationCount().get());
+                    terminated = true;
+
+                }
+                else if (this.parallelizable == ParallelExecution.GENERATION){
+                    int threads = Runtime.getRuntime().availableProcessors();
+                    ExecutorService pool = Executors.newFixedThreadPool(threads);
+                    Set<Future<IterationResult>> set = new HashSet<Future<IterationResult>>();
+                    List<Trial> toSend = new LinkedList<>();
+                    try {
+                        for (int i = 0; i < this.config.getIterationCount().get(); ++i) {
+                            synchronized (this) {
+                                //check and penalize not allowed parameter setups
+                                if (!configAllowed(config.getScriptParametersReference())) {
+                                    config.setObjectiveContainer(ObjectiveContainer.setBadObjectiveValue(config.getObjectiveContainerReference()));
+                                    config.getLandscapeReference().add(new IterationResult(config.getScriptParametersReference(), config.getObjectiveContainerReference(), startTime, timeDelta));
+                                }
+
+                                updateParameters(config.getScriptParametersReference(), config.getLandscapeReference()/*, config.getOptimizerParameters()*/);
+                                List<List<Param>> individuals =getParameterMapBatch(config.getScriptParametersReference());
+                                for (List<Param> p : individuals) {
+                                    Trial t = new Trial(config.getBaseCommand(), false, "", config.getObjectiveContainerReference(), p/*Param.cloneParamList(this.config.getScriptParametersReference())*/, startTime, timeDelta, this.config.getPublicFolderLocation());
+                                    addToTaskList(pool, set, toSend, t);
+                                }
+                                //distributed mode branch
+                                if(config.getDistributedMode())
+                                    executeInDistributedSystem(toSend);
+
+
+                                readAndSaveResults(experimetDir, backupDir, saveFileName, set);
+
+
+                                updateParameters(config.getScriptParametersReference(), config.getLandscapeReference()/*, config.getOptimizerParameters()*/);
+                                Main.getLogger().info( "PARAMETERS Parallel EXEC" + config.getScriptParametersReference().toString());
                             }
                         }
+
 
                     }catch (ExecutionException e){
                         throw new ImplementationException("Parallelization failed : "+e.getStackTrace() );
@@ -265,6 +287,45 @@ public abstract class AbstractAlgorithm {
             Main.getLogger().info(this.config.toString());
         }
 
+    }
+
+    private void readAndSaveResults(String experimetDir, String backupDir, String saveFileName, Set<Future<IterationResult>> set) throws InterruptedException, ExecutionException, CloneNotSupportedException, IOException {
+        for (Future<IterationResult> future : set) {
+            IterationResult ir = future.get();
+            Main.getLogger().info( "GETTING RESULT FROM " + ir.getCSVString());
+            this.config.setIterationCounter(this.config.getIterationCounter() + 1);
+            this.config.getLandscapeReference().add(ir);
+            if (this.config.getSavingFrequence() != -1 && this.config.getIterationCounter() % this.config.getSavingFrequence() == 0) {
+                String saveFileName1 = saveFileName.replace(experimetDir, backupDir).replace(".json", "_" + this.config.getIterationCounter() + ".json");
+                writeResultFile(saveFileName1);
+            }
+        }
+    }
+
+    private void addToTaskList(ExecutorService pool, Set<Future<IterationResult>> set, List<Trial> toSend, Trial t) {
+        if(config.getDistributedMode())
+            toSend.add(t);
+        else
+            set.add(pool.submit(t));
+    }
+
+    private void executeInDistributedSystem(List<Trial> toSend) throws InterruptedException {
+        for(Trial t :toSend) {
+            Gson gson1 = new GsonBuilder().setPrettyPrinting().create();
+            this.config.getCommunicationObject().publish(gson1.toJson(t, Trial.class), Main.getDistributedApplicationId());
+        }
+        final Gson gson = new Gson();
+        this.config.getCommunicationObject().distribute(toSend.stream().map(t-> gson.toJson(t,Trial.class)).collect(Collectors.toList()),Main.getDistributedApplicationId());
+
+        while(config.getLandscapeReference().size()<toSend.size()) {
+            // TODO: 2018. 10. 05. hardcoded id
+            config.getLandscapeReference().addAll(config.getCommunicationObject().receive(Main.getDistributedApplicationId()).stream().map(t -> IterationResult.deserializeIterationResults(t)).collect(Collectors.toList()));
+            System.out.println("COORD RECIEVING "+toSend.size() +" / "+config.getLandscapeReference().size());
+            Thread.sleep(500);
+            this.config.setIterationCounter(config.getLandscapeReference().size());
+        }
+        // TODO: 2018. 12. 14. should not shot down here
+        this.config.getCommunicationObject().publish("STOP",Main.getDistributedApplicationId());
     }
 
     /**
@@ -505,7 +566,10 @@ public abstract class AbstractAlgorithm {
      * .@param optimizerParams parameters of the optimizer
      */
     public abstract void updateParameters(List< Param> parameterMap, List<IterationResult> landscape/*, List<Param> optimizerParams*/) throws CloneNotSupportedException;
+    //public abstract void updateParameters(List<List< Param>> parameterMaps, List<List<IterationResult>> landscapes/*, List<Param> optimizerParams*/) throws CloneNotSupportedException;
 
+    public List<List<Param>> getParameterMapBatch(List<Param> pattern)throws CloneNotSupportedException {return null;}
+    public void setResults(List<IterationResult> results) throws CloneNotSupportedException {}
 
 
 }

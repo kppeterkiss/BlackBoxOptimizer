@@ -186,11 +186,14 @@
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.25</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.spotify/docker-maven-plugin -->
         <dependency>
             <groupId>com.spotify</groupId>
-            <artifactId>docker-client</artifactId>
-            <version>8.14.5</version>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>1.2.1</version>
         </dependency>
+
+
 
 
     </dependencies>
