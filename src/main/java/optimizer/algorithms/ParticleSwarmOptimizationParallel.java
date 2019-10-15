@@ -56,9 +56,10 @@ public class ParticleSwarmOptimizationParallel extends ParticleSwarmOptimization
     public void updateParameters(List<Param> parameterMap, List<IterationResult> landscape) throws CloneNotSupportedException {
         //here parameters are kinda dummy
 
-       if(is.firstStep)
-           //
+       if(is.firstStep){
            initParticles(parameterMap);
+           is.firstStep = false;
+       }
        else
            for (Particle particle : is.swarm)
                 updateParticleVelocity(parameterMap.size(), particle);
@@ -67,6 +68,13 @@ public class ParticleSwarmOptimizationParallel extends ParticleSwarmOptimization
 
 
     }
+
+    /**
+     * Returns the list of experiments to run(parameterlists are cloned)
+     * @param pattern
+     * @return
+     * @throws CloneNotSupportedException
+     */
     @Override
     public List<List<Param>> getParameterMapBatch(List<Param> pattern) throws CloneNotSupportedException {
         List<List<Param>> result = new LinkedList<>();
@@ -80,12 +88,22 @@ public class ParticleSwarmOptimizationParallel extends ParticleSwarmOptimization
 
     }
 
+    /**
+     * Update the state of particles based on the results of run with the last parametrization
+     * @param results
+     * @throws CloneNotSupportedException
+     */
     @Override
     public void setResults(List<IterationResult> results) throws CloneNotSupportedException {
         int i = 0;
         for(IterationResult res : results){
-            updateParticleAndGlobalState(is.swarm.get(i),res);
+            updateParticleAndGlobalState(is.swarm.get(i++),res);
         }
+    }
+
+    @Override
+    public void updateGlobals() throws CloneNotSupportedException {
+        updateGlobalBestPositionAndFitness();
     }
 
     /*

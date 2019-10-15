@@ -194,16 +194,18 @@ public abstract class AbstractAlgorithm {
                     int threads = Runtime.getRuntime().availableProcessors();
                     ExecutorService pool = Executors.newFixedThreadPool(threads);
                     Set<Future<IterationResult>> set = new HashSet<Future<IterationResult>>();
-                    List<Trial> toSend = new LinkedList<>();
                     try {
                         for (int i = 0; i < this.config.getIterationCount().get(); ++i) {
                             synchronized (this) {
-                                //check and penalize not allowed parameter setups
+                                List<Trial> toSend = new LinkedList<>();
+
+                                //check and penalize not allowed parameter setups -todo wrong place but not supposed to happen here anyway
                                 if (!configAllowed(config.getScriptParametersReference())) {
                                     config.setObjectiveContainer(ObjectiveContainer.setBadObjectiveValue(config.getObjectiveContainerReference()));
                                     config.getLandscapeReference().add(new IterationResult(config.getScriptParametersReference(), config.getObjectiveContainerReference(), startTime, timeDelta));
                                 }
-
+                                //No id-s, the setups and the results have to be in the same order
+                                //in first round initialization
                                 updateParameters(config.getScriptParametersReference(), config.getLandscapeReference()/*, config.getOptimizerParameters()*/);
                                 List<List<Param>> individuals =getParameterMapBatch(config.getScriptParametersReference());
                                 for (List<Param> p : individuals) {
@@ -212,13 +214,13 @@ public abstract class AbstractAlgorithm {
                                 }
                                 //distributed mode branch
                                 if(config.getDistributedMode())
+                                    //todo this is not working yet
                                     executeInDistributedSystem(toSend);
 
-
+                                //here we add all the results to the landscape
                                 readAndSaveResults(experimetDir, backupDir, saveFileName, set);
+                                updateGlobals();
 
-
-                                updateParameters(config.getScriptParametersReference(), config.getLandscapeReference()/*, config.getOptimizerParameters()*/);
                                 Main.getLogger().info( "PARAMETERS Parallel EXEC" + config.getScriptParametersReference().toString());
                             }
                         }
@@ -570,6 +572,7 @@ public abstract class AbstractAlgorithm {
 
     public List<List<Param>> getParameterMapBatch(List<Param> pattern)throws CloneNotSupportedException {return null;}
     public void setResults(List<IterationResult> results) throws CloneNotSupportedException {}
+    public void updateGlobals() throws CloneNotSupportedException {}
 
 
 }

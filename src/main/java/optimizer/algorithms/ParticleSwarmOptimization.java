@@ -127,7 +127,7 @@ public class ParticleSwarmOptimization extends AbstractAlgorithm {
         }
     }
 
-    private void updateGlobalBestPositionAndFitness() throws CloneNotSupportedException {
+    protected void updateGlobalBestPositionAndFitness() throws CloneNotSupportedException {
         is.swarmBestKnownPosition = is.swarm.get(0).position.clone();
         is.swarmBestFitness = is.swarm.get(0).bestFitness;
 
@@ -140,12 +140,21 @@ public class ParticleSwarmOptimization extends AbstractAlgorithm {
         }
     }
 
+    /**
+     * Sets the coordinates of the particle for the values of the parameters to execute
+     * @param parameterMap
+     * @param particle
+     */
     protected void setParticlePositionForParameterSetup(List<Param> parameterMap, Particle particle) {
         for(int i = 0; i < parameterMap.size(); ++i) {
             parameterMap.get(i).setInitValue(particle.position[i]);
         }
     }
 
+    /**
+     * initialize particles of the swarm with random position
+     * @param parameterMap List of {@link Param} obejects
+     */
     protected void initParticles(List<Param> parameterMap) {
         int dimension = parameterMap.size();
         float[] lower_bound = new float[dimension];
@@ -181,6 +190,8 @@ public class ParticleSwarmOptimization extends AbstractAlgorithm {
     public List<List<Param>> getParameterMapBatch(List<Param> pattern) throws CloneNotSupportedException {return null;}
     @Override
     public void setResults(List<IterationResult> results) throws CloneNotSupportedException {}
+    @Override
+    public void updateGlobals() throws CloneNotSupportedException {}
 
     class Particle {
         /**
