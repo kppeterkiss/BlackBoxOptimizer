@@ -41,7 +41,7 @@ public class GridSearch extends AbstractAlgorithm {
     InternalState is = new InternalState();
 
     {
-        this.parallelizable = true;
+        this.parallelizable = ParallelExecution.PARALLEL;
         this.optimizerParams = new LinkedList<>();
         this.allowedTypes.add(Integer.class);
         this.allowedTypes.add(Boolean.class);

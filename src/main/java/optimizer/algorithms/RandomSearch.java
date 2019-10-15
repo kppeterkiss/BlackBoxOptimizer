@@ -33,7 +33,7 @@ import java.util.Random;
 public class RandomSearch extends AbstractAlgorithm {
 
     {
-        this.parallelizable = true;
+        this.parallelizable = ParallelExecution.PARALLEL;
         this.allowedTypes.add(Integer.class);
         this.allowedTypes.add(Boolean.class);
         this.allowedTypes.add(String.class);
