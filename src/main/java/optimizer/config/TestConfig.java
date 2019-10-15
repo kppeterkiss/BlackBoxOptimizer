@@ -223,7 +223,7 @@ public class TestConfig {
             try {
                 if(!ir.badConfig()) {
                     sj.add(i++ + "," + ir.getCSVString());
-                    if(best == null || ir.betterThan(best));
+                    if(best == null || ir.betterThan(best))
                         best = ir;
                 }
             } catch (CloneNotSupportedException e) {

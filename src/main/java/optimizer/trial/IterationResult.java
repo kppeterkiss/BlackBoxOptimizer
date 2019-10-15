@@ -185,7 +185,7 @@ public class IterationResult implements Comparable<IterationResult>{
                 }
             }
         }
-        return distance;
+        return -distance;
     }
 
     /**
@@ -195,7 +195,7 @@ public class IterationResult implements Comparable<IterationResult>{
      * @throws CloneNotSupportedException
      */
     public boolean betterThan(IterationResult other) throws CloneNotSupportedException {
-        return getFitness() < other.getFitness();
+        return getFitness() > other.getFitness();
     }
 
     public String getConfigurationString() throws CloneNotSupportedException {
