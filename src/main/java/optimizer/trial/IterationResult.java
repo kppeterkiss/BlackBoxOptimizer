@@ -195,6 +195,8 @@ public class IterationResult implements Comparable<IterationResult>{
      * @throws CloneNotSupportedException
      */
     public boolean betterThan(IterationResult other) throws CloneNotSupportedException {
+        if(other == null)
+            return true;
         return getFitness() > other.getFitness();
     }
 

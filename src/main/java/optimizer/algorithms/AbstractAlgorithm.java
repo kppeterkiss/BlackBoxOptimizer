@@ -37,10 +37,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 
@@ -152,6 +149,8 @@ public abstract class AbstractAlgorithm {
 
                     int threads = Runtime.getRuntime().availableProcessors();
                     ExecutorService pool = Executors.newFixedThreadPool(threads);
+                    //CompletionService<IterationResult> completionService =
+                    //        new ExecutorCompletionService<IterationResult>(pool);
                     Set<Future<IterationResult>> set = new HashSet<Future<IterationResult>>();
                     List<Trial> toSend = new LinkedList<>();
                     try {
@@ -168,6 +167,7 @@ public abstract class AbstractAlgorithm {
                                 // create the trial object to execute
                                 Trial t = new Trial(config.getBaseCommand(), false, "", config.getObjectiveContainerReference(), Param.cloneParamList(this.config.getScriptParametersReference()), startTime, timeDelta,this.config.getPublicFolderLocation());
 
+                                //addToTaskList(pool, set, toSend, t);
                                 addToTaskList(pool, set, toSend, t);
                                 updateParameters(config.getScriptParametersReference(), config.getLandscapeReference()/*, config.getOptimizerParameters()*/);
                                 Main.getLogger().info( "PARAMETERS Parallel EXEC" + config.getScriptParametersReference().toString());
@@ -193,11 +193,14 @@ public abstract class AbstractAlgorithm {
                 else if (this.parallelizable == ParallelExecution.GENERATION){
                     int threads = Runtime.getRuntime().availableProcessors();
                     ExecutorService pool = Executors.newFixedThreadPool(threads);
-                    Set<Future<IterationResult>> set = new HashSet<Future<IterationResult>>();
+                    CompletionService<IterationResult> completionService =
+                            new ExecutorCompletionService<IterationResult>(pool);
+
                     try {
                         for (int i = 0; i < this.config.getIterationCount().get(); ++i) {
                             synchronized (this) {
                                 List<Trial> toSend = new LinkedList<>();
+                                Set<Future<IterationResult>> set = new HashSet<Future<IterationResult>>();
 
                                 //check and penalize not allowed parameter setups -todo wrong place but not supposed to happen here anyway
                                 if (!configAllowed(config.getScriptParametersReference())) {
@@ -210,7 +213,8 @@ public abstract class AbstractAlgorithm {
                                 List<List<Param>> individuals =getParameterMapBatch(config.getScriptParametersReference());
                                 for (List<Param> p : individuals) {
                                     Trial t = new Trial(config.getBaseCommand(), false, "", config.getObjectiveContainerReference(), p/*Param.cloneParamList(this.config.getScriptParametersReference())*/, startTime, timeDelta, this.config.getPublicFolderLocation());
-                                    addToTaskList(pool, set, toSend, t);
+                                    addToTaskListAndWait(completionService, set, toSend, t);
+                                    //addToTaskList(pool, set, toSend, t);
                                 }
                                 //distributed mode branch
                                 if(config.getDistributedMode())
@@ -218,10 +222,11 @@ public abstract class AbstractAlgorithm {
                                     executeInDistributedSystem(toSend);
 
                                 //here we add all the results to the landscape
-                                readAndSaveResults(experimetDir, backupDir, saveFileName, set);
+                                List<IterationResult> results = readAndSaveResults(experimetDir, backupDir, saveFileName, set);
+                                setResults(results);
                                 updateGlobals();
 
-                                Main.getLogger().info( "PARAMETERS Parallel EXEC" + config.getScriptParametersReference().toString());
+                                //Main.getLogger().info( "PARAMETERS Parallel EXEC" + config.getScriptParametersReference().toString());
                             }
                         }
 
@@ -291,17 +296,27 @@ public abstract class AbstractAlgorithm {
 
     }
 
-    private void readAndSaveResults(String experimetDir, String backupDir, String saveFileName, Set<Future<IterationResult>> set) throws InterruptedException, ExecutionException, CloneNotSupportedException, IOException {
+    private List<IterationResult> readAndSaveResults(String experimetDir, String backupDir, String saveFileName, Set<Future<IterationResult>> set) throws InterruptedException, ExecutionException, CloneNotSupportedException, IOException {
+        Main.getLogger().info( "COLLECTING RESULTS" + config.getScriptParametersReference().toString());
+        List<IterationResult> res = new LinkedList<>();
         for (Future<IterationResult> future : set) {
+            //todo ugly as hell do the decent way: https://stackoverflow.com/questions/19348248/waiting-on-a-list-of-future
+            while(!future.isDone())Thread.sleep(10);
             IterationResult ir = future.get();
-            Main.getLogger().info( "GETTING RESULT FROM " + ir.getCSVString());
-            this.config.setIterationCounter(this.config.getIterationCounter() + 1);
+            Main.getLogger().info( "GETTING RESULT  " + ir.getCSVString());
+            res.add(ir);
             this.config.getLandscapeReference().add(ir);
             if (this.config.getSavingFrequence() != -1 && this.config.getIterationCounter() % this.config.getSavingFrequence() == 0) {
                 String saveFileName1 = saveFileName.replace(experimetDir, backupDir).replace(".json", "_" + this.config.getIterationCounter() + ".json");
                 writeResultFile(saveFileName1);
             }
+
         }
+        Main.getLogger().info( "ALL RESULTS ARRIVED in round " + this.config.getIterationCounter());
+
+        this.config.setIterationCounter(this.config.getIterationCounter() + 1);
+        return res;
+
     }
 
     private void addToTaskList(ExecutorService pool, Set<Future<IterationResult>> set, List<Trial> toSend, Trial t) {
@@ -309,6 +324,13 @@ public abstract class AbstractAlgorithm {
             toSend.add(t);
         else
             set.add(pool.submit(t));
+    }
+
+    private void addToTaskListAndWait(CompletionService cs, Set<Future<IterationResult>> set, List<Trial> toSend, Trial t) {
+        if(config.getDistributedMode())
+            toSend.add(t);
+        else
+            set.add(cs.submit(t));
     }
 
     private void executeInDistributedSystem(List<Trial> toSend) throws InterruptedException {
