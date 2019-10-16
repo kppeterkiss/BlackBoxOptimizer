@@ -57,7 +57,8 @@ public class ParticleSwarmOptimizationParallel extends ParticleSwarmOptimization
         //here parameters are kinda dummy
 
        if(is.firstStep){
-           initParticles(parameterMap);
+           initSearchSpace(parameterMap);
+           initParticles(parameterMap.size());
            is.firstStep = false;
        }
        else

@@ -139,7 +139,7 @@ public class Trial implements Callable<IterationResult> {
         BufferedReader outputReader, errorReader;
         //Runtime rt = Runtime.getRuntime();
         ProcessBuilder builder = new ProcessBuilder( command.split(" "));
-        System.out.println("WPRKINGDIR SQAVed --"+this.workingDir);
+        System.out.println("WORKINGDIR SQAVed --"+this.workingDir);
         Path userDir= Paths.get(System.getProperty("user.dir"));
         System.out.println("userdir -- "+userDir);
         String s1 = userDir.resolve(this.workingDir).toString();

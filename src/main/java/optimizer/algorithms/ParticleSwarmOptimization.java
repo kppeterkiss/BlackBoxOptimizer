@@ -49,7 +49,8 @@ public class ParticleSwarmOptimization extends AbstractAlgorithm {
             int particleNumber=(int)optimizerParams.get(0).getValue();
             if(is.initialisedParticles == 0) {
                 //how many parameters we have to optmize
-                initParticles(parameterMap);
+                initSearchSpace(parameterMap);
+                initParticles(((Number) optimizerParams.get(0).getValue()).intValue());
             }
             //stage 1 initialization of all the particles - that is assign the first fitness and send the next for evaluation
             //set the value of the parameter to the one in the particle for running the experiment
@@ -124,6 +125,16 @@ public class ParticleSwarmOptimization extends AbstractAlgorithm {
 
 
             particle.position[d] += particle.velocity[d];
+            if(particle.position[d]>is.upperBounds[d]){
+                particle.velocity[d] = 0f;
+                particle.position[d] = is.upperBounds[d];
+
+            }
+            if(particle.position[d]<is.lowerBounds[d]){
+                particle.velocity[d] = 0f;
+                particle.position[d] = is.lowerBounds[d];
+            }
+
         }
     }
 
@@ -150,25 +161,29 @@ public class ParticleSwarmOptimization extends AbstractAlgorithm {
             parameterMap.get(i).setInitValue(particle.position[i]);
         }
     }
-
+    protected void initSearchSpace(List<Param> parameterMap){
+        is.dimension  = parameterMap.size();
+        is.lowerBounds = new float[is.dimension];
+        is.upperBounds = new float[is.dimension];
+        for(int i = 0; i < is.dimension; ++i) {
+            is.lowerBounds[i] = ((Number)parameterMap.get(i).getLowerBound()).floatValue();
+            is.upperBounds[i] = ((Number)parameterMap.get(i).getUpperBound()).floatValue();
+        }
+    }
     /**
      * initialize particles of the swarm with random position
-     * @param parameterMap List of {@link Param} obejects
+     * @param numberOfParticles number of particles to create
      */
-    protected void initParticles(List<Param> parameterMap) {
-        int dimension = parameterMap.size();
-        float[] lower_bound = new float[dimension];
-        float[] upper_bound = new float[dimension];
-        for(int i = 0; i < dimension; ++i) {
-            lower_bound[i] = ((Number)parameterMap.get(i).getLowerBound()).floatValue();
-            upper_bound[i] = ((Number)parameterMap.get(i).getUpperBound()).floatValue();
-        }
+    protected void initParticles(int numberOfParticles) {
+
+
+
         //array to store all parameters
         is.swarm = new ArrayList<>();
         //initialize the particles, and add to particle array
-        int particleNumber = ((Number) optimizerParams.get(0).getValue()).intValue();
+        int particleNumber = numberOfParticles;
         for(int i = 0; i < particleNumber; ++i) {
-            is.swarm.add(new Particle(dimension,lower_bound,upper_bound));
+            is.swarm.add(new Particle(/*dimension,lower_bound,upper_bound*/));
         }
     }
 
@@ -212,29 +227,31 @@ public class ParticleSwarmOptimization extends AbstractAlgorithm {
         //float bestFitness;
         IterationResult bestFitness;
 
-        public Particle(int dim, float[] lowerBounds, float[] upperBounds) {
+        public Particle(/*int dim, float[] lowerBounds, float[] upperBounds*/) {
             /**
              * recent position
              */
-            position = new float[dim];
+            position = new float[is.dimension];
             /**
              * velocity vector to describe movement of the particle
              */
-            velocity = new float[dim];
+            velocity = new float[is.dimension];
             /**
              * best position of the particle up to now
              */
-            bestKnownPosition = new float[dim];
+            bestKnownPosition = new float[is.dimension];
 
             Random rand = new Random();
-            for(int i = 0; i < dim; ++i) {
+            for(int i = 0; i < is.dimension; ++i) {
                 float r = rand.nextFloat();
                 //random initialization of position
-                position[i] = lowerBounds[i] + r * (upperBounds[i] - lowerBounds[i]);
+                position[i] = is.lowerBounds[i] + r * (is.upperBounds[i] - is.lowerBounds[i]);
                 bestKnownPosition[i] = position[i];
                 r = rand.nextFloat();
-                //random initialization of velocity
-                velocity[i] = lowerBounds[i] - upperBounds[i] + 2 * r * (upperBounds[i] - lowerBounds[i]);
+                //random initialization of velocity - should stay within range
+                float pointForInitVelocity = is.lowerBounds[i] + r * (is.upperBounds[i] - is.lowerBounds[i]);
+                velocity[i] = pointForInitVelocity - position[i];
+                //velocity[i] = is.lowerBounds[i] - is.upperBounds[i] + 2 * r * (is.upperBounds[i] - is.lowerBounds[i]);
             }
             //bestFitness = 0f;
             bestFitness = null;
@@ -252,7 +269,7 @@ public class ParticleSwarmOptimization extends AbstractAlgorithm {
         /**
          * used as a pointer to the actual particle
          */
-        int initialisedParticles = 0;
+        int initialisedParticles;
         /**
          * position of the best result
          */
@@ -261,6 +278,13 @@ public class ParticleSwarmOptimization extends AbstractAlgorithm {
          * best result of the swarn
          */
         IterationResult swarmBestFitness;
+        /**
+         * Boundaries of the search space
+         */
+        float[] upperBounds;
+        float[] lowerBounds;
+        int dimension;
+
         boolean firstStep = true;
 
     }
