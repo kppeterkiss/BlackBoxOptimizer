@@ -33,10 +33,7 @@ import optimizer.utils.Utils;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
@@ -207,7 +204,7 @@ public abstract class AbstractAlgorithm {
                                     config.setObjectiveContainer(ObjectiveContainer.setBadObjectiveValue(config.getObjectiveContainerReference()));
                                     config.getLandscapeReference().add(new IterationResult(config.getScriptParametersReference(), config.getObjectiveContainerReference(), startTime, timeDelta));
                                 }
-                                //No id-s, the setups and the results have to be in the same order
+                                //No id-s, the setups andy the results have to be in the same order
                                 //in first round initialization
                                 updateParameters(config.getScriptParametersReference(), config.getLandscapeReference()/*, config.getOptimizerParameters()*/);
                                 List<List<Param>> individuals =getParameterMapBatch(config.getScriptParametersReference());
@@ -591,10 +588,24 @@ public abstract class AbstractAlgorithm {
      */
     public abstract void updateParameters(List< Param> parameterMap, List<IterationResult> landscape/*, List<Param> optimizerParams*/) throws CloneNotSupportedException;
     //public abstract void updateParameters(List<List< Param>> parameterMaps, List<List<IterationResult>> landscapes/*, List<Param> optimizerParams*/) throws CloneNotSupportedException;
+    //
 
+    // override these for parallelized population-based algorithms!!
     public List<List<Param>> getParameterMapBatch(List<Param> pattern)throws CloneNotSupportedException {return null;}
     public void setResults(List<IterationResult> results) throws CloneNotSupportedException {}
     public void updateGlobals() throws CloneNotSupportedException {}
+
+
+    public void randomFloatInit(List<Param> setup){
+        Random rand = new Random();
+
+        for(int i = 0; i < setup.size(); ++i) {
+            float r = rand.nextFloat();
+            Param p = setup.get(i);
+            //random initialization of position
+            p.setInitValue((float)p.getLowerBound() + r * ((float)p.getUpperBound() - (float)p.getLowerBound()));
+        }
+    }
 
 
 }

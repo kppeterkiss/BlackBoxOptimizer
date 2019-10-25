@@ -122,7 +122,7 @@ public class HitAndRun extends AbstractAlgorithm {
     //wis this ok???
 
     /**
-     * starting from the maximal stepsize, iterating over the coordinates of the vector of move.
+     * C = stepsize. Starting from the maximal stepsize, iterating over the coordinates of the vector of move.
      * If the move would bring out from the searchspace, we scale it down to the extent it would only bring us to the edge of the space.
      * @param s direction vector
      * @param c the maximal step size
@@ -131,13 +131,14 @@ public class HitAndRun extends AbstractAlgorithm {
      */
     static double adjustC(double[] s, double c, List<Param> center) {
         for (int i = 0; i < s.length; ++i) {
-            //
+            //todo c always positive ???
             double distanceFromUpperEdge = ((Number) center.get(i).getUpperBound()).doubleValue() - ((Number) center.get(i).getValue()).doubleValue();
             if (s[i] > 0 && distanceFromUpperEdge < c * s[i])
                 c = (distanceFromUpperEdge) / s[i];
             double distanceFromLowerEdge = ((Number) center.get(i).getValue()).doubleValue() - ((Number) center.get(i).getLowerBound()).doubleValue();
-            if (s[i] < 0 && distanceFromLowerEdge < c * s[i])
-                c = (distanceFromLowerEdge) / s[i];
+            //this case s[i] < 0
+            if (s[i] < 0 && distanceFromLowerEdge < -(c * s[i]))
+                c = (distanceFromLowerEdge) / -s[i];
         }
         return c;
     }

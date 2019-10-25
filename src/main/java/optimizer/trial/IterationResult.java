@@ -156,8 +156,9 @@ public class IterationResult implements Comparable<IterationResult>{
 
     /**
      * Gives a measure of how good the configuration is. That can be seen as weighted sum of distances from the goal values.
+     * The bigger value of the fitness ALWAYS represents a better solution based on the objective
      * @return Sum  of {@link Objective#weight}} times a distance from the {@link Objective#target} if there is any, or in case {@link Relation#MAXIMIZE} or {@link Relation#MINIMIZE} what is bigger/smaller.
-     * todo should apply some normalization
+     * todo should apply some normalization,
      */
     public double getFitness() {
         double distance = 0;

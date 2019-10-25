@@ -16,10 +16,12 @@
 
 package optimizer.algorithms;
 
+import com.sun.xml.internal.rngom.digested.DDataPattern;
 import optimizer.trial.IterationResult;
 import optimizer.param.Param;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -37,43 +39,44 @@ public class GeneticTournamentRandomStep extends Genetic {
     @Override
     protected void select(List<IterationResult> landscape) {
 
-            double fitnessSum = landscape.get(is.bestChromosome).getFitness();
-            for(int i = (is.generation-1)*((int)optimizerParams.get(0).getValue()-1); i < is.generation*((int)optimizerParams.get(0).getValue()-1); ++i)
-                fitnessSum += landscape.get(i).getFitness();
-            Random rand = new Random();
-            double tresholdf = fitnessSum * rand.nextDouble();
-            double tresholdm = fitnessSum * rand.nextDouble();
+        double fitnessSum = landscape.get(is.bestChromosome).getFitness();
+        for(int i = (is.generation-1)*((int)optimizerParams.get(0).getValue()-1); i < is.generation*((int)optimizerParams.get(0).getValue()-1); ++i)
+            fitnessSum += landscape.get(i).getFitness();
+        Random rand = new Random();
+        double tresholdf = fitnessSum * rand.nextDouble();
+        double tresholdm = fitnessSum * rand.nextDouble();
 
-            if(landscape.get(is.bestChromosome).getFitness() >= tresholdf)
-                is.father = is.bestChromosome;
-            else {
-                double s = landscape.get(is.bestChromosome).getFitness();
-                for (int i = (is.generation - 1) * ((int) optimizerParams.get(0).getValue() - 1); i < is.generation * ((int) optimizerParams.get(0).getValue() - 1); ++i) {
-                    s += landscape.get(i).getFitness();
-                    if (s >= tresholdf) {
-                        is.father = i;
-                        break;
-                    }
+        if(landscape.get(is.bestChromosome).getFitness() >= tresholdf)
+            is.father = is.bestChromosome;
+        else {
+            double s = landscape.get(is.bestChromosome).getFitness();
+            for (int i = (is.generation - 1) * ((int) optimizerParams.get(0).getValue() - 1); i < is.generation * ((int) optimizerParams.get(0).getValue() - 1); ++i) {
+                s += landscape.get(i).getFitness();
+                if (s >= tresholdf) {
+                    is.father = i;
+                    break;
+                }
+            }
+        }
+
+        if(landscape.get(is.bestChromosome).getFitness() >= tresholdm)
+            is.mother = is.bestChromosome;
+        else {
+            double s = landscape.get(is.bestChromosome).getFitness();
+            for(int i = (is.generation-1)*((int)optimizerParams.get(0).getValue()-1); i < is.generation*((int)optimizerParams.get(0).getValue()-1); ++i) {
+                s += landscape.get(i).getFitness();
+                if(s >= tresholdm) {
+                    is.mother = i;
+                    break;
                 }
             }
 
-            if(landscape.get(is.bestChromosome).getFitness() >= tresholdm)
-                is.mother = is.bestChromosome;
-            else {
-                double s = landscape.get(is.bestChromosome).getFitness();
-                for(int i = (is.generation-1)*((int)optimizerParams.get(0).getValue()-1); i < is.generation*((int)optimizerParams.get(0).getValue()-1); ++i) {
-                    s += landscape.get(i).getFitness();
-                    if(s >= tresholdm) {
-                        is.mother = i;
-                        break;
-                    }
-                }
-
-            }
+        }
 
 
 
     }
+
 
     @Override
     protected List<Param> crossover(List<IterationResult> landscape, int mother, int father) throws CloneNotSupportedException {

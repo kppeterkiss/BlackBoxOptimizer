@@ -34,7 +34,7 @@ import java.util.Random;
  * Created by david on 2017. 08. 04..
  */
 
-// optimizerParams[0] : population size
+// optimizerParams[0] : populationSize size
 // optimizerParams[1] : number of populations
 
 public abstract class Genetic extends AbstractAlgorithm {
@@ -42,8 +42,10 @@ public abstract class Genetic extends AbstractAlgorithm {
 
     {
         this.optimizerParams = new LinkedList<>();
+        //size of populationSize
         this.optimizerParams.add(new Param(3,1000,1,"population_size"));
-        this.optimizerParams.add(new Param(3,1000,1,"population_number"));
+        //number of chromosomess/individuals participating in crossover as parents and this much offspring will be created
+        this.optimizerParams.add(new Param(3,1000,1,"crossover_size"));
     }
 
     @Override
@@ -52,20 +54,15 @@ public abstract class Genetic extends AbstractAlgorithm {
         Random rand = new Random();
 
         try {
+            //at the beginining until we have all individual we initialize a random setup
             if(is.generation == 0 && is.population < (int)optimizerParams.get(0).getValue()) {
-                for(Param p : parameterMap) {
-                    float lb = ((Number)p.getLowerBound()).floatValue();
-                    float ub = ((Number)p.getUpperBound()).floatValue();
-                    float r = rand.nextFloat();
-                    p.setInitValue(lb + r * (ub - lb));
-                }
+                initRandomIndividual(parameterMap, rand);
                 ++is.population;
                 return;
             }
+            //When round is over we take the best IterationResult, set the cpounter back to 1
             if(is.population == (int)optimizerParams.get(0).getValue()) {
-                for(int i = (is.generation + 1) * (is.population - 1); i > is.generation * (is.population - 1); --i )
-                if(landscape.get(i).betterThan(landscape.get(is.bestChromosome)))
-                    is.bestChromosome = i;
+                setBestIndividalIndexOfRound(landscape);
                 is.population = 1;
                 ++is.generation;
             }
@@ -80,6 +77,26 @@ public abstract class Genetic extends AbstractAlgorithm {
             e.printStackTrace();
         }
 
+    }
+
+    private void setBestIndividalIndexOfRound(List<IterationResult> landscape) throws CloneNotSupportedException {
+        for(int i = (is.generation + 1) * (is.population - 1); i > is.generation * (is.population - 1); --i )
+        if(landscape.get(i).betterThan(landscape.get(is.bestChromosome)))
+            is.bestChromosome = i;
+    }
+
+    /**
+     * get a setup as freference and set its values to random according to boundaries
+     * @param parameterMap
+     * @param rand
+     */
+    private void initRandomIndividual(List<Param> parameterMap, Random rand) {
+        for(Param p : parameterMap) {
+            float lb = ((Number)p.getLowerBound()).floatValue();
+            float ub = ((Number)p.getUpperBound()).floatValue();
+            float r = rand.nextFloat();
+            p.setInitValue(lb + r * (ub - lb));
+        }
     }
 
     protected abstract void select(List<IterationResult> landscape);
@@ -126,14 +143,22 @@ public abstract class Genetic extends AbstractAlgorithm {
 
 
     class InternalState {
-
+        /**
+         * counter for the generations
+         */
         int generation = 0;
+        /**
+         * counter to iterate over individuals
+         */
         int population = 1;
-
+        /**
+         * Store the index of the best parametrization in the landscape
+         */
         int bestChromosome = 0;
 
         int mother;
         int father;
 
     }
+
 }

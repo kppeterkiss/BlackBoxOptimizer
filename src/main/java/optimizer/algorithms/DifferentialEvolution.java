@@ -46,6 +46,7 @@ public class DifferentialEvolution extends AbstractAlgorithm {
             Random rand = new Random();
 
             if(is.firstGeneration) {
+                //init searchspace+
                 for(Param p : parameterMap) {
                     float lb = ((Number)p.getLowerBound()).floatValue();
                     float ub = ((Number)p.getUpperBound()).floatValue();
@@ -53,6 +54,7 @@ public class DifferentialEvolution extends AbstractAlgorithm {
                     p.setInitValue(lb + r * (ub - lb));
                 }
                 ++is.actualIndividual;
+                // end of the first round
                 if(is.actualIndividual == ((Number)optimizerParams.get(0).getValue()).intValue()) {
                     is.firstGeneration = false;
                     is.firstMutation = true;
@@ -66,39 +68,51 @@ public class DifferentialEvolution extends AbstractAlgorithm {
             }
 
             if(!is.firstMutation) {
-                is.newmembers[is.actualIndividual] = landscape.get(landscape.size()-1).getFitness() > landscape.get(is.members[is.actualIndividual]).getFitness() ?
-                        landscape.size()-1 : is.members[is.actualIndividual];
-                ++is.actualIndividual;
-                if(is.actualIndividual == is.members.length) {
-                    is.members = is.newmembers.clone();
-                    is.actualIndividual = 0;
-                }
+                //
+                select(landscape);
             }
 
-            int a,b,c;
-            a = rand.nextInt(is.members.length-1);
-            b = rand.nextInt(is.members.length-1);
-            c = rand.nextInt(is.members.length-1);
-
-            List<Param> xm = new ArrayList<>();
-            Param.refillList(xm,landscape.get(is.members[a]).getConfigurationClone());
-            for(int i = 0; i < xm.size(); ++i) {
-                xm.get(i).add((((Number)landscape.get(is.members[b]).getConfigurationClone().get(i).getValue()).floatValue() -
-                        ((Number)landscape.get(is.members[c]).getConfigurationClone().get(i).getValue()).floatValue())*((Number)optimizerParams.get(1).getValue()).floatValue());
-            }
-            Param.refillList(is.xc,landscape.get(is.members[is.actualIndividual]).getConfigurationClone());
-//// TODO: 23/09/17  
-            for(int i = 0; i < is.members.length && i<is.xc.size(); ++i) {
-                float r = rand.nextFloat();
-                if(r < ((Number)optimizerParams.get(2).getValue()).floatValue()) {
-                    is.xc.get(i).setInitValue(xm.get(i).getValue());
-                }
-            }
+            mutate(landscape);
 
 
         }
         catch(CloneNotSupportedException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void select(List<IterationResult> landscape) {
+        is.newmembers[is.actualIndividual] = landscape.get(landscape.size()-1).getFitness() > landscape.get(is.members[is.actualIndividual]).getFitness() ?
+                landscape.size()-1 : is.members[is.actualIndividual];
+        ++is.actualIndividual;
+        if(is.actualIndividual == is.members.length) {
+            is.members = is.newmembers.clone();
+            is.actualIndividual = 0;
+        }
+    }
+
+    private void mutate(List<IterationResult> landscape) throws CloneNotSupportedException {
+        Random rand = new Random();
+        int a,b,c;
+        a = rand.nextInt(is.members.length-1);
+        b = rand.nextInt(is.members.length-1);
+        c = rand.nextInt(is.members.length-1);
+
+        List<Param> xm =landscape.get(is.members[a]).getConfigurationClone();
+        for(int i = 0; i < xm.size(); ++i) {
+            float phi = ((Number) optimizerParams.get(1).getValue()).floatValue();
+            float b_i = ((Number) landscape.get(is.members[b]).getConfigurationClone().get(i).getValue()).floatValue();
+            float c_i = ((Number) landscape.get(is.members[c]).getConfigurationClone().get(i).getValue()).floatValue();
+            xm.get(i).add((b_i -c_i)* phi);
+        }
+        Param.refillList(is.xc,landscape.get(is.members[is.actualIndividual]).getConfigurationClone());
+//// TODO: 23/09/17
+        for(int i = 0; i < is.members.length && i<is.xc.size(); ++i) {
+            float r = rand.nextFloat();
+            float kappa = ((Number) optimizerParams.get(2).getValue()).floatValue();
+            if(r < kappa) {
+                is.xc.get(i).setInitValue(xm.get(i).getValue());
+            }
         }
     }
 
