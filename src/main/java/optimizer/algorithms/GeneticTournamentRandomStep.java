@@ -16,7 +16,6 @@
 
 package optimizer.algorithms;
 
-import com.sun.xml.internal.rngom.digested.DDataPattern;
 import optimizer.trial.IterationResult;
 import optimizer.param.Param;
 

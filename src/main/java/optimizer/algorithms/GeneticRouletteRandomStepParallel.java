@@ -32,7 +32,6 @@
 
 package optimizer.algorithms;
 
-import com.sun.tools.corba.se.idl.InterfaceGen;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
 
