@@ -81,6 +81,8 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
                 }
             }
             for (FireFly f: state.swarm) {
+                f.checkBoundsForNewPosition(state.dimension,
+                        state.lowerBounds, state.upperBounds);
                 f.setPositionToNew();
             }
         }
