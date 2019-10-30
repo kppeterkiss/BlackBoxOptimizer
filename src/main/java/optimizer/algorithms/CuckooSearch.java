@@ -1,5 +1,6 @@
 package optimizer.algorithms;
 
+import optimizer.common.Solution;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
 import optimizer.utils.Utils;
@@ -49,7 +50,8 @@ public class CuckooSearch extends AbstractAlgorithm {
             state.swarm.add(new Nest(
                     state.dimension,
                     state.lowerBounds,
-                    state.upperBounds));
+                    state.upperBounds,
+                    rand));
         }
     }
 
@@ -95,7 +97,7 @@ public class CuckooSearch extends AbstractAlgorithm {
                                             (float) (alpha * ((Math.signum(Pa - epsilon) + 1) / 2) *  // Heaviside function
                                                     (state.swarm.get(j).position[l] - state.swarm.get(k).position[l]));
                         }
-                        state.swarm.get(i).checkBoundsForNewPosition();
+                        state.swarm.get(i).checkBoundsForNewPosition(state.dimension, state.lowerBounds, state.upperBounds);
                         state.calculateResultsForIds.add(i);
                     }
                 }
@@ -187,7 +189,7 @@ public class CuckooSearch extends AbstractAlgorithm {
         for (int i = 0; i < state.dimension; ++i) {
             nest.newPosition[i] = nest.position[i] + (float) (alpha * step[i] * (nest.position[i] - state.swarmBestKnownPosition[i]));
         }
-        nest.checkBoundsForNewPosition();
+        nest.checkBoundsForNewPosition(state.dimension, state.lowerBounds, state.upperBounds);
     }
 
     public void updateGlobals() throws CloneNotSupportedException {
@@ -199,32 +201,9 @@ public class CuckooSearch extends AbstractAlgorithm {
          state.calculateResultsForIds.clear();
     }
 
-    class Nest {
-        float[] position;
-        float[] newPosition;
-        IterationResult actualFitness;
-
-
-        public Nest(int dim,  float[] lowerBounds, float[] upperBounds) {
-            this.position = new float[dim];
-            this.newPosition = new float[dim];
-
-            Random rand = new Random();
-            for(int i = 0; i < dim; ++i) {
-                float r = rand.nextFloat();
-                this.position[i] = lowerBounds[i] + r * (upperBounds[i] - lowerBounds[i]);
-            }
-            this.actualFitness = null;
-        }
-
-        public void checkBoundsForNewPosition() {
-            for (int i = 0; i < state.dimension; ++i) {
-                if (newPosition[i] > state.upperBounds[i]) {
-                    newPosition[i] = state.upperBounds[i];
-                } else if (newPosition[i] < state.lowerBounds[i]) {
-                    newPosition[i] = state.lowerBounds[i];
-                }
-            }
+    class Nest extends Solution {
+        public Nest(int dim,  float[] lowerBounds, float[] upperBounds, Random rand) {
+            super(dim, lowerBounds, upperBounds, rand);
         }
     }
 

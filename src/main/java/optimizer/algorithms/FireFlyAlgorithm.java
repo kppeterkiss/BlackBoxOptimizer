@@ -1,5 +1,6 @@
 package optimizer.algorithms;
 
+import optimizer.common.Solution;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
 import optimizer.utils.Utils;
@@ -12,6 +13,7 @@ import static junit.framework.TestCase.assertEquals;
 
 public class FireFlyAlgorithm extends AbstractAlgorithm {
     InternalState state = new InternalState();
+    Random rand = new Random();
 
     {
         this.optimizerParams = new LinkedList<>();
@@ -58,7 +60,6 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
             state.firstStep = false;
         } else {
             float alpha = ((Number)optimizerParams.get(1).getValue()).floatValue();
-            Random rand = new Random();
             for (int i = 0; i < swarm_size; i++) {
                 state.swarm.get(i).newPosition = state.swarm.get(i).position.clone();
                 for (int j = 0; j < swarm_size; j++) {
@@ -133,27 +134,14 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
         return (float) Math.sqrt(dist);
     }
 
-    class FireFly {
-        float[] position;
-        float[] newPosition;
+    class FireFly extends Solution{
         float[] bestKnownPosition;
         IterationResult bestFitness;
-        IterationResult actualFitness;
 
         FireFly(int dim, float[] lowerBounds, float[] upperBounds) {
-            this.position = new float[dim];
-            this.newPosition = new float[dim];
-            this.bestKnownPosition = new float[dim];
-
-            Random rand = new Random();
-            for(int i = 0; i < dim; ++i) {
-                float r = rand.nextFloat();
-                this.position[i] = lowerBounds[i] + r * (upperBounds[i] - lowerBounds[i]);
-
-                this.bestKnownPosition[i] = this.position[i];
-            }
+            super(dim, lowerBounds, upperBounds, rand);
+            this.bestKnownPosition = this.position.clone();
             this.bestFitness = null;
-            this.actualFitness = null;
         }
 
         public String print() {
