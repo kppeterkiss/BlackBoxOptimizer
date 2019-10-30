@@ -1,5 +1,6 @@
 package optimizer.algorithms;
 
+import optimizer.common.InternalStateBase;
 import optimizer.common.Solution;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
@@ -161,17 +162,7 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
         }
     }
 
-    class InternalState {
-        ArrayList<FireFly> swarm;
-        int actualFireFly;
-        float[] swarmBestKnownPosition;
-        IterationResult swarmBestFitness;
-        boolean firstStep = true;
-
-        float[] upperBounds;
-        float[] lowerBounds;
-        int dimension;
-    }
+    class InternalState extends InternalStateBase<FireFly> {}
 }
 
 

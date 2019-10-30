@@ -1,5 +1,6 @@
 package optimizer.algorithms;
 
+import optimizer.common.InternalStateBase;
 import optimizer.common.Solution;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
@@ -212,17 +213,9 @@ public class CuckooSearch extends AbstractAlgorithm {
             second_part;
     }
 
-    class InternalState {
-        ArrayList<Nest> swarm;
-        List<Integer> calculateResultsForIds;
-        float[] swarmBestKnownPosition;
+    class InternalState extends InternalStateBase<Nest> {
         int swarmBestNest;
-        IterationResult swarmBestFitness;
-        boolean firstStep = true;
+        List<Integer> calculateResultsForIds;
         AlgorithmPart part;
-
-        float[] upperBounds;
-        float[] lowerBounds;
-        int dimension;
     }
 }
