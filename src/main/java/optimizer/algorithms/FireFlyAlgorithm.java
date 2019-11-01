@@ -30,14 +30,8 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
         this.parallelizable = ParallelExecution.GENERATION;
     }
 
-    private void initSearchSpace(List<Param> parameterMap){
-        state.dimension  = parameterMap.size();
-        state.lowerBounds = new float[state.dimension];
-        state.upperBounds = new float[state.dimension];
-        for(int i = 0; i < state.dimension; ++i) {
-            state.lowerBounds[i] = ((Number)parameterMap.get(i).getLowerBound()).floatValue();
-            state.upperBounds[i] = ((Number)parameterMap.get(i).getUpperBound()).floatValue();
-        }
+    private void initSearchSpace(List<Param> parameterMap) {
+        state.initSearchSpace(parameterMap);
     }
 
     private void initFireFlies(int swarmSize) {
