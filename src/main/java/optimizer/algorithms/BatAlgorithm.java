@@ -57,52 +57,45 @@ public class BatAlgorithm extends AbstractAlgorithm{
             double Qmin = ((Number)optimizerParams.get(3).getValue()).floatValue();
             double Qmax = ((Number)optimizerParams.get(4).getValue()).floatValue();
 
-            // start calculating the new position
-            double Q = Qmin + (Qmin - Qmax) * rand.nextDouble();
-            for (int i = 0; i < state.dimension; ++i) {
-                // update velocity
-                state.swarm.get(state.activeBat).velocity[i] +=
-                        (state.swarm.get(state.activeBat).position[i] - state.swarmBestKnownPosition[i]) * Q;
-                // update newPosition
-                state.swarm.get(state.activeBat).newPosition[i] =
-                        state.swarm.get(state.activeBat).position[i] + state.swarm.get(state.activeBat).velocity[i];
-            }
-
-            float r = ((Number)optimizerParams.get(2).getValue()).floatValue();
-            float sigma = ((Number)optimizerParams.get(5).getValue()).floatValue();
-
-            if (rand.nextFloat() > r) {
+            for (int j = 0; j < swarmSize; ++j) {
+                // start calculating the new position
+                double Q = Qmin + (Qmin - Qmax) * rand.nextDouble();
                 for (int i = 0; i < state.dimension; ++i) {
-                    state.swarm.get(state.activeBat).newPosition[i] =
-                            (float) (state.swarmBestKnownPosition[i] + sigma * rand.nextGaussian());
+                    // update velocity
+                    state.swarm.get(j).velocity[i] +=
+                            (state.swarm.get(j).position[i] - state.swarmBestKnownPosition[i]) * Q;
+                    // update newPosition
+                    state.swarm.get(j).newPosition[i] =
+                            state.swarm.get(j).position[i] + state.swarm.get(j).velocity[i];
                 }
+
+                float r = ((Number) optimizerParams.get(2).getValue()).floatValue();
+                float sigma = ((Number) optimizerParams.get(5).getValue()).floatValue();
+
+                if (rand.nextFloat() > r) {
+                    for (int i = 0; i < state.dimension; ++i) {
+                        state.swarm.get(j).newPosition[i] =
+                                (float) (state.swarmBestKnownPosition[i] + sigma * rand.nextGaussian());
+                    }
+                }
+                state.swarm.get(j).checkBoundsForNewPosition(state.dimension,
+                        state.lowerBounds, state.upperBounds);
             }
-            state.swarm.get(state.activeBat).checkBoundsForNewPosition(state.dimension,
-                    state.lowerBounds, state.upperBounds);
         }
     }
 
     @Override
     public List<List<Param>> getParameterMapBatch(List<Param> pattern)throws CloneNotSupportedException {
         List<List<Param>> result = new LinkedList<>();
-        if (state.firstStep) {
-            for (Bat bat : state.swarm) {
-                List<Param> setup = Param.cloneParamList(pattern);
-                // setup each dimension of the position
-                for (int i = 0; i < setup.size(); ++i) {
-                    setup.get(i).setInitValue(bat.position[i]);
-                }
-                result.add(setup);
-            }
-        } else {
+        for (int j = 0; j < state.swarm.size(); ++j) {
             List<Param> setup = Param.cloneParamList(pattern);
             // setup each dimension of the position
             for (int i = 0; i < setup.size(); ++i) {
-                setup.get(i).setInitValue(state.swarm.get(state.activeBat).newPosition[i]);
+                setup.get(i).setInitValue(state.firstStep ? state.swarm.get(j).position[i] : state.swarm.get(j).newPosition[i]);
+                //setup.get(i).setId(j);
             }
             result.add(setup);
         }
-
         return result;
     }
 
@@ -120,32 +113,25 @@ public class BatAlgorithm extends AbstractAlgorithm{
         } else {
             // "if the solution improves or not too loudness"
             float A = ((Number)optimizerParams.get(1).getValue()).floatValue();
+            int i = 0;
+            for (IterationResult res : results) {
+                if (res.betterThan(state.swarm.get(i).actualFitness) && (rand.nextFloat() < A)) {
+                    state.swarm.get(i).position = state.swarm.get(i).newPosition.clone();
+                    state.swarm.get(i).actualFitness = res;
+                }
 
-            if(results.get(0).betterThan(state.swarm.get(state.activeBat).actualFitness) && (rand.nextFloat() <  A)) {
-                state.swarm.get(state.activeBat).position = state.swarm.get(state.activeBat).newPosition.clone();
-                state.swarm.get(state.activeBat).actualFitness = results.get(0);
-            }
-
-            // set new best positin
-            if(results.get(0).betterThan(state.swarmBestFitness)) {
-                state.swarmBestFitness = results.get(0);
-                state.swarmBestKnownPosition = state.swarm.get(state.activeBat).newPosition.clone();
+                // set new best positin
+                if (res.betterThan(state.swarmBestFitness)) {
+                    state.swarmBestFitness = res;
+                    state.swarmBestKnownPosition = state.swarm.get(i).newPosition.clone();
+                }
+                ++i;
             }
         }
 
     }
 
     public void updateGlobals() throws CloneNotSupportedException {
-        // to the next bat
-        if (!state.firstStep) {
-            int swarmSize = ((Number)optimizerParams.get(0).getValue()).intValue();
-
-            if (state.activeBat < swarmSize - 1)
-                state.activeBat++;
-            else
-                state.activeBat = 0;
-        }
-
         state.firstStep = false;
     }
 
@@ -174,11 +160,8 @@ public class BatAlgorithm extends AbstractAlgorithm{
     }
 
     class InternalState extends InternalStateBase<Bat> {
-        int activeBat;
-
         public InternalState() {
             super();
-            activeBat = 0;
         }
     }
 }
