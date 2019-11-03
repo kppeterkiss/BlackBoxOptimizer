@@ -19,9 +19,9 @@ public class BatAlgorithm extends AbstractAlgorithm{
         this.optimizerParams = new LinkedList<>();
         this.optimizerParams.add(new Param(10,Integer.MAX_VALUE,1,"swarm_size"));
         // loudness (constant or decreasing)
-        this.optimizerParams.add(new Param(0.25, 1,0, "A"));
-        // Pulse rate (constant or decreasing)
-        this.optimizerParams.add(new Param(0.5, 1,0, "r"));
+        this.optimizerParams.add(new Param(0.9, 1,0, "A"));
+        // Pulse rate (constant or increasing)
+        this.optimizerParams.add(new Param(0.25, 1,0, "r"));
         // Frequency minimum
         this.optimizerParams.add(new Param(0, 100,0, "Qmin"));
         // Frequency maximum
@@ -70,6 +70,7 @@ public class BatAlgorithm extends AbstractAlgorithm{
 
             float r = ((Number)optimizerParams.get(2).getValue()).floatValue();
             float sigma = ((Number)optimizerParams.get(5).getValue()).floatValue();
+
             if (rand.nextFloat() > r) {
                 for (int i = 0; i < state.dimension; ++i) {
                     state.swarm.get(state.activeBat).newPosition[i] =
@@ -117,7 +118,7 @@ public class BatAlgorithm extends AbstractAlgorithm{
                 ++i;
             }
         } else {
-            // if the solution improves or not too loudness
+            // "if the solution improves or not too loudness"
             float A = ((Number)optimizerParams.get(1).getValue()).floatValue();
 
             if(results.get(0).betterThan(state.swarm.get(state.activeBat).actualFitness) && (rand.nextFloat() <  A)) {
@@ -155,6 +156,20 @@ public class BatAlgorithm extends AbstractAlgorithm{
         Bat(int dim,  float[] lowerBounds, float[] upperBounds, Random rand) {
             super(dim, lowerBounds, upperBounds, rand);
             velocity = new float[dim];
+        }
+
+
+        public void checkBoundsForNewPosition(int dimension, float[] lowerBounds, float[] upperBounds) {
+            // The velociy reset is not in the pseudo code,
+            // but it seems a necessary addition
+            for (int i = 0; i < dimension; ++i) {
+                if (newPosition[i] > upperBounds[i]) {
+                    velocity[i] = 0f;
+                } else if (newPosition[i] < lowerBounds[i]) {
+                    velocity[i] = 0f;
+                }
+            }
+            super.checkBoundsForNewPosition(dimension,lowerBounds,upperBounds);
         }
     }
 
