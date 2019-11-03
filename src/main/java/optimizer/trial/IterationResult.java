@@ -254,4 +254,8 @@ public class IterationResult implements Comparable<IterationResult>{
     public int compareTo(IterationResult other) {
         return (int)(this.timeStamp-other.timeStamp);
     }
+
+    public List<Param> getConfiguration() {
+        return configuration;
+    }
 }

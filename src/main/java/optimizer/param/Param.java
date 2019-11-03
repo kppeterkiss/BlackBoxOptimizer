@@ -56,8 +56,10 @@ public class Param<T> implements Cloneable, Comparable<Param>{
      * List of boundaries({@link ParameterDependency}) of a given Param. That specifies the upper and lower bound possibly depending on the {@code initValue} of another Parameter.
      */
     List<ParameterDependency> dependencies;
-
-
+    /**
+    * The id is used to order the List<IterationResult>.
+    * */
+    private int id;
 
     public List<ParameterDependency> getDependencies() {
         return dependencies;
@@ -637,6 +639,13 @@ public class Param<T> implements Cloneable, Comparable<Param>{
         return true;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 }
 
 

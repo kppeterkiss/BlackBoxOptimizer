@@ -28,6 +28,7 @@ import optimizer.main.Main;
 import optimizer.objective.ObjectiveContainer;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
+import optimizer.trial.SortbyConfigID;
 import optimizer.trial.Trial;
 import optimizer.utils.Utils;
 
@@ -36,6 +37,8 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
+
+import static optimizer.param.Param.cloneParamList;
 
 
 /**
@@ -162,7 +165,7 @@ public abstract class AbstractAlgorithm {
 
 
                                 // create the trial object to execute
-                                Trial t = new Trial(config.getBaseCommand(), false, "", config.getObjectiveContainerReference(), Param.cloneParamList(this.config.getScriptParametersReference()), startTime, timeDelta,this.config.getPublicFolderLocation());
+                                Trial t = new Trial(config.getBaseCommand(), false, "", config.getObjectiveContainerReference(), cloneParamList(this.config.getScriptParametersReference()), startTime, timeDelta,this.config.getPublicFolderLocation());
 
                                 //addToTaskList(pool, set, toSend, t);
                                 addToTaskList(pool, set, toSend, t);
@@ -220,6 +223,9 @@ public abstract class AbstractAlgorithm {
 
                                 //here we add all the results to the landscape
                                 List<IterationResult> results = readAndSaveResults(experimetDir, backupDir, saveFileName, set);
+
+                                // order the iteration result as they came in the getParameterMapBatch
+                                Collections.sort(results, new SortbyConfigID());
                                 setResults(results);
                                 updateGlobals();
 
@@ -239,7 +245,7 @@ public abstract class AbstractAlgorithm {
                 }
                 else {
                     if (configAllowed(config.getScriptParametersReference())) {
-                        Trial t = new Trial(config.getBaseCommand(), false, "", config.getObjectiveContainerReference(), Param.cloneParamList(this.config.getScriptParametersReference()), startTime, timeDelta,this.config.getPublicFolderLocation());
+                        Trial t = new Trial(config.getBaseCommand(), false, "", config.getObjectiveContainerReference(), cloneParamList(this.config.getScriptParametersReference()), startTime, timeDelta,this.config.getPublicFolderLocation());
                         IterationResult ir = t.executeSequentially();
                         Main.getLogger().info(  "GETTING RESULT FROM " + ir.getCSVString());
                         this.config.setIterationCounter(this.config.getIterationCounter() + 1);

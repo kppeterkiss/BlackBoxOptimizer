@@ -92,7 +92,7 @@ public class BatAlgorithm extends AbstractAlgorithm{
             // setup each dimension of the position
             for (int i = 0; i < setup.size(); ++i) {
                 setup.get(i).setInitValue(state.firstStep ? state.swarm.get(j).position[i] : state.swarm.get(j).newPosition[i]);
-                //setup.get(i).setId(j);
+                setup.get(i).setId(j);
             }
             result.add(setup);
         }
