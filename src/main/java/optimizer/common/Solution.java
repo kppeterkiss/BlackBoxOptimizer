@@ -9,6 +9,12 @@ public class Solution {
     public float[] newPosition;
     public IterationResult actualFitness;
 
+    public Solution(int dim) {
+        this.position = new float[dim];
+        this.newPosition = new float[dim];
+        this.actualFitness = null;
+    }
+
     public Solution(int dim, float[] lowerBounds, float[] upperBounds, Random rand) {
         this.position = new float[dim];
         this.newPosition = new float[dim];
