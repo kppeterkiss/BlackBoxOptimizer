@@ -16,9 +16,7 @@ public class Solution {
     }
 
     public Solution(int dim, float[] lowerBounds, float[] upperBounds, Random rand) {
-        this.position = new float[dim];
-        this.newPosition = new float[dim];
-        this.actualFitness = null;
+        this(dim);
 
         for(int i = 0; i < dim; ++i) {
             float r = rand.nextFloat();
