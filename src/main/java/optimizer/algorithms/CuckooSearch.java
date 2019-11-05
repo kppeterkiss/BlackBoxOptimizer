@@ -102,7 +102,7 @@ public class CuckooSearch extends AbstractAlgorithm {
         }
     }
 
-    public List<Param> createParamSetup(List<Param> pattern, float[] input) throws CloneNotSupportedException {
+    public List<Param> createParamSetup(List<Param> pattern, float[] input, int id) throws CloneNotSupportedException {
         List<Param> setup = Param.cloneParamList(pattern);
         // setup each dimension of the position
         for (int i = 0; i < setup.size(); ++i) {
@@ -115,17 +115,14 @@ public class CuckooSearch extends AbstractAlgorithm {
     public List<List<Param>> getParameterMapBatch(List<Param> pattern)throws CloneNotSupportedException {
         List<List<Param>> result = new LinkedList<>();
         if (state.firstStep) {
-            for (Nest nest : state.swarm) {
-                result.add(createParamSetup(pattern, nest.position));
+            for(int j = 0; j < state.swarm.size(); ++j) {
+                result.add(createParamSetup(pattern, state.swarm.get(j).position, j));
             }
         } else {
-            state.calculateResultsForIds.forEach((Integer id) -> {
-                try {
-                    result.add(createParamSetup(pattern, state.swarm.get(id).newPosition));
-                } catch (CloneNotSupportedException e) {
-                    e.printStackTrace();
-                }
-            });
+            for(int j = 0; j < state.calculateResultsForIds.size(); ++j) {
+                int id = state.calculateResultsForIds.get(j);
+                result.add(createParamSetup(pattern, state.swarm.get(id).newPosition,id));
+            }
         }
         return result;
     }

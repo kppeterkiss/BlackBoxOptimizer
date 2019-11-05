@@ -86,11 +86,12 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
     @Override
     public List<List<Param>> getParameterMapBatch(List<Param> pattern)throws CloneNotSupportedException {
         List<List<Param>> result = new LinkedList<>();
-        for(FireFly fly : state.swarm){
+        for(int j = 0; j < state.swarm.size(); ++j) {
             List<Param> setup = Param.cloneParamList(pattern);
             // setup each dimension of the position
             for(int i = 0; i < setup.size(); ++i) {
-                setup.get(i).setInitValue(fly.position[i]);
+                setup.get(i).setInitValue(state.swarm.get(j).position[i]);
+                setup.get(i).setId(j);
             }
             result.add(setup);
         }
