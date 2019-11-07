@@ -201,7 +201,9 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
                     Bee bee = state.swarm.get(res.getConfiguration().get(0).getId());
                     if (res.betterThan(bee.actualFitness)) {
                         bee.actualFitness = res;
-                        bee.position = bee.newPosition.clone();
+                        if (state.phase != AlgorithmPhase.scout) {
+                            bee.position = bee.newPosition.clone();
+                        }
                         setBest(bee);
                     } else {
                         if (state.phase == AlgorithmPhase.onlooker) {
