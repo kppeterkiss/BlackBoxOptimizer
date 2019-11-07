@@ -5,10 +5,7 @@ import optimizer.common.Solution;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static java.lang.Math.round;
 
@@ -19,9 +16,9 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
     {
         this.parallelizable = ParallelExecution.GENERATION;
         this.optimizerParams = new LinkedList<>();
-        this.optimizerParams.add(new Param(10,Integer.MAX_VALUE,1,"swarm_size"));
+        this.optimizerParams.add(new Param(10,Integer.MAX_VALUE,1,"number_of_employer"));
         // employed_bees_percentage
-        this.optimizerParams.add(new Param(0.9, 1,0, "employed_bees_percentage"));
+        this.optimizerParams.add(new Param(10, Integer.MAX_VALUE,1, "number_of_onlooker"));
         // If a position cannot be improved over a predefined number (called limit) of cycles, then the food source is abandoned.
         this.optimizerParams.add(new Param(5,Integer.MAX_VALUE,1,"limit"));
     }
@@ -30,12 +27,12 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
         state.initSearchSpace(parameterMap);
     }
 
-    private void initBees(int swarmSize, float employed_bees_percentage) {
+    private void initBees(int numOfEmployer, int numOfOnlooker) {
         //array to store all parameters
         state.swarm = new ArrayList<>();
         //initialize the nests, and add to nest array
-        for (int i = 0; i < swarmSize; ++i) {
-            if (((float)i / (float) swarmSize) <= employed_bees_percentage) {
+        for (int i = 0; i < numOfEmployer + numOfOnlooker; ++i) {
+            if (i < numOfEmployer) {
                 state.swarm.add(new Bee(
                         state.dimension,
                         state.lowerBounds,
@@ -68,62 +65,61 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
      */
     public void moveBee(int beeId, int otherBeeId) {
         // select random dimension
-        int d = rand.nextInt(state.dimension - 1);
+        int d = rand.nextInt(state.dimension);
         // create new solution
         state.swarm.get(beeId).newPosition = state.swarm.get(beeId).position.clone();
         // [-1,1] , min + Math.random() * (max - min);
         state.swarm.get(beeId).newPosition[d] +=
                 (rand.nextFloat() * 2 - 1) *
                         (state.swarm.get(beeId).position[d] - state.swarm.get(otherBeeId).position[d]);
+
+        state.swarm.get(beeId).checkBoundsForNewPosition(state.dimension, state.lowerBounds, state.upperBounds);
     }
 
     @Override
     public void updateParameters(List<Param> parameterMap, List<IterationResult> landscape) throws CloneNotSupportedException {
-        int swarmSize = ((Number)optimizerParams.get(0).getValue()).intValue();
-        float employed_bees_percentage = ((Number)optimizerParams.get(1).getValue()).floatValue();
-        int numOfEmployers = round(swarmSize * employed_bees_percentage);
+        int number_of_employer = ((Number)optimizerParams.get(0).getValue()).intValue();
+        int number_of_onlooker = ((Number)optimizerParams.get(1).getValue()).intValue();
+        int swarmSize = number_of_employer + number_of_onlooker;
 
         switch (state.phase) {
             case first:
                 initSearchSpace(parameterMap);
-                initBees(swarmSize, employed_bees_percentage);
+                initBees(number_of_employer, number_of_onlooker);
                 break;
             case employer:
                 int i = 0;
-                while (i < numOfEmployers) {
+                while (i < number_of_employer) {
                     // select random candidate (i != j)
-                    int j = getRandomBee(i, numOfEmployers);
+                    int j = getRandomBee(i, number_of_employer);
                     moveBee(i,j);
                     ++i;
                 }
                 break;
             case onlooker:
-                ArrayList<Double> probs = createProbabilities(swarmSize);
+                ArrayList<Double> probs = createProbabilities(number_of_employer);
 
-                // optimize this
-                int selected_employer = -1;
-                for (int selected_onlooker = 0; selected_onlooker < state.swarm.size(); ++selected_onlooker) {
-                    if (state.swarm.get(selected_onlooker).type == BeeType.onlooker) {
-                        double r = rand.nextDouble();
-                        for (int j = 0; j < probs.size() - 1; ++j) {
-                            if (r >= probs.get(j) && r < probs.get(j +1 )) {
-                                selected_employer = j;
-                            }
+                for (int onlooker = number_of_employer; onlooker < swarmSize; ++onlooker) {
+                    double r = rand.nextDouble();
+                    for (int employerId = 0; employerId < probs.size() - 1; ++employerId) {
+                        if (r >= probs.get(employerId) && r < probs.get(employerId +1 )) {
+                            // first move the onlooker where the employer is
+                            state.swarm.get(onlooker).position = state.swarm.get(employerId).position.clone();
+                            state.swarm.get(onlooker).actualFitness = state.swarm.get(employerId).actualFitness;
+                            state.swarm.get(onlooker).helpingTo(employerId);
+
+                            // the movement is the same as the employers do
+                            // it cannot be the selected_employer
+                            int id = getRandomBee(employerId, number_of_employer);
+                            moveBee(onlooker, id);
+                            break;
                         }
                     }
-                    // first move the onlooker where the employer is
-                    state.swarm.get(selected_onlooker).position = state.swarm.get(selected_employer).position;
-                    state.swarm.get(selected_onlooker).actualFitness = state.swarm.get(selected_employer).actualFitness;
-
-                    // the movement is the same as the employers do
-                    // it cannot be the selected_employer
-                    int j = getRandomBee(selected_employer, numOfEmployers);
-                    moveBee(selected_onlooker, j);
                 }
                 break;
             case scout:
                 int limit = ((Number)optimizerParams.get(2).getValue()).intValue();
-                for(int j = 0; j < state.swarm.size(); ++j) {
+                for(int j = 0; j < number_of_employer; ++j) {
                     if (state.swarm.get(j).trial >= limit) {
                         // new location/bee is generated
                         state.swarm.set(j, new Bee(
@@ -140,12 +136,15 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
 
     @Override
     public List<List<Param>> getParameterMapBatch(List<Param> pattern)throws CloneNotSupportedException {
+        int number_of_employer = ((Number)optimizerParams.get(0).getValue()).intValue();
+        int number_of_onlooker = ((Number)optimizerParams.get(1).getValue()).intValue();
         List<List<Param>> result = new LinkedList<>();
+
         switch (state.phase) {
             case first:
             case scout:
-                for (int j = 0; j < state.swarm.size(); ++j) {
-                    if (state.swarm.get(j).type == BeeType.employer && state.swarm.get(j).trial == 0) {
+                for (int j = 0; j < number_of_employer; ++j) {
+                    if (state.swarm.get(j).trial == 0) {
                         List<Param> setup = Param.cloneParamList(pattern);
                         // setup each dimension of the position
                         for (int i = 0; i < setup.size(); ++i) {
@@ -157,26 +156,24 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
                 }
                 break;
             case employer:
-                createParamBatch(pattern, result, BeeType.employer);
+                createParamBatch(pattern, result, 0, number_of_employer);
                 break;
             case onlooker:
-                createParamBatch(pattern, result, BeeType.onlooker);
+                createParamBatch(pattern, result, number_of_employer, number_of_employer + number_of_onlooker);
                 break;
         }
         return result;
     }
 
-    private void createParamBatch(List<Param> pattern, List<List<Param>> result, BeeType type) throws CloneNotSupportedException {
-        for (int j = 0; j < state.swarm.size(); ++j) {
-            if (state.swarm.get(j).type == type) {
-                List<Param> setup = Param.cloneParamList(pattern);
-                // setup each dimension of the position
-                for (int i = 0; i < setup.size(); ++i) {
-                    setup.get(i).setInitValue(state.swarm.get(j).newPosition[i]);
-                    setup.get(i).setId(j);
-                }
-                result.add(setup);
+    private void createParamBatch(List<Param> pattern, List<List<Param>> result, int start, int end) throws CloneNotSupportedException {
+        for (int j = start; j < end; ++j) {
+            List<Param> setup = Param.cloneParamList(pattern);
+            // setup each dimension of the position
+            for (int i = 0; i < setup.size(); ++i) {
+                setup.get(i).setInitValue(state.swarm.get(j).newPosition[i]);
+                setup.get(i).setId(j);
             }
+            result.add(setup);
         }
     }
 
@@ -207,7 +204,11 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
                         bee.position = bee.newPosition.clone();
                         setBest(bee);
                     } else {
-                        bee.trial += 1;
+                        if (state.phase == AlgorithmPhase.onlooker) {
+                            state.swarm.get(bee.helpingToEmployerId).trial += 1;
+                        } else {
+                            bee.trial += 1;
+                        }
                     }
                 }
                 break;
@@ -223,6 +224,10 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
                 state.phase = AlgorithmPhase.onlooker;
                 break;
             case onlooker:
+                int number_of_employer = ((Number)optimizerParams.get(0).getValue()).intValue();
+                for (int onlooker = number_of_employer; onlooker < state.swarm.size(); ++onlooker) {
+                    state.swarm.get(onlooker).helpingToEmployerId = -1;
+                }
                 state.phase = AlgorithmPhase.scout;
                 break;
             case scout:
@@ -240,22 +245,27 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
     public ArrayList<Double> createProbabilities(int numOfEmployers)
     {
         ArrayList<Double> probs = new ArrayList<>();
+        probs.add(0.0);
 
-        double totalFittness = 0;
+        int max_id = 0;
+        double max = Math.abs(state.swarm.get(0).actualFitness.getFitness());
+        for (int i = 1; i < numOfEmployers; ++i)
+        {
+            if ((Math.abs(state.swarm.get(i).actualFitness.getFitness()) > max)) {
+                max = Math.abs(state.swarm.get(i).actualFitness.getFitness());
+                max_id = i;
+            }
+
+        }
 
         for (int i = 0; i < numOfEmployers; ++i)
         {
-            totalFittness += state.swarm.get(i).actualFitness.getFitness();
+            probs.add(
+                    state.swarm.get(i).actualFitness.getFitness() / state.swarm.get(max_id).actualFitness.getFitness());
         }
 
-        double sumOfProbs = 0;
-        for (int i = 0; i < numOfEmployers; ++i)
-        {
-            double prob = state.swarm.get(i).actualFitness.getFitness() / totalFittness;
-            probs.add(prob + sumOfProbs);
-            sumOfProbs += prob;
-        }
-
+        //order the probabilities
+        Collections.sort(probs);
         return probs;
     }
 
@@ -275,26 +285,31 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
     class Bee extends Solution {
         BeeType type;
         int trial;
+        int helpingToEmployerId;
 
         Bee(int dim, BeeType type) {
             super(dim);
             this.type = type;
+            helpingToEmployerId = -1;
         }
 
         Bee(int dim,  float[] lowerBounds, float[] upperBounds, Random rand, BeeType type) {
             super(dim, lowerBounds, upperBounds, rand);
             this.type = type;
+            helpingToEmployerId = -1;
+        }
+
+        public void helpingTo(int beeId) {
+            helpingToEmployerId = beeId;
         }
     }
 
     class InternalState extends InternalStateBase<Bee> {
         AlgorithmPhase phase;
-        int trial;
 
         public InternalState() {
             super();
             phase = AlgorithmPhase.first;
-            trial = 0;
         }
     }
 }
