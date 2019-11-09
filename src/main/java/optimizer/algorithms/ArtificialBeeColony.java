@@ -1,7 +1,10 @@
 package optimizer.algorithms;
 
 import optimizer.common.InternalStateBase;
+import optimizer.common.Probability;
 import optimizer.common.Solution;
+import optimizer.objective.Objective;
+import optimizer.objective.Relation;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
 
@@ -97,13 +100,15 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
                 }
                 break;
             case onlooker:
-                ArrayList<Double> probs = createProbabilities(number_of_employer);
+                ArrayList<Probability> probs = createProbabilities(number_of_employer);
 
                 for (int onlooker = number_of_employer; onlooker < swarmSize; ++onlooker) {
                     double r = rand.nextDouble();
-                    for (int employerId = 0; employerId < probs.size() - 1; ++employerId) {
-                        if (r >= probs.get(employerId) && r < probs.get(employerId +1 )) {
+                    for (int j = 0; j < probs.size() - 1; ++j) {
+                        if (r >= probs.get(j).getProbability() && r < probs.get(j +1 ).getProbability()) {
                             // first move the onlooker where the employer is
+                            // -1 is because the 0.0 was added before
+                            int employerId = probs.get(j).getId() - 1;
                             state.swarm.get(onlooker).position = state.swarm.get(employerId).position.clone();
                             state.swarm.get(onlooker).actualFitness = state.swarm.get(employerId).actualFitness;
                             state.swarm.get(onlooker).helpingTo(employerId);
@@ -241,20 +246,28 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
         }
     }
 
-    /*
-     * Todo: is this ok in case of minimize or maximize?????
-     */
-    public ArrayList<Double> createProbabilities(int numOfEmployers)
+    public ArrayList<Probability> createProbabilities(int numOfEmployers)
     {
-        ArrayList<Double> probs = new ArrayList<>();
-        probs.add(0.0);
+        Relation rel = Relation.MAXIMIZE;
+        try {
+            List<Objective> objectives = state.swarmBestFitness.getObjectiveContainerClone().getObjectiveListReference();
+            if (objectives.get(0).getRelation() == Relation.MINIMIZE) {
+                rel = Relation.MINIMIZE;
+            }
+
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<Probability> probs = new ArrayList<>();
+        probs.add(new Probability(0,0.0));
 
         int max_id = 0;
-        double max = Math.abs(state.swarm.get(0).actualFitness.getFitness());
+        double max = Math.abs(rel == Relation.MAXIMIZE ? state.swarm.get(0).actualFitness.getFitness() : 1 / state.swarm.get(0).actualFitness.getFitness());
         for (int i = 1; i < numOfEmployers; ++i)
         {
-            if ((Math.abs(state.swarm.get(i).actualFitness.getFitness()) > max)) {
-                max = Math.abs(state.swarm.get(i).actualFitness.getFitness());
+            if ((Math.abs(rel == Relation.MAXIMIZE ? state.swarm.get(i).actualFitness.getFitness() : 1 / state.swarm.get(i).actualFitness.getFitness()) > max)) {
+                max = Math.abs(rel == Relation.MAXIMIZE ? state.swarm.get(i).actualFitness.getFitness() : 1 / state.swarm.get(i).actualFitness.getFitness());
                 max_id = i;
             }
 
@@ -262,8 +275,9 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
 
         for (int i = 0; i < numOfEmployers; ++i)
         {
-            probs.add(
-                    state.swarm.get(i).actualFitness.getFitness() / state.swarm.get(max_id).actualFitness.getFitness());
+            probs.add( new Probability(i + 1, rel == Relation.MAXIMIZE ?
+                    state.swarm.get(i).actualFitness.getFitness() / state.swarm.get(max_id).actualFitness.getFitness() :
+                    state.swarm.get(max_id).actualFitness.getFitness() / state.swarm.get(i).actualFitness.getFitness()));
         }
 
         //order the probabilities
