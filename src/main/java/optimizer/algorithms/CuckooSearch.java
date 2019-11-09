@@ -68,7 +68,8 @@ public class CuckooSearch extends AbstractAlgorithm {
                 for (int j = 0; j < numberOfNests; ++j) {
                     //The best solution does not change
                     if (state.swarmBestNest != j) {
-                        levy_flights(state.swarm.get(j), beta, alpha);
+                        state.swarm.get(j).levy_flights(beta,alpha, rand, state.swarmBestKnownPosition);
+                        state.swarm.get(j).checkBoundsForNewPosition(state.dimension, state.lowerBounds, state.upperBounds);
                         state.calculateResultsForIds.add(j);
                     }
                 }
@@ -161,27 +162,6 @@ public class CuckooSearch extends AbstractAlgorithm {
                     ++i;
                 }
         }
-    }
-    /*
-    * This method sets for a nest a new position, in the
-    * newPosition attribute.
-    * */
-    public void levy_flights(Nest nest, double beta, double alpha) {
-        double tmpdiv = Gamma.gamma((1 + beta) / 2) * beta * Math.pow(2,((beta - 1) / 2));
-        double sigma = Math.pow((Gamma.gamma(1 + beta) * Math.sin(Math.PI * beta / 2)) / tmpdiv, 1 / beta) ;
-
-        // Levy flights by Mantegna's algorithm
-        double[] step = new double[state.dimension];
-        for (int i = 0; i < state.dimension; ++i) {
-            // u / (v)^(1/beta)
-            step[i] = (rand.nextGaussian() * sigma) / Math.pow(Math.abs(rand.nextGaussian()), 1 / beta);
-            }
-
-        //stepSize = alpha * step[i] * (s - best);
-        for (int i = 0; i < state.dimension; ++i) {
-            nest.newPosition[i] = nest.position[i] + (float) (alpha * step[i] * (nest.position[i] - state.swarmBestKnownPosition[i]));
-        }
-        nest.checkBoundsForNewPosition(state.dimension, state.lowerBounds, state.upperBounds);
     }
 
     public void updateGlobals() throws CloneNotSupportedException {

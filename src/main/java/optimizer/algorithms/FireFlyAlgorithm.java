@@ -12,7 +12,7 @@ import java.util.*;
 import static junit.framework.TestCase.assertEquals;
 
 
-public class FireFlyAlgorithm extends SwarmIntelligence {
+public class FireFlyAlgorithm extends AbstractAlgorithm {
     InternalState state = new InternalState();
     Random rand = new Random();
 

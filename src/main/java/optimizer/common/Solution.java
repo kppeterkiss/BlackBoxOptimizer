@@ -1,6 +1,7 @@
 package optimizer.common;
 
 import optimizer.trial.IterationResult;
+import org.apache.commons.math3.special.Gamma;
 
 import java.util.Random;
 
@@ -33,4 +34,23 @@ public class Solution {
             }
         }
     }
+
+    public void levy_flights(double beta, double alpha, Random rand, float[] swarmBestKnownPosition) {
+        int dimension = position.length;
+        double tmpdiv = Gamma.gamma((1 + beta) / 2) * beta * Math.pow(2,((beta - 1) / 2));
+        double sigma = Math.pow((Gamma.gamma(1 + beta) * Math.sin(Math.PI * beta / 2)) / tmpdiv, 1 / beta) ;
+
+        // Levy flights by Mantegna's algorithm
+        double[] step = new double[dimension];
+        for (int i = 0; i < dimension; ++i) {
+            // u / (v)^(1/beta)
+            step[i] = (rand.nextGaussian() * sigma) / Math.pow(Math.abs(rand.nextGaussian()), 1 / beta);
+        }
+
+        //stepSize = alpha * step[i] * (s - best);
+        for (int i = 0; i < dimension; ++i) {
+            newPosition[i] = position[i] + (float) (alpha * step[i] * (position[i] - swarmBestKnownPosition[i]));
+        }
+    }
+
 }
