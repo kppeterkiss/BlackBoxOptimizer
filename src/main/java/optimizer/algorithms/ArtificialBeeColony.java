@@ -21,7 +21,7 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
         this.optimizerParams = new LinkedList<>();
         this.optimizerParams.add(new Param(10,Integer.MAX_VALUE,1,"number_of_employer"));
         // employed_bees_percentage
-        this.optimizerParams.add(new Param(10, Integer.MAX_VALUE,1, "number_of_onlooker"));
+        this.optimizerParams.add(new Param(15, Integer.MAX_VALUE,1, "number_of_onlooker"));
         // If a position cannot be improved over a predefined number (called limit) of cycles, then the food source is abandoned.
         this.optimizerParams.add(new Param(5,Integer.MAX_VALUE,1,"limit"));
     }
@@ -132,7 +132,7 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
                                 state.lowerBounds,
                                 state.upperBounds,
                                 rand,
-                                BeeType.employer));
+                                BeeType.scout));
                     }
                 }
                 break;
@@ -147,24 +147,24 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
 
         switch (state.phase) {
             case first:
-            case scout:
-                for (int j = 0; j < number_of_employer; ++j) {
-                    if (state.swarm.get(j).trial == 0) {
-                        List<Param> setup = Param.cloneParamList(pattern);
-                        // setup each dimension of the position
-                        for (int i = 0; i < setup.size(); ++i) {
-                            setup.get(i).setInitValue(state.swarm.get(j).position[i]);
-                            setup.get(i).setId(j);
-                        }
-                        result.add(setup);
-                    }
-                }
-                break;
             case employer:
                 createParamBatch(pattern, result, 0, number_of_employer);
                 break;
             case onlooker:
                 createParamBatch(pattern, result, number_of_employer, number_of_employer + number_of_onlooker);
+                break;
+            case scout:
+                for (int j = 0; j < number_of_employer; ++j) {
+                    if (state.swarm.get(j).type == BeeType.scout) {
+                        List<Param> setup = Param.cloneParamList(pattern);
+                        // setup each dimension of the position
+                        for (int i = 0; i < setup.size(); ++i) {
+                            setup.get(i).setInitValue(state.swarm.get(j).newPosition[i]);
+                            setup.get(i).setId(j);
+                        }
+                        result.add(setup);
+                    }
+                }
                 break;
         }
         return result;
@@ -195,6 +195,7 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
                 for (IterationResult res : results) {
                     Bee bee = state.swarm.get(res.getConfiguration().get(0).getId());
                     bee.actualFitness = res;
+                    bee.position = bee.newPosition.clone();
                     setBest(bee);
                 }
                 break;
@@ -206,17 +207,23 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
                     Bee bee = state.swarm.get(res.getConfiguration().get(0).getId());
                     if (res.betterThan(bee.actualFitness)) {
                         bee.actualFitness = res;
-                        if (state.phase != AlgorithmPhase.scout) {
-                            bee.position = bee.newPosition.clone();
-                        }
+                        bee.position = bee.newPosition.clone();
                         setBest(bee);
+                        // fitness is improved so trial is 0
+                        if (state.phase == AlgorithmPhase.onlooker) {
+                            state.swarm.get(bee.helpingToEmployerId).trial = 0;
+                        } else {
+                            bee.trial = 0;
+                        }
                     } else {
+
                         if (state.phase == AlgorithmPhase.onlooker) {
                             state.swarm.get(bee.helpingToEmployerId).trial += 1;
                         } else {
                             bee.trial += 1;
                         }
                     }
+                    if (bee.type == BeeType.scout) bee.type = BeeType.employer;
                 }
                 break;
         }

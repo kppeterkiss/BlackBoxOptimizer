@@ -12,7 +12,7 @@ import java.util.*;
 import static junit.framework.TestCase.assertEquals;
 
 
-public class FireFlyAlgorithm extends AbstractAlgorithm {
+public class FireFlyAlgorithm extends SwarmIntelligence {
     InternalState state = new InternalState();
     Random rand = new Random();
 
@@ -51,7 +51,7 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
         int swarm_size = ((Number)optimizerParams.get(1).getValue()).intValue();
         if (state.firstStep) {
             initSearchSpace(parameterMap);
-            initFireFlies(swarm_size);  //swarm_size
+            initFireFlies(swarm_size);
             state.firstStep = false;
         } else {
             float alpha = ((Number)optimizerParams.get(1).getValue()).floatValue();
@@ -74,11 +74,8 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
                         e.printStackTrace();
                     }
                 }
-            }
-            for (FireFly f: state.swarm) {
-                f.checkBoundsForNewPosition(state.dimension,
+                state.swarm.get(i).checkBoundsForNewPosition(state.dimension,
                         state.lowerBounds, state.upperBounds);
-                f.setPositionToNew();
             }
         }
     }
@@ -90,7 +87,7 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
             List<Param> setup = Param.cloneParamList(pattern);
             // setup each dimension of the position
             for(int i = 0; i < setup.size(); ++i) {
-                setup.get(i).setInitValue(state.swarm.get(j).position[i]);
+                setup.get(i).setInitValue(state.swarm.get(j).newPosition[i]);
                 setup.get(i).setId(j);
             }
             result.add(setup);
@@ -100,6 +97,7 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
 
     private void updateFireflyAndGlobalState(FireFly fly, IterationResult ir) throws CloneNotSupportedException {
         fly.actualFitness = ir;
+        fly.position = fly.newPosition.clone();
         if(ir.betterThan(fly.bestFitness) ){
             fly.bestKnownPosition = fly.position.clone();
             fly.bestFitness = ir;
@@ -150,10 +148,6 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
             sb.append("\n");
             sb.append("bestFitness: " + this.bestFitness);
             return sb.toString();
-        }
-
-        public void setPositionToNew() {
-            this.position = newPosition.clone();
         }
     }
 

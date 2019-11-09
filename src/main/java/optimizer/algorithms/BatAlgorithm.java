@@ -91,7 +91,7 @@ public class BatAlgorithm extends AbstractAlgorithm{
             List<Param> setup = Param.cloneParamList(pattern);
             // setup each dimension of the position
             for (int i = 0; i < setup.size(); ++i) {
-                setup.get(i).setInitValue(state.firstStep ? state.swarm.get(j).position[i] : state.swarm.get(j).newPosition[i]);
+                setup.get(i).setInitValue(state.swarm.get(j).newPosition[i]);
                 setup.get(i).setId(j);
             }
             result.add(setup);
@@ -104,6 +104,7 @@ public class BatAlgorithm extends AbstractAlgorithm{
             int i = 0;
             for (IterationResult res : results) {
                 state.swarm.get(i).actualFitness = res;
+                state.swarm.get(i).position = state.swarm.get(i).newPosition.clone();
                 if(state.swarm.get(i).actualFitness.betterThan(state.swarmBestFitness)) {
                     state.swarmBestFitness = state.swarm.get(i).actualFitness;
                     state.swarmBestKnownPosition = state.swarm.get(i).position.clone();

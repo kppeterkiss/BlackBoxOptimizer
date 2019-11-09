@@ -20,7 +20,7 @@ public class Solution {
 
         for(int i = 0; i < dim; ++i) {
             float r = rand.nextFloat();
-            this.position[i] = lowerBounds[i] + r * (upperBounds[i] - lowerBounds[i]);
+            this.newPosition[i] = lowerBounds[i] + r * (upperBounds[i] - lowerBounds[i]);
         }
     }
 
