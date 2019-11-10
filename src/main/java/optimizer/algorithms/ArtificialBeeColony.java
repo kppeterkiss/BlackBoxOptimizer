@@ -18,6 +18,7 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
 
     {
         this.parallelizable = ParallelExecution.GENERATION;
+        this.iterationCounterCorrection = 3;
         this.optimizerParams = new LinkedList<>();
         this.optimizerParams.add(new Param(10,Integer.MAX_VALUE,1,"number_of_employer"));
         // employed_bees_percentage

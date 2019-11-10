@@ -18,6 +18,7 @@ public class CuckooSearch extends AbstractAlgorithm {
 
     {
         this.parallelizable = ParallelExecution.GENERATION;
+        this.iterationCounterCorrection = 2;
         this.optimizerParams = new LinkedList<>();
         this.optimizerParams.add(new Param(25,Integer.MAX_VALUE,1,"number_of_nests"));
         // discovery rate of cockoo eggs/solutions

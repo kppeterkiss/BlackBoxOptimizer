@@ -98,6 +98,11 @@ public abstract class AbstractAlgorithm {
      * Counter for the executed trials.
      */
     protected Integer iterationCounter=0;
+    /**
+     * Some algorithms are broken into multiple phases, which have their own parameter update and fitness calculation.
+     * In the papers, these should belong to one iteration.
+     */
+    protected Integer iterationCounterCorrection=1;
 
     /**
      * Setter method for {@link #timeDelta}.
@@ -195,6 +200,9 @@ public abstract class AbstractAlgorithm {
                     ExecutorService pool = Executors.newFixedThreadPool(threads);
                     CompletionService<IterationResult> completionService =
                             new ExecutorCompletionService<IterationResult>(pool);
+
+                    this.config.setIterationCount(Optional.of(this.config.getIterationCount().get() * this.iterationCounterCorrection));
+
 
                     try {
                         for (int i = 0; i < this.config.getIterationCount().get(); ++i) {
