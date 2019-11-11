@@ -11,6 +11,10 @@ public class Probability  implements  Comparable<Probability>{
         return probability;
     }
 
+    public void setProbability(double probability) {
+        this.probability = probability;
+    }
+
     double probability;
 
     public Probability(int id, double probability) {
