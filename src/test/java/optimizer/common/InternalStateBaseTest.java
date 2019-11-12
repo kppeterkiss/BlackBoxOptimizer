@@ -14,12 +14,23 @@ public class InternalStateBaseTest {
     Param p2 = new Param(5f,10f,4f,"p2");
 
     @Test
+    public void constructor() {
+        InternalStateBase<Solution> state = new InternalStateBase<>();
+        assertNotNull(state.swarm);
+        assertNull(state.swarmBestKnownPosition);
+        assertNull(state.swarmBestFitness);
+        assertTrue(state.firstStep);
+        assertNull(state.upperBounds);
+        assertNull(state.lowerBounds);
+        assertEquals(-1, state.dimension);
+    }
+
+    @Test
     public void searchSpace_is_set() {
         paramerters.add(p1);
         paramerters.add(p2);
 
         InternalStateBase<Solution> state = new InternalStateBase<>();
-
         state.initSearchSpace(paramerters);
 
         assertEquals(state.dimension, paramerters.size());

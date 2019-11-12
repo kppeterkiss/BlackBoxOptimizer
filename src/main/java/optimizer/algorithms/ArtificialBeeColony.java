@@ -32,8 +32,6 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
     }
 
     private void initBees(int numOfEmployer, int numOfOnlooker) {
-        //array to store all parameters
-        state.swarm = new ArrayList<>();
         //initialize the nests, and add to nest array
         for (int i = 0; i < numOfEmployer + numOfOnlooker; ++i) {
             if (i < numOfEmployer) {

@@ -16,7 +16,7 @@ public class SolutionTest {
     int dimension = 2;
     float[] lowerBounds = {1, 2};
     float[] upperBounds = {5, 10};
-    Random randMock = mock(Random.class);;
+    Random randMock = mock(Random.class);
 
     @Test
     public void newPosition_is_zero() {

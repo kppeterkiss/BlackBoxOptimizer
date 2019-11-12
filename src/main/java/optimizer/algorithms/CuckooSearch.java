@@ -38,8 +38,6 @@ public class CuckooSearch extends AbstractAlgorithm {
     }
 
     private void initNests(int swarmSize) {
-        //array to store all parameters
-        state.swarm = new ArrayList<>();
         state.calculateResultsForIds = new LinkedList<>();
         //initialize the nests, and add to nest array
         for (int i = 0; i < swarmSize; ++i) {

@@ -35,8 +35,6 @@ public class BatAlgorithm extends AbstractAlgorithm{
     }
 
     private void initBats(int swarmSize) {
-        //array to store all parameters
-        state.swarm = new ArrayList<>();
         //initialize the nests, and add to nest array
         for (int i = 0; i < swarmSize; ++i) {
             state.swarm.add(new Bat(

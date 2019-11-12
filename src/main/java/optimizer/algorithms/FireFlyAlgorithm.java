@@ -35,8 +35,6 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
     }
 
     private void initFireFlies(int swarmSize) {
-        //array to store all parameters
-        state.swarm = new ArrayList<>();
         //initialize the fireflies, and add to firefly array
         for (int i = 0; i < swarmSize; ++i) {
             state.swarm.add(new FireFly(

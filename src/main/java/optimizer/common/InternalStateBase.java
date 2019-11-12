@@ -17,7 +17,15 @@ public class InternalStateBase<T> {
     public float[] lowerBounds;
     public int dimension;
 
-    public InternalStateBase() {}
+    public InternalStateBase() {
+        swarm = new ArrayList<>();
+        swarmBestKnownPosition = null;
+        swarmBestFitness = null;
+        firstStep = true;
+        upperBounds = null;
+        lowerBounds = null;
+        dimension = -1;
+    }
 
     public void initSearchSpace(List<Param> parameterMap) {
         dimension  = parameterMap.size();
