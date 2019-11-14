@@ -44,7 +44,7 @@ public class BeeInternalState<AlgoPhase> extends InternalStateBase<Bee> {
         {
             double normalizedNum = swarm.get(i).actualFitness.getFitness() / max;
             denom += normalizedNum;
-            probs.add(new Probability(i + 1, normalizedNum));
+            probs.add(new Probability(i, normalizedNum));
         }
 
         for (int i = 0; i < numOfEmployers; ++i)
@@ -66,7 +66,7 @@ public class BeeInternalState<AlgoPhase> extends InternalStateBase<Bee> {
 
         }
 
-        probs.addFirst(new Probability(0,0.0));
+        probs.addFirst(new Probability(-1,0.0));
 
         Collections.sort(probs);
 
@@ -74,9 +74,10 @@ public class BeeInternalState<AlgoPhase> extends InternalStateBase<Bee> {
     }
 
     public void createIntervals(List<Probability> probs) {
-        for (int i = 0; i < probs.size() -1 ; ++i) {
+        for (int i = 0; i < probs.size() - 1; ++i) {
             probs.get(i + 1).setProbability(probs.get(i).getProbability() + probs.get(i + 1).getProbability());
         }
+        probs.get(probs.size() - 1).setProbability(Math.round(probs.get(probs.size() - 1).getProbability()));
     }
 
     public void setBest(Bee bee) throws CloneNotSupportedException {

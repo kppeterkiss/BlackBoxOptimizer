@@ -79,8 +79,7 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
                     for (int j = 0; j < probs.size() - 1; ++j) {
                         if (r >= probs.get(j).getProbability() && r < probs.get(j + 1).getProbability()) {
                             // First move the onlooker where the employer is.
-                            // The -1 is because the 0.0 (with 0 id) was added before
-                            int employerId = probs.get(j).getId() - 1;
+                            int employerId = probs.get(j).getId();
                             state.swarm.get(onlooker).position = state.swarm.get(employerId).position.clone();
                             state.swarm.get(onlooker).actualFitness = state.swarm.get(employerId).actualFitness;
                             state.swarm.get(onlooker).helpingTo(employerId);

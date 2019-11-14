@@ -87,30 +87,30 @@ public class BeeInternalStateTest {
         }
 
         List<Probability> probs = state.createProbabilities(3);
-        assertEquals(0, probs.get(0).getId());
+        assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
-        assertEquals(1, probs.get(1).getId());
+        assertEquals(0, probs.get(1).getId());
         assertEquals(0.16666, probs.get(1).getProbability(), 0.0001);
 
-        assertEquals(2, probs.get(2).getId());
+        assertEquals(1, probs.get(2).getId());
         assertEquals(0.33333, probs.get(2).getProbability(), 0.0001);
 
-        assertEquals(3, probs.get(3).getId());
+        assertEquals(2, probs.get(3).getId());
         assertEquals(0.5, probs.get(3).getProbability(), 0.0001);
 
         state.createIntervals(probs);
 
-        assertEquals(0, probs.get(0).getId());
+        assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
-        assertEquals(1, probs.get(1).getId());
+        assertEquals(0, probs.get(1).getId());
         assertEquals(0.16666, probs.get(1).getProbability(), 0.0001);
 
-        assertEquals(2, probs.get(2).getId());
+        assertEquals(1, probs.get(2).getId());
         assertEquals(0.5, probs.get(2).getProbability(), 0.0001);
 
-        assertEquals(3, probs.get(3).getId());
+        assertEquals(2, probs.get(3).getId());
         assertEquals(1, probs.get(3).getProbability(), 0.0001);
     }
 
@@ -123,30 +123,30 @@ public class BeeInternalStateTest {
         }
 
         List<Probability> probs = state.createProbabilities(3);
-        assertEquals(0, probs.get(0).getId());
+        assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
-        assertEquals(3, probs.get(1).getId());
+        assertEquals(2, probs.get(1).getId());
         assertEquals(0.16666, probs.get(1).getProbability(), 0.0001);
 
-        assertEquals(2, probs.get(2).getId());
+        assertEquals(1, probs.get(2).getId());
         assertEquals(0.33333, probs.get(2).getProbability(), 0.0001);
 
-        assertEquals(1, probs.get(3).getId());
+        assertEquals(0, probs.get(3).getId());
         assertEquals(0.5, probs.get(3).getProbability(), 0.0001);
 
         state.createIntervals(probs);
 
-        assertEquals(0, probs.get(0).getId());
+        assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
-        assertEquals(3, probs.get(1).getId());
+        assertEquals(2, probs.get(1).getId());
         assertEquals(0.16666, probs.get(1).getProbability(), 0.0001);
 
-        assertEquals(2, probs.get(2).getId());
+        assertEquals(1, probs.get(2).getId());
         assertEquals(0.49999, probs.get(2).getProbability(), 0.0001);
 
-        assertEquals(1, probs.get(3).getId());
+        assertEquals(0, probs.get(3).getId());
         assertEquals(1, probs.get(3).getProbability(), 0.0001);
     }
 
@@ -159,30 +159,30 @@ public class BeeInternalStateTest {
         }
 
         List<Probability> probs = state.createProbabilities(3);
-        assertEquals(0, probs.get(0).getId());
+        assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
-        assertEquals(1, probs.get(1).getId());
+        assertEquals(0, probs.get(1).getId());
         assertEquals(0.19999, probs.get(1).getProbability(), 0.0001);
 
-        assertEquals(3, probs.get(2).getId());
+        assertEquals(2, probs.get(2).getId());
         assertEquals(0.33333, probs.get(2).getProbability(), 0.0001);
 
-        assertEquals(2, probs.get(3).getId());
+        assertEquals(1, probs.get(3).getId());
         assertEquals(0.46666, probs.get(3).getProbability(), 0.0001);
 
         state.createIntervals(probs);
 
-        assertEquals(0, probs.get(0).getId());
+        assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
-        assertEquals(1, probs.get(1).getId());
+        assertEquals(0, probs.get(1).getId());
         assertEquals(0.19999, probs.get(1).getProbability(), 0.0001);
 
-        assertEquals(3, probs.get(2).getId());
+        assertEquals(2, probs.get(2).getId());
         assertEquals(0.53333, probs.get(2).getProbability(), 0.0001);
 
-        assertEquals(2, probs.get(3).getId());
+        assertEquals(1, probs.get(3).getId());
         assertEquals(1, probs.get(3).getProbability(), 0.0001);
 
     }
@@ -196,30 +196,30 @@ public class BeeInternalStateTest {
         }
 
         List<Probability> probs = state.createProbabilities(3);
-        assertEquals(0, probs.get(0).getId());
+        assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
-        assertEquals(1, probs.get(1).getId());
+        assertEquals(0, probs.get(1).getId());
         assertEquals(0.33006, probs.get(1).getProbability(), 0.0001);
 
-        assertEquals(2, probs.get(2).getId());
+        assertEquals(1, probs.get(2).getId());
         assertEquals(0.33333, probs.get(2).getProbability(), 0.0001);
 
-        assertEquals(3, probs.get(3).getId());
+        assertEquals(2, probs.get(3).getId());
         assertEquals(0.33660, probs.get(3).getProbability(), 0.0001);
 
         state.createIntervals(probs);
 
-        assertEquals(0, probs.get(0).getId());
+        assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
-        assertEquals(1, probs.get(1).getId());
+        assertEquals(0, probs.get(1).getId());
         assertEquals(0.33006, probs.get(1).getProbability(), 0.0001);
 
-        assertEquals(2, probs.get(2).getId());
+        assertEquals(1, probs.get(2).getId());
         assertEquals(0.66339, probs.get(2).getProbability(), 0.0001);
 
-        assertEquals(3, probs.get(3).getId());
+        assertEquals(2, probs.get(3).getId());
         assertEquals(1, probs.get(3).getProbability(), 0.0001);
 
     }
@@ -233,30 +233,30 @@ public class BeeInternalStateTest {
         }
 
         List<Probability> probs = state.createProbabilities(3);
-        assertEquals(0, probs.get(0).getId());
+        assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
-        assertEquals(3, probs.get(1).getId());
+        assertEquals(2, probs.get(1).getId());
         assertEquals(0.33006, probs.get(1).getProbability(), 0.0001);
 
-        assertEquals(2, probs.get(2).getId());
+        assertEquals(1, probs.get(2).getId());
         assertEquals(0.33333, probs.get(2).getProbability(), 0.0001);
 
-        assertEquals(1, probs.get(3).getId());
+        assertEquals(0, probs.get(3).getId());
         assertEquals(0.33660, probs.get(3).getProbability(), 0.0001);
 
         state.createIntervals(probs);
 
-        assertEquals(0, probs.get(0).getId());
+        assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
-        assertEquals(3, probs.get(1).getId());
+        assertEquals(2, probs.get(1).getId());
         assertEquals(0.33006, probs.get(1).getProbability(), 0.0001);
 
-        assertEquals(2, probs.get(2).getId());
+        assertEquals(1, probs.get(2).getId());
         assertEquals(0.66339, probs.get(2).getProbability(), 0.0001);
 
-        assertEquals(1, probs.get(3).getId());
+        assertEquals(0, probs.get(3).getId());
         assertEquals(1, probs.get(3).getProbability(), 0.0001);
     }
 
@@ -270,30 +270,46 @@ public class BeeInternalStateTest {
         }
 
         List<Probability> probs = state.createProbabilities(3);
-        assertEquals(0, probs.get(0).getId());
+        assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
-        assertEquals(3, probs.get(1).getId());
+        assertEquals(2, probs.get(1).getId());
         assertEquals(0.14285, probs.get(1).getProbability(), 0.0001);
 
-        assertEquals(2, probs.get(2).getId());
+        assertEquals(1, probs.get(2).getId());
         assertEquals(0.28571, probs.get(2).getProbability(), 0.0001);
 
-        assertEquals(1, probs.get(3).getId());
+        assertEquals(0, probs.get(3).getId());
         assertEquals(0.57142, probs.get(3).getProbability(), 0.0001);
 
         state.createIntervals(probs);
 
-        assertEquals(0, probs.get(0).getId());
+        assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
-        assertEquals(3, probs.get(1).getId());
+        assertEquals(2, probs.get(1).getId());
         assertEquals(0.14285, probs.get(1).getProbability(), 0.0001);
 
-        assertEquals(2, probs.get(2).getId());
+        assertEquals(1, probs.get(2).getId());
         assertEquals(0.42857, probs.get(2).getProbability(), 0.0001);
 
-        assertEquals(1, probs.get(3).getId());
+        assertEquals(0, probs.get(3).getId());
         assertEquals(1, probs.get(3).getProbability(), 0.0001);
+    }
+
+    @Test
+    public void createIntervals_last_probability_is_rounded_to_one() {
+        List<Probability> probs = new LinkedList<>();
+        probs.add(new Probability(0, 0));
+        probs.add(new Probability(0, 0.15));
+        probs.add(new Probability(0, 0.7));
+        probs.add(new Probability(0, 0.1));
+
+        state.createIntervals(probs);
+
+        assertEquals(0, probs.get(0).getProbability(), 0.0000000001);
+        assertEquals(0.15, probs.get(1).getProbability(), 0.0000000001);
+        assertEquals(0.85, probs.get(2).getProbability(), 0.0000000001);
+        assertEquals(1, probs.get(3).getProbability(), 0.0000000001);
     }
 }
