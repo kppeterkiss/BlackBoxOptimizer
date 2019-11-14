@@ -19,36 +19,36 @@ public class SolutionTest {
     Random randMock = mock(Random.class);
 
     @Test
-    public void newPosition_is_zero() {
+    public void position_is_zero() {
         when(randMock.nextFloat()).thenReturn(0f);
         Solution sol = new Solution(dimension, lowerBounds, upperBounds, randMock);
 
         float[] expected = { 0, 0 };
-        assertArrayEquals(expected, sol.newPosition, 0);
+        assertArrayEquals(expected, sol.position, 0);
     }
 
     @Test
-    public void positions_are_between_bounds() {
+    public void new_positions_are_at_the_bounds() {
         float min = 0f;
         when(randMock.nextFloat()).thenReturn(min);
 
         Solution sol1 = new Solution(dimension, lowerBounds, upperBounds, randMock);
-        assertArrayEquals(lowerBounds, sol1.position, 0);
+        assertArrayEquals(lowerBounds, sol1.newPosition, 0);
 
         float max = 1f;
         when(randMock.nextFloat()).thenReturn(max);
 
         Solution sol2 = new Solution(dimension, lowerBounds, upperBounds, randMock);
-        assertArrayEquals(upperBounds, sol2.position, 0);
+        assertArrayEquals(upperBounds, sol2.newPosition, 0);
     }
 
     @Test
-    public void newPosition_is_in_bounds() {
+    public void new_positions_are_between_bounds() {
         when(randMock.nextFloat()).thenReturn(0.5f);
         Solution sol1 = new Solution(dimension, lowerBounds, upperBounds, randMock);
 
         float[] expected = { 3, 6 };
-        assertArrayEquals(expected, sol1.position, 0);
+        assertArrayEquals(expected, sol1.newPosition, 0);
 
         sol1.newPosition[0] = 0;
         sol1.newPosition[1] = -2;
