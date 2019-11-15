@@ -1,4 +1,4 @@
-package optimizer.common.beealgorithms;
+package optimizer.common.bee;
 
 import optimizer.common.Solution;
 

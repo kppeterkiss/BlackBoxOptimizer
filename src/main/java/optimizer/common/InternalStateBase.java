@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InternalStateBase<T> {
-    public ArrayList<T> swarm;
+    public List<T> swarm;
     public float[] swarmBestKnownPosition;
     public IterationResult swarmBestFitness;
 

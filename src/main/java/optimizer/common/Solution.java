@@ -8,6 +8,11 @@ import java.util.Random;
 public class Solution {
     public float[] position;
     public float[] newPosition;
+
+    public IterationResult getActualFitness() {
+        return actualFitness;
+    }
+
     public IterationResult actualFitness;
 
     public Solution(int dim) {

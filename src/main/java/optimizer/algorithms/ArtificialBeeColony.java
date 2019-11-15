@@ -1,9 +1,10 @@
 package optimizer.algorithms;
 
 import optimizer.common.Probability;
-import optimizer.common.beealgorithms.Bee;
-import optimizer.common.beealgorithms.Bee.BeeType;
-import optimizer.common.beealgorithms.BeeInternalState;
+import optimizer.common.RouletteWheelSelection;
+import optimizer.common.bee.Bee;
+import optimizer.common.bee.Bee.BeeType;
+import optimizer.common.bee.BeeInternalState;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
 
@@ -13,6 +14,7 @@ import static java.lang.Math.round;
 
 public class ArtificialBeeColony extends AbstractAlgorithm{
     BeeInternalState<AlgorithmPhase> state = new BeeInternalState();
+    RouletteWheelSelection selection = new RouletteWheelSelection();
     Random rand = new Random();
 
     {
@@ -70,9 +72,9 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
                 }
                 break;
             case onlooker:
-                List<Probability> probs = state.createProbabilities(number_of_employer);
+                List<Probability> probs = selection.createProbabilities(number_of_employer, state.swarm, state.swarmBestFitness);
                 // create intervals to choose from
-                state.createIntervals(probs);
+                selection.createIntervals(probs);
 
                 for (int onlooker = number_of_employer; onlooker < swarmSize; ++onlooker) {
                     double r = rand.nextDouble();

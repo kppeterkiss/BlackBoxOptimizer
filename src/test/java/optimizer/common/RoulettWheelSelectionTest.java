@@ -1,6 +1,5 @@
-package optimizer.common.beealgorithms;
+package optimizer.common;
 
-import optimizer.common.Probability;
 import optimizer.objective.Objective;
 import optimizer.objective.ObjectiveContainer;
 import optimizer.objective.Relation;
@@ -18,7 +17,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class BeeInternalStateTest {
+public class RoulettWheelSelectionTest {
     int dimension = 2;
     float[] lowerBounds = {0, 10};
     float[] upperBounds = {0, 10};
@@ -26,14 +25,12 @@ public class BeeInternalStateTest {
     Param p2 = new Param(5f,10f,0f,"p2");
 
     Random randMock = mock(Random.class);
-    BeeInternalState<TestPhases> state;
 
-    enum TestPhases {
-        first
-    }
+    ArrayList<Solution> swarm = new ArrayList<>();
+    RouletteWheelSelection selection = new RouletteWheelSelection();
+    IterationResult swarmBestFitness;
 
     void setup_data(float val1, float val2, float val3, Relation relation) throws CloneNotSupportedException {
-        state = new BeeInternalState();
 
         ArrayList<Objective> objList1 = new ArrayList<>();
         ArrayList<Objective> objList2 = new ArrayList<>();
@@ -58,24 +55,21 @@ public class BeeInternalStateTest {
         IterationResult res2 = new IterationResult(params,objectiveContainer2, 0, 1);
         IterationResult res3 = new IterationResult(params,objectiveContainer3, 0, 1);
 
-        state.swarm.add(new Bee(dimension,lowerBounds,upperBounds,randMock, Bee.BeeType.employer));
-        state.swarm.get(state.swarm.size() - 1).actualFitness = res1;
+        swarm.add(new Solution(dimension,lowerBounds,upperBounds,randMock));
+        swarm.get(swarm.size() - 1).actualFitness = res1;
 
-        state.swarm.add(new Bee(dimension,lowerBounds,upperBounds,randMock, Bee.BeeType.employer));
-        state.swarm.get(state.swarm.size() - 1).actualFitness = res2;
+        swarm.add(new Solution(dimension,lowerBounds,upperBounds,randMock));
+        swarm.get(swarm.size() - 1).actualFitness = res2;
 
-        state.swarm.add(new Bee(dimension,lowerBounds,upperBounds,randMock, Bee.BeeType.employer));
-        state.swarm.get(state.swarm.size() - 1).actualFitness = res3;
+        swarm.add(new Solution(dimension,lowerBounds,upperBounds,randMock));
+        swarm.get(swarm.size() - 1).actualFitness = res3;
 
-        state.swarmBestFitness = res3;
+        swarmBestFitness = res3;
     }
-
-
 
     @Before
     public void setup() throws CloneNotSupportedException {
         when(randMock.nextFloat()).thenReturn(0.5f);
-        state = new BeeInternalState();
     }
 
     @Test
@@ -86,7 +80,7 @@ public class BeeInternalStateTest {
             e.printStackTrace();
         }
 
-        List<Probability> probs = state.createProbabilities(3);
+        List<Probability> probs = selection.createProbabilities(3, swarm, swarmBestFitness);
         assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
@@ -99,7 +93,7 @@ public class BeeInternalStateTest {
         assertEquals(2, probs.get(3).getId());
         assertEquals(0.5, probs.get(3).getProbability(), 0.0001);
 
-        state.createIntervals(probs);
+        selection.createIntervals(probs);
 
         assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
@@ -122,7 +116,7 @@ public class BeeInternalStateTest {
             e.printStackTrace();
         }
 
-        List<Probability> probs = state.createProbabilities(3);
+        List<Probability> probs = selection.createProbabilities(3, swarm, swarmBestFitness);
         assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
@@ -135,7 +129,7 @@ public class BeeInternalStateTest {
         assertEquals(0, probs.get(3).getId());
         assertEquals(0.5, probs.get(3).getProbability(), 0.0001);
 
-        state.createIntervals(probs);
+        selection.createIntervals(probs);
 
         assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
@@ -158,7 +152,7 @@ public class BeeInternalStateTest {
             e.printStackTrace();
         }
 
-        List<Probability> probs = state.createProbabilities(3);
+        List<Probability> probs = selection.createProbabilities(3, swarm, swarmBestFitness);
         assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
@@ -171,7 +165,7 @@ public class BeeInternalStateTest {
         assertEquals(1, probs.get(3).getId());
         assertEquals(0.46666, probs.get(3).getProbability(), 0.0001);
 
-        state.createIntervals(probs);
+        selection.createIntervals(probs);
 
         assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
@@ -195,7 +189,7 @@ public class BeeInternalStateTest {
             e.printStackTrace();
         }
 
-        List<Probability> probs = state.createProbabilities(3);
+        List<Probability> probs = selection.createProbabilities(3, swarm, swarmBestFitness);
         assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
@@ -208,7 +202,7 @@ public class BeeInternalStateTest {
         assertEquals(2, probs.get(3).getId());
         assertEquals(0.33660, probs.get(3).getProbability(), 0.0001);
 
-        state.createIntervals(probs);
+        selection.createIntervals(probs);
 
         assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
@@ -232,7 +226,7 @@ public class BeeInternalStateTest {
             e.printStackTrace();
         }
 
-        List<Probability> probs = state.createProbabilities(3);
+        List<Probability> probs = selection.createProbabilities(3, swarm, swarmBestFitness);
         assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
@@ -245,7 +239,7 @@ public class BeeInternalStateTest {
         assertEquals(0, probs.get(3).getId());
         assertEquals(0.33660, probs.get(3).getProbability(), 0.0001);
 
-        state.createIntervals(probs);
+        selection.createIntervals(probs);
 
         assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
@@ -269,7 +263,7 @@ public class BeeInternalStateTest {
             e.printStackTrace();
         }
 
-        List<Probability> probs = state.createProbabilities(3);
+        List<Probability> probs = selection.createProbabilities(3, swarm, swarmBestFitness);
         assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
@@ -282,7 +276,7 @@ public class BeeInternalStateTest {
         assertEquals(0, probs.get(3).getId());
         assertEquals(0.57142, probs.get(3).getProbability(), 0.0001);
 
-        state.createIntervals(probs);
+        selection.createIntervals(probs);
 
         assertEquals(-1, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
@@ -305,7 +299,7 @@ public class BeeInternalStateTest {
         probs.add(new Probability(0, 0.7));
         probs.add(new Probability(0, 0.1));
 
-        state.createIntervals(probs);
+        selection.createIntervals(probs);
 
         assertEquals(0, probs.get(0).getProbability(), 0.0000000001);
         assertEquals(0.15, probs.get(1).getProbability(), 0.0000000001);
