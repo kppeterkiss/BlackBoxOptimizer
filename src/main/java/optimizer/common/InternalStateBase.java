@@ -36,4 +36,11 @@ public class InternalStateBase<T> {
             upperBounds[i] = ((Number)parameterMap.get(i).getUpperBound()).floatValue();
         }
     }
+
+    public void setBest(Solution solution) throws CloneNotSupportedException {
+        if(solution.actualFitness.betterThan(swarmBestFitness)) {
+            swarmBestFitness = solution.actualFitness;
+            swarmBestKnownPosition = solution.position.clone();
+        }
+    }
 }
