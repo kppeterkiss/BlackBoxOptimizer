@@ -5,7 +5,7 @@ import org.apache.commons.math3.special.Gamma;
 
 import java.util.Random;
 
-public class Solution {
+public class Solution implements Comparable<Solution>{
     public float[] position;
     public float[] newPosition;
 
@@ -58,4 +58,16 @@ public class Solution {
         }
     }
 
+    @Override
+    public int compareTo(Solution solution) {
+        try {
+            if (this.actualFitness.betterThan(solution.actualFitness))
+                return -1;
+            else
+                return  1;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

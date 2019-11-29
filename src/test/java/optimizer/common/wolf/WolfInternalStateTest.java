@@ -1,5 +1,6 @@
 package optimizer.common.wolf;
 
+import optimizer.common.Solution;
 import optimizer.objective.Objective;
 import optimizer.objective.ObjectiveContainer;
 import optimizer.objective.Relation;
@@ -22,7 +23,7 @@ public class WolfInternalStateTest {
     private Param p2 = new Param(5f,10f,4f,"p2");
 
     private Random rand;
-    private WolfInternalState<Wolf> state;
+    private WolfInternalState<Solution> state;
 
     public WolfInternalStateTest() {
         dimension = 2;
@@ -48,7 +49,7 @@ public class WolfInternalStateTest {
             params.add(p2);
             IterationResult res1 = new IterationResult(params, objectiveContainer1, 0, 1);
 
-            state.swarm.add(new Wolf(dimension, lowerBounds, upperBounds, rand));
+            state.swarm.add(new Solution(dimension, lowerBounds, upperBounds, rand));
             state.swarm.get(state.swarm.size() - 1).actualFitness = res1;
         }
 

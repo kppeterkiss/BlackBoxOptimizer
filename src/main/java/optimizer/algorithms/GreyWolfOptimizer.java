@@ -1,5 +1,6 @@
 package optimizer.algorithms;
 
+import optimizer.common.Solution;
 import optimizer.common.wolf.*;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
@@ -25,7 +26,7 @@ public class GreyWolfOptimizer extends AbstractAlgorithm {
 
     private void initWolves(int swarm_size) {
         for (int i = 0; i < swarm_size; ++i) {
-            state.swarm.add(new Wolf(
+            state.swarm.add(new Solution(
                     state.dimension,
                     state.lowerBounds,
                     state.upperBounds,
@@ -93,7 +94,7 @@ public class GreyWolfOptimizer extends AbstractAlgorithm {
         return r2;
     }
 
-    public double[] createD(double[] c, Wolf leader, Wolf wolf) {
+    public double[] createD(double[] c, Solution leader, Solution wolf) {
         double[] d = new double[c.length];
         for (int i = 0; i < d.length; ++i) {
             d[i] = Math.abs(c[i] * leader.position[i] - wolf.position[i]);
@@ -101,7 +102,7 @@ public class GreyWolfOptimizer extends AbstractAlgorithm {
         return d;
     }
 
-    public double[] createX( Wolf leader, double[] a, double[] d) {
+    public double[] createX(Solution leader, double[] a, double[] d) {
         double[] x = new double[a.length];
         for (int i = 0; i < d.length; ++i) {
             x[i] = leader.position[i] - a[i] * d[i];
@@ -135,7 +136,7 @@ public class GreyWolfOptimizer extends AbstractAlgorithm {
 
     public void setResults(List<IterationResult> results) throws CloneNotSupportedException {
         for (IterationResult res : results) {
-            Wolf wolf = state.swarm.get(res.getConfiguration().get(0).getId());
+            Solution wolf = state.swarm.get(res.getConfiguration().get(0).getId());
             wolf.actualFitness = res;
             wolf.position = wolf.newPosition.clone();
             state.setBest(wolf);

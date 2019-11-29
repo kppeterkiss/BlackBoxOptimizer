@@ -12,13 +12,6 @@ public class BeeInternalState<AlgoPhase> extends InternalStateBase<Bee> {
         super();
     }
 
-    public void setBest(Bee bee) throws CloneNotSupportedException {
-        if(bee.actualFitness.betterThan(swarmBestFitness)) {
-            swarmBestFitness = bee.actualFitness;
-            swarmBestKnownPosition = bee.position.clone();
-        }
-    }
-
     public void setAllResults(List<IterationResult> results) throws CloneNotSupportedException {
         for (IterationResult res : results) {
             Bee bee = swarm.get(res.getConfiguration().get(0).getId());
