@@ -20,7 +20,7 @@ public class FlowerPollination extends AbstractAlgorithm {
         // beta
         this.optimizerParams.add(new Param(1.5, 2,1, "beta"));
         // In most cases, we can use α = O(L/10), where L is the
-        //characteristic scale of the problem of interest, whereas in some cases α = O(L/100)
+        // characteristic scale of the problem of interest, whereas in some cases α = O(L/100)
         this.optimizerParams.add(new Param(0.1, 100,0, "alpha"));
     }
 
@@ -108,32 +108,14 @@ public class FlowerPollination extends AbstractAlgorithm {
         return result;
     }
 
-    private void setSwarmBest(int id) throws CloneNotSupportedException {
-        if (getFlower(id).actualFitness.betterThan(state.swarmBestFitness)) {
-            state.swarmBestFitness = getFlower(id).actualFitness;
-            state.swarmBestKnownPosition = getFlower(id).position.clone();
-        }
-    }
-
     public void setResults(List<IterationResult> results) throws CloneNotSupportedException {
-        switch (state.phase) {
-            case Init:
-                for (IterationResult res : results) {
-                    int id = res.getConfiguration().get(0).getId();
-                    getFlower(id).actualFitness = res;
-                    getFlower(id).position = getFlower(id).newPosition.clone();
-                    setSwarmBest(id);
-                }
-                break;
-            case Main:
-                IterationResult res = results.get(0);
-                int id = res.getConfiguration().get(0).getId();
-                if (res.betterThan(getFlower(id).actualFitness)) {
-                    getFlower(id).actualFitness = res;
-                    getFlower(id).position = getFlower(id).newPosition.clone();
-                    setSwarmBest(id);
-                }
-                break;
+        for (IterationResult res : results) {
+            Solution flower = getFlower(res.getConfiguration().get(0).getId());
+            flower.saveResultAndPosition(res);
+            if (flower.actualFitness.betterThan(state.swarmBestFitness)) {
+                state.swarmBestFitness = flower.actualFitness;
+                state.swarmBestKnownPosition = flower.position.clone();
+            }
         }
     }
 
@@ -165,7 +147,6 @@ public class FlowerPollination extends AbstractAlgorithm {
         AlgorithmPhase phase;
         int currentFlower;
         ArrayList<Integer> JK;
-
 
         public InternalState() {
             super();

@@ -98,36 +98,25 @@ public class BatAlgorithm extends AbstractAlgorithm{
     }
 
     public void setResults(List<IterationResult> results) throws CloneNotSupportedException {
-        if (state.firstStep) {
-            int i = 0;
-            for (IterationResult res : results) {
-                getBat(i).actualFitness = res;
-                getBat(i).position = getBat(i).newPosition.clone();
-                if(getBat(i).actualFitness.betterThan(state.swarmBestFitness)) {
-                    state.swarmBestFitness = getBat(i).actualFitness;
-                    state.swarmBestKnownPosition = getBat(i).position.clone();
-                }
-                ++i;
-            }
-        } else {
-            // "if the solution improves or not too loudness"
-            float A = ((Number)optimizerParams.get(1).getValue()).floatValue();
-            int i = 0;
-            for (IterationResult res : results) {
-                if (res.betterThan(getBat(i).actualFitness) && (rand.nextFloat() < A)) {
-                    getBat(i).position = getBat(i).newPosition.clone();
-                    getBat(i).actualFitness = res;
-                }
+        float A = ((Number)optimizerParams.get(1).getValue()).floatValue();
 
-                // set new best positin
+        for (IterationResult res : results) {
+            Bat bat = getBat(res.getConfiguration().get(0).getId());
+            if (state.firstStep) {
+                bat.saveResultAndPosition(res);
+                state.setBest(bat);
+            } else {
+                // "if the solution improves or not too loudness"
+                if (res.betterThan(bat.actualFitness) && (rand.nextFloat() < A)) {
+                    bat.saveResultAndPosition(res);
+                }
+                // set new best position
                 if (res.betterThan(state.swarmBestFitness)) {
                     state.swarmBestFitness = res;
-                    state.swarmBestKnownPosition = getBat(i).newPosition.clone();
+                    state.swarmBestKnownPosition = bat.newPosition.clone();
                 }
-                ++i;
             }
         }
-
     }
 
     public void updateGlobals() throws CloneNotSupportedException {

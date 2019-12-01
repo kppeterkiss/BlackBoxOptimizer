@@ -103,8 +103,7 @@ public class HarmonySearch extends AbstractAlgorithm {
             case first:
                 for (IterationResult res : results) {
                     Solution harmony = getHarmony(res.getConfiguration().get(0).getId());
-                    harmony.actualFitness = res;
-                    harmony.position = harmony.newPosition.clone();
+                    harmony.saveResultAndPosition(res);
                     state.setBest(harmony);
                 }
                 state.findWorst();

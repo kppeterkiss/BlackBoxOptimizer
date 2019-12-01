@@ -137,8 +137,7 @@ public class GreyWolfOptimizer extends AbstractAlgorithm {
     public void setResults(List<IterationResult> results) throws CloneNotSupportedException {
         for (IterationResult res : results) {
             Solution wolf = getWolf(res.getConfiguration().get(0).getId());
-            wolf.actualFitness = res;
-            wolf.position = wolf.newPosition.clone();
+            wolf.saveResultAndPosition(res);
             state.setBest(wolf);
         }
     }

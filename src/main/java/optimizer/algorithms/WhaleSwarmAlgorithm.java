@@ -82,8 +82,7 @@ public class WhaleSwarmAlgorithm extends AbstractAlgorithm {
     public void setResults(List<IterationResult> results) throws CloneNotSupportedException {
         for (IterationResult res : results) {
             Solution whale = getWhale(res.getConfiguration().get(0).getId());
-            whale.actualFitness = res;
-            whale.position = whale.newPosition.clone();
+            whale.saveResultAndPosition(res);
             state.setBest(whale);
         }
     }

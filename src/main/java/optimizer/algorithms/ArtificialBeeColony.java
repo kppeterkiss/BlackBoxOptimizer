@@ -166,8 +166,7 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
                     // get the id of the solution
                     Bee bee = getBee(res.getConfiguration().get(0).getId());
                     if (res.betterThan(bee.actualFitness)) {
-                        bee.actualFitness = res;
-                        bee.position = bee.newPosition.clone();
+                        bee.saveResultAndPosition(res);
                         state.setBest(bee);
                         // fitness is improved so trial is 0
                         if (state.phase == AlgorithmPhase.onlooker) {

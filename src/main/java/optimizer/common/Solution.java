@@ -40,6 +40,11 @@ public class Solution implements Comparable<Solution>{
         }
     }
 
+    public void saveResultAndPosition(IterationResult result) {
+        actualFitness = result;
+        position = newPosition.clone();
+    }
+
     public void levy_flights(double beta, double alpha, Random rand, float[] swarmBestKnownPosition) {
         int dimension = position.length;
         double tmpdiv = Gamma.gamma((1 + beta) / 2) * beta * Math.pow(2,((beta - 1) / 2));

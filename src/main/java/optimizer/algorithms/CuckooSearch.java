@@ -30,7 +30,6 @@ public class CuckooSearch extends AbstractAlgorithm {
 
     private void initSearchSpace(List<Param> parameterMap){
         state.initSearchSpace(parameterMap);
-        state.part = AlgorithmPart.second_part;
         state.swarmBestNest = -1;
     }
 
@@ -47,15 +46,16 @@ public class CuckooSearch extends AbstractAlgorithm {
     }
 
     @Override
-    public void updateParameters(List<Param> parameterMap, List<IterationResult> landscape) throws CloneNotSupportedException {
+    public void updateParameters(List<Param> parameterMap, List<IterationResult> landscape) {
         int numberOfNests = ((Number)optimizerParams.get(0).getValue()).intValue();
-        if (state.firstStep) {
-            initSearchSpace(parameterMap);
-            initNests(numberOfNests);
-        } else {
-            double beta = ((Number)optimizerParams.get(2).getValue()).floatValue();
-            double alpha = ((Number)optimizerParams.get(3).getValue()).floatValue();
-            if (state.part == AlgorithmPart.first_part) {
+        double beta = ((Number)optimizerParams.get(2).getValue()).floatValue();
+        double alpha = ((Number)optimizerParams.get(3).getValue()).floatValue();
+        switch (state.phase) {
+            case init:
+                initSearchSpace(parameterMap);
+                initNests(numberOfNests);
+                break;
+            case first_part:
                 /*
                 Get a cuckoo randomly
                 Generate a solution by L´evy flights [e.g., Eq.(9.2)]
@@ -69,7 +69,8 @@ public class CuckooSearch extends AbstractAlgorithm {
                         state.calculateResultsForIds.add(j);
                     }
                 }
-            } else if (state.part == AlgorithmPart.second_part){
+                break;
+            case second_part:
                 float Pa = ((Number)optimizerParams.get(1).getValue()).floatValue();
                 float randWalkStepSize = ((Number)optimizerParams.get(4).getValue()).floatValue();
                 /*
@@ -94,13 +95,11 @@ public class CuckooSearch extends AbstractAlgorithm {
                         state.calculateResultsForIds.add(i);
                     }
                 }
-            } else {
-                // Should not happen
-            }
+                break;
         }
     }
 
-    public List<Param> createParamSetup(List<Param> pattern, float[] input, int id) throws CloneNotSupportedException {
+    private List<Param> createParamSetup(List<Param> pattern, float[] input, int id) throws CloneNotSupportedException {
         List<Param> setup = Param.cloneParamList(pattern);
         // setup each dimension of the position
         for (int i = 0; i < setup.size(); ++i) {
@@ -113,75 +112,61 @@ public class CuckooSearch extends AbstractAlgorithm {
     @Override
     public List<List<Param>> getParameterMapBatch(List<Param> pattern)throws CloneNotSupportedException {
         List<List<Param>> result = new LinkedList<>();
-        if (state.firstStep) {
-            for(int j = 0; j < state.swarm.size(); ++j) {
-                result.add(createParamSetup(pattern, getNest(j).newPosition, j));
-            }
-        } else {
-            for(int j = 0; j < state.calculateResultsForIds.size(); ++j) {
-                int id = state.calculateResultsForIds.get(j);
-                result.add(createParamSetup(pattern, getNest(id).newPosition,id));
-            }
+        switch (state.phase) {
+            case init:
+                for(int j = 0; j < state.swarm.size(); ++j) {
+                    result.add(createParamSetup(pattern, getNest(j).newPosition, j));
+                }
+                break;
+            case first_part:
+            case second_part:
+                for(int j = 0; j < state.calculateResultsForIds.size(); ++j) {
+                    int id = state.calculateResultsForIds.get(j);
+                    result.add(createParamSetup(pattern, getNest(id).newPosition,id));
+                }
+                break;
         }
         return result;
     }
 
     public void setResults(List<IterationResult> results) throws CloneNotSupportedException {
-        if (state.firstStep) {
-            int i = 0;
-            for (IterationResult res : results) {
-                getNest(i).actualFitness = res;
-                getNest(i).position = getNest(i).newPosition.clone();
-                if(getNest(i).actualFitness.betterThan(state.swarmBestFitness)) {
-                    state.swarmBestFitness = getNest(i).actualFitness;
-                    state.swarmBestKnownPosition = getNest(i).position.clone();
-                    state.swarmBestNest = i;
-                }
-                ++i;
+        for (IterationResult res : results) {
+            Solution nest = getNest(res.getConfiguration().get(0).getId());
+            nest.saveResultAndPosition(res);
+            if(nest.actualFitness.betterThan(state.swarmBestFitness)) {
+                state.swarmBestFitness = nest.actualFitness;
+                state.swarmBestKnownPosition = nest.position.clone();
+                state.swarmBestNest = res.getConfiguration().get(0).getId();
             }
-        } else {
-                //rewrite it, not really good in this form, prone to error
-                int i = 0;
-                for (IterationResult res : results) {
-                    int id = state.calculateResultsForIds.get(i);
-                    Solution nest = getNest(id);
-                    if (nest.actualFitness.betterThan(res)) {
-                        nest.actualFitness = res;
-                        nest.position = nest.newPosition.clone();
-
-                        if(nest.actualFitness.betterThan(state.swarmBestFitness)) {
-                            state.swarmBestFitness = nest.actualFitness;
-                            state.swarmBestKnownPosition = nest.position.clone();
-                            state.swarmBestNest = i;
-                        }
-                    }
-                    ++i;
-                }
         }
     }
 
-    public void updateGlobals() throws CloneNotSupportedException {
-        state.firstStep = false;
-         if (state.part == AlgorithmPart.first_part)
-             state.part = AlgorithmPart.second_part;
-         else
-             state.part = AlgorithmPart.first_part;
-         state.calculateResultsForIds.clear();
+    public void updateGlobals() {
+        switch (state.phase) {
+            case init:
+            case second_part:
+                state.phase = AlgorithmPhase.first_part;
+                break;
+            case first_part:
+                state.phase = AlgorithmPhase.second_part;
+                break;
+        }
+        state.calculateResultsForIds.clear();
     }
 
-    Solution getNest(int id) {
+    private Solution getNest(int id) {
         return state.swarm.get(id);
     }
 
-
-    enum AlgorithmPart {
+    enum AlgorithmPhase {
+            init,
             first_part,
-            second_part;
+            second_part
     }
 
     class InternalState extends InternalStateBase<Solution> {
         int swarmBestNest;
         List<Integer> calculateResultsForIds;
-        AlgorithmPart part;
+        AlgorithmPhase phase = AlgorithmPhase.init;;
     }
 }
