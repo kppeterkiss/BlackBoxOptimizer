@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+
 public class HarmonySearch extends AbstractAlgorithm {
     InternalState state = new InternalState();
     Random rand = new Random();
@@ -54,7 +55,7 @@ public class HarmonySearch extends AbstractAlgorithm {
 
                 for (int dim = 0; dim < state.dimension; ++dim) {
                     if (rand.nextFloat() < harmony_rate) {
-                        state.newHarmony.newPosition[dim] = state.swarm.get(rand.nextInt(harmony_size)).position[dim];
+                        state.newHarmony.newPosition[dim] = getHarmony(rand.nextInt(harmony_size)).position[dim];
 
                         if (rand.nextFloat() < par) {
                             float bandwidth = ((Number)optimizerParams.get(3).getValue()).floatValue();
@@ -79,7 +80,7 @@ public class HarmonySearch extends AbstractAlgorithm {
                     List<Param> setup = Param.cloneParamList(pattern);
                     // setup each dimension of the position
                     for (int i = 0; i < setup.size(); ++i) {
-                        setup.get(i).setInitValue(state.swarm.get(j).newPosition[i]);
+                        setup.get(i).setInitValue(getHarmony(j).newPosition[i]);
                         setup.get(i).setId(j);
                     }
                     result.add(setup);
@@ -101,7 +102,7 @@ public class HarmonySearch extends AbstractAlgorithm {
         switch (state.phase) {
             case first:
                 for (IterationResult res : results) {
-                    Solution harmony = state.swarm.get(res.getConfiguration().get(0).getId());
+                    Solution harmony = getHarmony(res.getConfiguration().get(0).getId());
                     harmony.actualFitness = res;
                     harmony.position = harmony.newPosition.clone();
                     state.setBest(harmony);
@@ -131,6 +132,10 @@ public class HarmonySearch extends AbstractAlgorithm {
         }
     }
 
+    Solution getHarmony(int id) {
+        return state.swarm.get(id);
+    }
+    
     public enum AlgorithmPhase {
         first,
         iteration
@@ -152,14 +157,14 @@ public class HarmonySearch extends AbstractAlgorithm {
         }
 
         void findWorst() throws CloneNotSupportedException {
-            swarmWorstFitness = state.swarm.get(0).actualFitness;
-            swarmWorstKnownPosition = state.swarm.get(0).position.clone();
+            swarmWorstFitness = getHarmony(0).actualFitness;
+            swarmWorstKnownPosition = getHarmony(0).position.clone();
             swarmWorstId = 0;
 
             for (int i = 0; i < state.swarm.size(); ++i) {
-                if(swarmWorstFitness.betterThan(state.swarm.get(i).getActualFitness())) {
-                    swarmWorstFitness = state.swarm.get(i).actualFitness;
-                    swarmWorstKnownPosition = state.swarm.get(i).position.clone();
+                if(swarmWorstFitness.betterThan(getHarmony(i).getActualFitness())) {
+                    swarmWorstFitness = getHarmony(i).actualFitness;
+                    swarmWorstKnownPosition = getHarmony(i).position.clone();
                     swarmWorstId = i;
                 }
             }

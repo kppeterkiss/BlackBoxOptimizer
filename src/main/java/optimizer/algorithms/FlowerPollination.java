@@ -5,7 +5,6 @@ import optimizer.common.Solution;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
 
-import javax.swing.text.html.HTMLDocument;
 import java.util.*;
 
 public class FlowerPollination extends AbstractAlgorithm {
@@ -37,7 +36,7 @@ public class FlowerPollination extends AbstractAlgorithm {
     private void initFlowers(int swarmSize) {
         //initialize the nests, and add to nest array
         for (int i = 0; i < swarmSize; ++i) {
-            state.swarm.add(new Flower(
+            state.swarm.add(new Solution(
                     state.dimension,
                     state.lowerBounds,
                     state.upperBounds,
@@ -60,22 +59,22 @@ public class FlowerPollination extends AbstractAlgorithm {
                     if (rand.nextFloat() > probability_switch) {
                         // Pollens are carried by insects and thus can move in
                         // large scale, large distance.
-                        state.swarm.get(state.currentFlower).levy_flights(
+                        getFlower(state.currentFlower).levy_flights(
                                 beta, alpha, rand, state.swarmBestKnownPosition);
 
-                        state.swarm.get(state.currentFlower).checkBoundsForNewPosition(
+                        getFlower(state.currentFlower).checkBoundsForNewPosition(
                                 state.dimension, state.lowerBounds, state.upperBounds);
                     } else {
                         // if not, then local pollination of neighbor flowers
                         double epsilon = rand.nextDouble();
                         Collections.shuffle(state.JK);
 
-                        state.swarm.get(state.currentFlower).newPosition =
-                                state.swarm.get(state.currentFlower).position.clone();
+                        getFlower(state.currentFlower).newPosition =
+                                getFlower(state.currentFlower).position.clone();
                         for (int i = 0; i < state.dimension; ++i) {
-                            state.swarm.get(state.currentFlower).newPosition[i] +=
-                                    epsilon * (state.swarm.get(state.JK.get(0)).position[i]
-                                            - state.swarm.get(state.JK.get(1)).position[i]);
+                            getFlower(state.currentFlower).newPosition[i] +=
+                                    epsilon * (getFlower(state.JK.get(0)).position[i]
+                                            - getFlower(state.JK.get(1)).position[i]);
                         }
                     }
 
@@ -91,7 +90,7 @@ public class FlowerPollination extends AbstractAlgorithm {
                     List<Param> setup = Param.cloneParamList(pattern);
                     // setup each dimension of the position
                     for(int i = 0; i < setup.size(); ++i) {
-                        setup.get(i).setInitValue(state.swarm.get(j).newPosition[i]);
+                        setup.get(i).setInitValue(getFlower(j).newPosition[i]);
                         setup.get(i).setId(j);
                     }
                     result.add(setup);
@@ -101,7 +100,7 @@ public class FlowerPollination extends AbstractAlgorithm {
                 List<Param> setup = Param.cloneParamList(pattern);
                 // setup each dimension of the position
                 for(int i = 0; i < setup.size(); ++i) {
-                    setup.get(i).setInitValue(state.swarm.get(state.currentFlower).newPosition[i]);
+                    setup.get(i).setInitValue(getFlower(state.currentFlower).newPosition[i]);
                     setup.get(i).setId(state.currentFlower);
                 }
                 result.add(setup);
@@ -109,10 +108,10 @@ public class FlowerPollination extends AbstractAlgorithm {
         return result;
     }
 
-    public void setSwarmBest(int id) throws CloneNotSupportedException {
-        if (state.swarm.get(id).actualFitness.betterThan(state.swarmBestFitness)) {
-            state.swarmBestFitness = state.swarm.get(id).actualFitness;
-            state.swarmBestKnownPosition = state.swarm.get(id).position.clone();
+    private void setSwarmBest(int id) throws CloneNotSupportedException {
+        if (getFlower(id).actualFitness.betterThan(state.swarmBestFitness)) {
+            state.swarmBestFitness = getFlower(id).actualFitness;
+            state.swarmBestKnownPosition = getFlower(id).position.clone();
         }
     }
 
@@ -121,24 +120,24 @@ public class FlowerPollination extends AbstractAlgorithm {
             case Init:
                 for (IterationResult res : results) {
                     int id = res.getConfiguration().get(0).getId();
-                    state.swarm.get(id).actualFitness = res;
-                    state.swarm.get(id).position = state.swarm.get(id).newPosition.clone();
+                    getFlower(id).actualFitness = res;
+                    getFlower(id).position = getFlower(id).newPosition.clone();
                     setSwarmBest(id);
                 }
                 break;
             case Main:
                 IterationResult res = results.get(0);
                 int id = res.getConfiguration().get(0).getId();
-                if (res.betterThan(state.swarm.get(id).actualFitness)) {
-                    state.swarm.get(id).actualFitness = res;
-                    state.swarm.get(id).position = state.swarm.get(id).newPosition.clone();
+                if (res.betterThan(getFlower(id).actualFitness)) {
+                    getFlower(id).actualFitness = res;
+                    getFlower(id).position = getFlower(id).newPosition.clone();
                     setSwarmBest(id);
                 }
                 break;
         }
     }
 
-    public void updateGlobals() throws CloneNotSupportedException {
+    public void updateGlobals() {
         switch (state.phase) {
             case Init:
                 state.phase = AlgorithmPhase.Main;
@@ -153,19 +152,16 @@ public class FlowerPollination extends AbstractAlgorithm {
         }
     }
 
-    class Flower extends Solution {
-        Flower(int dim,  float[] lowerBounds, float[] upperBounds, Random rand) {
-            super(dim, lowerBounds, upperBounds, rand);
-        }
+    private Solution getFlower(int id) {
+        return state.swarm.get(id);
     }
-
 
     enum AlgorithmPhase {
         Init,
         Main
     }
 
-    class InternalState extends InternalStateBase<Flower> {
+    class InternalState extends InternalStateBase<Solution> {
         AlgorithmPhase phase;
         int currentFlower;
         ArrayList<Integer> JK;

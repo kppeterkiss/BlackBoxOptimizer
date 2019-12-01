@@ -4,12 +4,9 @@ import optimizer.common.InternalStateBase;
 import optimizer.common.Solution;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
-import optimizer.utils.Utils;
 
 import java.lang.Math;
 import java.util.*;
-
-import org.apache.commons.math3.special.Gamma;
 
 
 public class CuckooSearch extends AbstractAlgorithm {
@@ -41,7 +38,7 @@ public class CuckooSearch extends AbstractAlgorithm {
         state.calculateResultsForIds = new LinkedList<>();
         //initialize the nests, and add to nest array
         for (int i = 0; i < swarmSize; ++i) {
-            state.swarm.add(new Nest(
+            state.swarm.add(new Solution(
                     state.dimension,
                     state.lowerBounds,
                     state.upperBounds,
@@ -67,8 +64,8 @@ public class CuckooSearch extends AbstractAlgorithm {
                 for (int j = 0; j < numberOfNests; ++j) {
                     //The best solution does not change
                     if (state.swarmBestNest != j) {
-                        state.swarm.get(j).levy_flights(beta,alpha, rand, state.swarmBestKnownPosition);
-                        state.swarm.get(j).checkBoundsForNewPosition(state.dimension, state.lowerBounds, state.upperBounds);
+                        getNest(j).levy_flights(beta,alpha, rand, state.swarmBestKnownPosition);
+                        getNest(j).checkBoundsForNewPosition(state.dimension, state.lowerBounds, state.upperBounds);
                         state.calculateResultsForIds.add(j);
                     }
                 }
@@ -88,12 +85,12 @@ public class CuckooSearch extends AbstractAlgorithm {
 
                     if (state.swarmBestNest != i) {
                         for (int dim = 0; dim < state.dimension; ++dim) {
-                            state.swarm.get(i).newPosition[dim] =
-                                    state.swarm.get(i).position[dim] + randWalkStepSize *
+                            getNest(i).newPosition[dim] =
+                                    getNest(i).position[dim] + randWalkStepSize *
                                             (float) (alpha * ((Math.signum(Pa - epsilon) + 1) / 2) *  // Heaviside function
-                                                    (state.swarm.get(j).position[dim] - state.swarm.get(k).position[dim]));
+                                                    (getNest(j).position[dim] - getNest(k).position[dim]));
                         }
-                        state.swarm.get(i).checkBoundsForNewPosition(state.dimension, state.lowerBounds, state.upperBounds);
+                        getNest(i).checkBoundsForNewPosition(state.dimension, state.lowerBounds, state.upperBounds);
                         state.calculateResultsForIds.add(i);
                     }
                 }
@@ -118,12 +115,12 @@ public class CuckooSearch extends AbstractAlgorithm {
         List<List<Param>> result = new LinkedList<>();
         if (state.firstStep) {
             for(int j = 0; j < state.swarm.size(); ++j) {
-                result.add(createParamSetup(pattern, state.swarm.get(j).newPosition, j));
+                result.add(createParamSetup(pattern, getNest(j).newPosition, j));
             }
         } else {
             for(int j = 0; j < state.calculateResultsForIds.size(); ++j) {
                 int id = state.calculateResultsForIds.get(j);
-                result.add(createParamSetup(pattern, state.swarm.get(id).newPosition,id));
+                result.add(createParamSetup(pattern, getNest(id).newPosition,id));
             }
         }
         return result;
@@ -133,11 +130,11 @@ public class CuckooSearch extends AbstractAlgorithm {
         if (state.firstStep) {
             int i = 0;
             for (IterationResult res : results) {
-                state.swarm.get(i).actualFitness = res;
-                state.swarm.get(i).position = state.swarm.get(i).newPosition.clone();
-                if(state.swarm.get(i).actualFitness.betterThan(state.swarmBestFitness)) {
-                    state.swarmBestFitness = state.swarm.get(i).actualFitness;
-                    state.swarmBestKnownPosition = state.swarm.get(i).position.clone();
+                getNest(i).actualFitness = res;
+                getNest(i).position = getNest(i).newPosition.clone();
+                if(getNest(i).actualFitness.betterThan(state.swarmBestFitness)) {
+                    state.swarmBestFitness = getNest(i).actualFitness;
+                    state.swarmBestKnownPosition = getNest(i).position.clone();
                     state.swarmBestNest = i;
                 }
                 ++i;
@@ -147,7 +144,7 @@ public class CuckooSearch extends AbstractAlgorithm {
                 int i = 0;
                 for (IterationResult res : results) {
                     int id = state.calculateResultsForIds.get(i);
-                    Nest nest = state.swarm.get(id);
+                    Solution nest = getNest(id);
                     if (nest.actualFitness.betterThan(res)) {
                         nest.actualFitness = res;
                         nest.position = nest.newPosition.clone();
@@ -172,18 +169,17 @@ public class CuckooSearch extends AbstractAlgorithm {
          state.calculateResultsForIds.clear();
     }
 
-    class Nest extends Solution {
-        public Nest(int dim,  float[] lowerBounds, float[] upperBounds, Random rand) {
-            super(dim, lowerBounds, upperBounds, rand);
-        }
+    Solution getNest(int id) {
+        return state.swarm.get(id);
     }
+
 
     enum AlgorithmPart {
             first_part,
             second_part;
     }
 
-    class InternalState extends InternalStateBase<Nest> {
+    class InternalState extends InternalStateBase<Solution> {
         int swarmBestNest;
         List<Integer> calculateResultsForIds;
         AlgorithmPart part;

@@ -52,12 +52,12 @@ public class WhaleSwarmAlgorithm extends AbstractAlgorithm {
                    if (closestBetteWhale != -1) {
                        float modifier = rand.nextFloat() * (float)ultrasoundIntensity(i, closestBetteWhale);
                        for (int dim = 0; dim < state.dimension; ++dim) {
-                           state.swarm.get(i).newPosition[dim] =
-                                   modifier * (state.swarm.get(closestBetteWhale).position[dim] - state.swarm.get(i).position[dim]);
+                           getWhale(i).newPosition[dim] =
+                                   modifier * (getWhale(closestBetteWhale).position[dim] - getWhale(i).position[dim]);
                        }
-                       state.swarm.get(i).checkBoundsForNewPosition(state.dimension, state.lowerBounds, state.upperBounds);
+                       getWhale(i).checkBoundsForNewPosition(state.dimension, state.lowerBounds, state.upperBounds);
                    } else {
-                       state.swarm.get(i).newPosition = state.swarm.get(i).position.clone();
+                       getWhale(i).newPosition = getWhale(i).position.clone();
                    }
 
                 }
@@ -71,7 +71,7 @@ public class WhaleSwarmAlgorithm extends AbstractAlgorithm {
             List<Param> setup = Param.cloneParamList(pattern);
             // setup each dimension of the position
             for (int i = 0; i < setup.size(); ++i) {
-                setup.get(i).setInitValue(state.swarm.get(j).newPosition[i]);
+                setup.get(i).setInitValue(getWhale(j).newPosition[i]);
                 setup.get(i).setId(j);
             }
             result.add(setup);
@@ -81,7 +81,7 @@ public class WhaleSwarmAlgorithm extends AbstractAlgorithm {
 
     public void setResults(List<IterationResult> results) throws CloneNotSupportedException {
         for (IterationResult res : results) {
-            Solution whale = state.swarm.get(res.getConfiguration().get(0).getId());
+            Solution whale = getWhale(res.getConfiguration().get(0).getId());
             whale.actualFitness = res;
             whale.position = whale.newPosition.clone();
             state.setBest(whale);
@@ -103,13 +103,17 @@ public class WhaleSwarmAlgorithm extends AbstractAlgorithm {
     */
     public double ultrasoundIntensity(int i, int j) {
         double ro = 0;
-        float distance = Distance.distance(state.dimension, state.swarm.get(i).position, state.swarm.get(j).position);
+        float distance = Distance.distance(state.dimension, getWhale(i).position, getWhale(j).position);
         float ro0 = ((Number)optimizerParams.get(1).getValue()).floatValue();
         float eta = ((Number)optimizerParams.get(2).getValue()).floatValue();
         ro = ro0 * Math.exp(-eta * distance);
         return ro;
     }
 
+    Solution getWhale(int id) {
+        return state.swarm.get(id);
+    }
+    
     public enum AlgorithmPhase {
         first,
         iteration

@@ -5,12 +5,8 @@ import optimizer.common.Solution;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
 import optimizer.utils.Utils;
-import org.junit.Test;
 
 import java.util.*;
-
-import static junit.framework.TestCase.assertEquals;
-
 
 public class FireFlyAlgorithm extends AbstractAlgorithm {
     InternalState state = new InternalState();
@@ -54,17 +50,17 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
         } else {
             float alpha = ((Number)optimizerParams.get(1).getValue()).floatValue();
             for (int i = 0; i < swarm_size; i++) {
-                state.swarm.get(i).newPosition = state.swarm.get(i).position.clone();
+                getFirefly(i).newPosition = getFirefly(i).position.clone();
                 for (int j = 0; j < swarm_size; j++) {
                     try {
-                        if (state.swarm.get(j).actualFitness.betterThan(state.swarm.get(i).actualFitness)) {
-                            float distance_i_j = distance(state.swarm.get(i).position, state.swarm.get(j).position);
+                        if (getFirefly(j).actualFitness.betterThan(getFirefly(i).actualFitness)) {
+                            float distance_i_j = distance(getFirefly(i).position, getFirefly(j).position);
                             //Vary attractiveness with distance r via exp(/gamma*r)
                             float beta = getAttractiveness(distance_i_j);
                             //move firefly i towards j;
                             for (int dim = 0; dim < state.dimension; dim++) {
-                                state.swarm.get(i).newPosition[dim] +=
-                                        beta * (state.swarm.get(j).position[dim] - state.swarm.get(i).newPosition[dim])
+                                getFirefly(i).newPosition[dim] +=
+                                        beta * (getFirefly(j).position[dim] - getFirefly(i).newPosition[dim])
                                                 + alpha * (rand.doubles(0,1).limit(1).findFirst().getAsDouble() - 0.5);
                             }
                         }
@@ -72,7 +68,7 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
                         e.printStackTrace();
                     }
                 }
-                state.swarm.get(i).checkBoundsForNewPosition(state.dimension,
+                getFirefly(i).checkBoundsForNewPosition(state.dimension,
                         state.lowerBounds, state.upperBounds);
             }
         }
@@ -85,7 +81,7 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
             List<Param> setup = Param.cloneParamList(pattern);
             // setup each dimension of the position
             for(int i = 0; i < setup.size(); ++i) {
-                setup.get(i).setInitValue(state.swarm.get(j).newPosition[i]);
+                setup.get(i).setInitValue(getFirefly(j).newPosition[i]);
                 setup.get(i).setId(j);
             }
             result.add(setup);
@@ -110,7 +106,7 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
     public void setResults(List<IterationResult> results) throws CloneNotSupportedException {
         int i = 0;
         for(IterationResult res : results) {
-            updateFireflyAndGlobalState(state.swarm.get(i++),res);
+            updateFireflyAndGlobalState(getFirefly(i++),res);
         }
     }
 
@@ -128,6 +124,10 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
         return (float) Math.sqrt(dist);
     }
 
+    FireFly getFirefly(int id) {
+        return state.swarm.get(id);
+    }
+
     class FireFly extends Solution{
         float[] bestKnownPosition;
         IterationResult bestFitness;
@@ -136,16 +136,6 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
             super(dim, lowerBounds, upperBounds, rand);
             this.bestKnownPosition = this.position.clone();
             this.bestFitness = null;
-        }
-
-        public String print() {
-            StringBuilder sb = new StringBuilder();
-            sb.append("position: " + Arrays.toString(this.position));
-            sb.append("\n");
-            sb.append("bestKnownPosition: " + Arrays.toString(this.bestKnownPosition));
-            sb.append("\n");
-            sb.append("bestFitness: " + this.bestFitness);
-            return sb.toString();
         }
     }
 

@@ -5,10 +5,10 @@ import optimizer.common.Solution;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
 
 public class BatAlgorithm extends AbstractAlgorithm{
     InternalState state = new InternalState();
@@ -60,11 +60,11 @@ public class BatAlgorithm extends AbstractAlgorithm{
                 double Q = Qmin + (Qmin - Qmax) * rand.nextDouble();
                 for (int i = 0; i < state.dimension; ++i) {
                     // update velocity
-                    state.swarm.get(j).velocity[i] +=
-                            (state.swarm.get(j).position[i] - state.swarmBestKnownPosition[i]) * Q;
+                    getBat(j).velocity[i] +=
+                            (getBat(j).position[i] - state.swarmBestKnownPosition[i]) * Q;
                     // update newPosition
-                    state.swarm.get(j).newPosition[i] =
-                            state.swarm.get(j).position[i] + state.swarm.get(j).velocity[i];
+                    getBat(j).newPosition[i] =
+                            getBat(j).position[i] + getBat(j).velocity[i];
                 }
 
                 float r = ((Number) optimizerParams.get(2).getValue()).floatValue();
@@ -72,11 +72,11 @@ public class BatAlgorithm extends AbstractAlgorithm{
 
                 if (rand.nextFloat() > r) {
                     for (int i = 0; i < state.dimension; ++i) {
-                        state.swarm.get(j).newPosition[i] =
+                        getBat(j).newPosition[i] =
                                 (float) (state.swarmBestKnownPosition[i] + sigma * rand.nextGaussian());
                     }
                 }
-                state.swarm.get(j).checkBoundsForNewPosition(state.dimension,
+                getBat(j).checkBoundsForNewPosition(state.dimension,
                         state.lowerBounds, state.upperBounds);
             }
         }
@@ -89,7 +89,7 @@ public class BatAlgorithm extends AbstractAlgorithm{
             List<Param> setup = Param.cloneParamList(pattern);
             // setup each dimension of the position
             for (int i = 0; i < setup.size(); ++i) {
-                setup.get(i).setInitValue(state.swarm.get(j).newPosition[i]);
+                setup.get(i).setInitValue(getBat(j).newPosition[i]);
                 setup.get(i).setId(j);
             }
             result.add(setup);
@@ -101,11 +101,11 @@ public class BatAlgorithm extends AbstractAlgorithm{
         if (state.firstStep) {
             int i = 0;
             for (IterationResult res : results) {
-                state.swarm.get(i).actualFitness = res;
-                state.swarm.get(i).position = state.swarm.get(i).newPosition.clone();
-                if(state.swarm.get(i).actualFitness.betterThan(state.swarmBestFitness)) {
-                    state.swarmBestFitness = state.swarm.get(i).actualFitness;
-                    state.swarmBestKnownPosition = state.swarm.get(i).position.clone();
+                getBat(i).actualFitness = res;
+                getBat(i).position = getBat(i).newPosition.clone();
+                if(getBat(i).actualFitness.betterThan(state.swarmBestFitness)) {
+                    state.swarmBestFitness = getBat(i).actualFitness;
+                    state.swarmBestKnownPosition = getBat(i).position.clone();
                 }
                 ++i;
             }
@@ -114,15 +114,15 @@ public class BatAlgorithm extends AbstractAlgorithm{
             float A = ((Number)optimizerParams.get(1).getValue()).floatValue();
             int i = 0;
             for (IterationResult res : results) {
-                if (res.betterThan(state.swarm.get(i).actualFitness) && (rand.nextFloat() < A)) {
-                    state.swarm.get(i).position = state.swarm.get(i).newPosition.clone();
-                    state.swarm.get(i).actualFitness = res;
+                if (res.betterThan(getBat(i).actualFitness) && (rand.nextFloat() < A)) {
+                    getBat(i).position = getBat(i).newPosition.clone();
+                    getBat(i).actualFitness = res;
                 }
 
                 // set new best positin
                 if (res.betterThan(state.swarmBestFitness)) {
                     state.swarmBestFitness = res;
-                    state.swarmBestKnownPosition = state.swarm.get(i).newPosition.clone();
+                    state.swarmBestKnownPosition = getBat(i).newPosition.clone();
                 }
                 ++i;
             }
@@ -134,6 +134,9 @@ public class BatAlgorithm extends AbstractAlgorithm{
         state.firstStep = false;
     }
 
+    Bat getBat(int id) {
+        return state.swarm.get(id);
+    }
 
     class Bat extends Solution {
         float[] velocity;

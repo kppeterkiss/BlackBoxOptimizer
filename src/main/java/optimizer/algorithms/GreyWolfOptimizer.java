@@ -55,15 +55,15 @@ public class GreyWolfOptimizer extends AbstractAlgorithm {
                     double[] A3 = createA(a);
                     double[] C3 = createC(a);
 
-                    double[] Dalpha = createD(C1, state.swarm.get(0), state.swarm.get(i));
-                    double[] Dbeta = createD(C2, state.swarm.get(1), state.swarm.get(i));
-                    double[] Ddelta = createD(C3, state.swarm.get(2), state.swarm.get(i));
+                    double[] Dalpha = createD(C1, getWolf(0), getWolf(i));
+                    double[] Dbeta = createD(C2, getWolf(1), getWolf(i));
+                    double[] Ddelta = createD(C3, getWolf(2), getWolf(i));
 
-                    double[] X1 = createX(state.swarm.get(0), A1, Dalpha);
-                    double[] X2 = createX(state.swarm.get(1), A2, Dbeta);
-                    double[] X3 = createX(state.swarm.get(2), A3, Ddelta);
-                    state.swarm.get(i).newPosition = calculateNewPosition(X1, X2, X3);
-                    state.swarm.get(i).checkBoundsForNewPosition(state.dimension, state.lowerBounds, state.upperBounds);
+                    double[] X1 = createX(getWolf(0), A1, Dalpha);
+                    double[] X2 = createX(getWolf(1), A2, Dbeta);
+                    double[] X3 = createX(getWolf(2), A3, Ddelta);
+                    getWolf(i).newPosition = calculateNewPosition(X1, X2, X3);
+                    getWolf(i).checkBoundsForNewPosition(state.dimension, state.lowerBounds, state.upperBounds);
                 }
                 break;
         }
@@ -126,7 +126,7 @@ public class GreyWolfOptimizer extends AbstractAlgorithm {
             List<Param> setup = Param.cloneParamList(pattern);
             // setup each dimension of the position
             for (int i = 0; i < setup.size(); ++i) {
-                setup.get(i).setInitValue(state.swarm.get(j).newPosition[i]);
+                setup.get(i).setInitValue(getWolf(j).newPosition[i]);
                 setup.get(i).setId(j);
             }
             result.add(setup);
@@ -136,7 +136,7 @@ public class GreyWolfOptimizer extends AbstractAlgorithm {
 
     public void setResults(List<IterationResult> results) throws CloneNotSupportedException {
         for (IterationResult res : results) {
-            Solution wolf = state.swarm.get(res.getConfiguration().get(0).getId());
+            Solution wolf = getWolf(res.getConfiguration().get(0).getId());
             wolf.actualFitness = res;
             wolf.position = wolf.newPosition.clone();
             state.setBest(wolf);
@@ -154,6 +154,11 @@ public class GreyWolfOptimizer extends AbstractAlgorithm {
                 break;
         }
     }
+
+    Solution getWolf(int id) {
+        return state.swarm.get(id);
+    }
+
 
     public enum AlgorithmPhase {
         first,
