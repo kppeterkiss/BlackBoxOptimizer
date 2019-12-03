@@ -14,14 +14,13 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
 
     {
         this.optimizerParams = new LinkedList<>();
-        this.optimizerParams.add(new Param(5,Integer.MAX_VALUE,1,"max_generation"));
-        this.optimizerParams.add(new Param(5,Integer.MAX_VALUE,1,"population_size"));
+        this.optimizerParams.add(new Param(20,Integer.MAX_VALUE,1,"swarm_size"));
         // attractiveness
-        this.optimizerParams.add(new Param(1.0, Utils.FLOAT_REDEFINED_MAX_VALUE,Float.MIN_VALUE, "beta0"));
+        this.optimizerParams.add(new Param(1.0, 100.0,0, "beta0"));
         // randomization param [0-1]
-        this.optimizerParams.add(new Param(0.5, Utils.FLOAT_REDEFINED_MAX_VALUE,Float.MIN_VALUE, "alpha"));
-        // variation of attractiveness
-        this.optimizerParams.add(new Param(0.5, Utils.FLOAT_REDEFINED_MAX_VALUE,Float.MIN_VALUE, "gamma"));
+        this.optimizerParams.add(new Param(0.2, 1.0,0, "alpha"));
+        // light absorption coefficient
+        this.optimizerParams.add(new Param(0.5, 100,0.001, "gamma"));
 
         this.parallelizable = ParallelExecution.GENERATION;
     }
@@ -42,13 +41,13 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
     @Override
     public void updateParameters(List<Param> parameterMap, List<IterationResult> landscape) {
         // intit
-        int swarm_size = ((Number)optimizerParams.get(1).getValue()).intValue();
+        int swarm_size = ((Number)optimizerParams.get(0).getValue()).intValue();
         if (state.firstStep) {
             initSearchSpace(parameterMap);
             initFireFlies(swarm_size);
             state.firstStep = false;
         } else {
-            float alpha = ((Number)optimizerParams.get(1).getValue()).floatValue();
+            float alpha = ((Number)optimizerParams.get(2).getValue()).floatValue();
             for (int i = 0; i < swarm_size; i++) {
                 getFirefly(i).newPosition = getFirefly(i).position.clone();
                 for (int j = 0; j < swarm_size; j++) {
@@ -112,7 +111,7 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
 
     private float getAttractiveness(float dist) {
         float beta0 = ((Number) this.optimizerParams.get(1).getValue()).floatValue(); //beta0
-        float gamma = ((Number) this.optimizerParams.get(4).getValue()).floatValue(); //gamma
+        float gamma = ((Number) this.optimizerParams.get(3).getValue()).floatValue(); //gamma
         return (beta0 / (1 + gamma*dist*dist));
     }
 
