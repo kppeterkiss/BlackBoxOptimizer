@@ -1,6 +1,7 @@
-package optimizer.common.wolf;
+package optimizer.common;
+import optimizer.algorithms.GreyWolfOptimizer;
+import optimizer.algorithms.GreyWolfOptimizer.InternalState;
 
-import optimizer.common.Solution;
 import optimizer.objective.Objective;
 import optimizer.objective.ObjectiveContainer;
 import optimizer.objective.Relation;
@@ -14,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 
 public class WolfInternalStateTest {
+    GreyWolfOptimizer algo;
     private final int dimension;
     private float[] lowerBounds;
     private float[] upperBounds;
@@ -23,14 +25,15 @@ public class WolfInternalStateTest {
     private Param p2 = new Param(5f,10f,4f,"p2");
 
     private Random rand;
-    private WolfInternalState<Solution> state;
+    private InternalState state;
 
     public WolfInternalStateTest() {
+        algo = new GreyWolfOptimizer();
         dimension = 2;
         lowerBounds = new float[]{-10, -10};
         upperBounds = new float[]{ 10,  10};
         rand = new Random();
-        state = new WolfInternalState<>();
+        state = algo.getState();
     }
 
     private void setup_data(int swarm_size, float[] values, Relation relation) throws CloneNotSupportedException {

@@ -1,7 +1,7 @@
 package optimizer.algorithms;
 
+import optimizer.common.InternalStateBase;
 import optimizer.common.Solution;
-import optimizer.common.wolf.*;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
 
@@ -9,7 +9,7 @@ import optimizer.trial.IterationResult;
 import java.util.*;
 
 public class GreyWolfOptimizer extends AbstractAlgorithm {
-    WolfInternalState<AlgorithmPhase> state = new WolfInternalState();
+    InternalState state = new InternalState();
     Random rand = new Random();
 
     {
@@ -158,9 +158,20 @@ public class GreyWolfOptimizer extends AbstractAlgorithm {
         return state.swarm.get(id);
     }
 
-
     public enum AlgorithmPhase {
         first,
         iteration
+    }
+
+    public InternalState getState() {
+        return state;
+    }
+
+    public class InternalState extends InternalStateBase<Solution> {
+        public AlgorithmPhase phase;
+
+        public InternalState() {
+            super();
+        }
     }
 }
