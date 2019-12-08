@@ -17,7 +17,6 @@ public class GreyWolfOptimizer extends AbstractAlgorithm {
         this.iterationCounter = 0;
         this.optimizerParams = new LinkedList<>();
         this.optimizerParams.add(new Param(10,Integer.MAX_VALUE,5,"swarm_size"));
-        state.phase = AlgorithmPhase.first;
     }
 
     private void initSearchSpace(List<Param> parameterMap) {
@@ -39,7 +38,7 @@ public class GreyWolfOptimizer extends AbstractAlgorithm {
         int swarm_size = ((Number)optimizerParams.get(0).getValue()).intValue();
         ++iterationCounter;
         switch (state.phase) {
-            case first:
+            case init:
                 initSearchSpace(parameterMap);
                 initWolves(swarm_size);
                 break;
@@ -146,7 +145,7 @@ public class GreyWolfOptimizer extends AbstractAlgorithm {
         iterationCounter++;
 
         switch (state.phase) {
-            case first:
+            case init:
                 state.phase = AlgorithmPhase.iteration;
                 break;
             case iteration:
@@ -159,7 +158,7 @@ public class GreyWolfOptimizer extends AbstractAlgorithm {
     }
 
     public enum AlgorithmPhase {
-        first,
+        init,
         iteration
     }
 
@@ -172,6 +171,7 @@ public class GreyWolfOptimizer extends AbstractAlgorithm {
 
         public InternalState() {
             super();
+            phase = AlgorithmPhase.init;
         }
     }
 }

@@ -167,6 +167,11 @@ public class CuckooSearch extends AbstractAlgorithm {
     class InternalState extends InternalStateBase<Solution> {
         int swarmBestNest;
         List<Integer> calculateResultsForIds;
-        AlgorithmPhase phase = AlgorithmPhase.init;;
+        AlgorithmPhase phase;
+
+        public InternalState() {
+            super();
+            phase = AlgorithmPhase.init;
+        }
     }
 }

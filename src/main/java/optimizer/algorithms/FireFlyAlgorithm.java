@@ -15,7 +15,7 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
         this.optimizerParams = new LinkedList<>();
         this.optimizerParams.add(new Param(20,Integer.MAX_VALUE,1,"swarm_size"));
         // attractiveness
-        this.optimizerParams.add(new Param(1.0, 100.0,0, "beta0"));
+        this.optimizerParams.add(new Param(30.0, 100.0,0, "beta0"));
         // randomization param [0-1]
         this.optimizerParams.add(new Param(0.2, 1.0,0, "alpha"));
         // light absorption coefficient
@@ -137,7 +137,11 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
         }
     }
 
-    class InternalState extends InternalStateBase<FireFly> {}
+    class InternalState extends InternalStateBase<FireFly> {
+        public InternalState() {
+            super();
+        }
+    }
 }
 
 
