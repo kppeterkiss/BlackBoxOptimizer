@@ -19,7 +19,7 @@ public class InternalStateBaseTest {
         assertNotNull(state.swarm);
         assertNull(state.swarmBestKnownPosition);
         assertNull(state.swarmBestFitness);
-        assertTrue(state.firstStep);
+        assertTrue(state.init);
         assertNull(state.upperBounds);
         assertNull(state.lowerBounds);
         assertEquals(-1, state.dimension);

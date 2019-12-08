@@ -42,7 +42,7 @@ public class WhaleSwarmAlgorithm extends AbstractAlgorithm {
     public void updateParameters(List<Param> parameterMap, List<IterationResult> landscape) throws CloneNotSupportedException {
         int swarm_size = ((Number)optimizerParams.get(0).getValue()).intValue();
         switch (state.phase) {
-            case first:
+            case init:
                 initSearchSpace(parameterMap);
                 initWhales(swarm_size);
                 break;
@@ -89,7 +89,7 @@ public class WhaleSwarmAlgorithm extends AbstractAlgorithm {
 
     public void updateGlobals() throws CloneNotSupportedException {
         switch (state.phase) {
-            case first:
+            case init:
                 state.phase = AlgorithmPhase.iteration;
                 break;
             case iteration:
@@ -114,7 +114,7 @@ public class WhaleSwarmAlgorithm extends AbstractAlgorithm {
     }
     
     public enum AlgorithmPhase {
-        first,
+        init,
         iteration
     }
 
@@ -123,7 +123,7 @@ public class WhaleSwarmAlgorithm extends AbstractAlgorithm {
 
         public InternalState() {
             super();
-            phase = AlgorithmPhase.first;
+            phase = AlgorithmPhase.init;
         }
 
         public int getClosestBetterWhale(int id) throws CloneNotSupportedException {

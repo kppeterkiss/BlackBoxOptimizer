@@ -4,7 +4,6 @@ import optimizer.common.InternalStateBase;
 import optimizer.common.Solution;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
-import optimizer.utils.Utils;
 
 import java.util.*;
 
@@ -42,10 +41,10 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
     public void updateParameters(List<Param> parameterMap, List<IterationResult> landscape) {
         // intit
         int swarm_size = ((Number)optimizerParams.get(0).getValue()).intValue();
-        if (state.firstStep) {
+        if (state.init) {
             initSearchSpace(parameterMap);
             initFireFlies(swarm_size);
-            state.firstStep = false;
+            state.init = false;
         } else {
             float alpha = ((Number)optimizerParams.get(2).getValue()).floatValue();
             for (int i = 0; i < swarm_size; i++) {

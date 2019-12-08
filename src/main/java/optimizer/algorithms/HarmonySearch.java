@@ -44,7 +44,7 @@ public class HarmonySearch extends AbstractAlgorithm {
     public void updateParameters(List<Param> parameterMap, List<IterationResult> landscape) {
         int harmony_size = ((Number)optimizerParams.get(0).getValue()).intValue();
         switch (state.phase) {
-            case first:
+            case init:
                 initSearchSpace(parameterMap);
                 initHarmonies(harmony_size);
                 break;
@@ -75,7 +75,7 @@ public class HarmonySearch extends AbstractAlgorithm {
     public List<List<Param>> getParameterMapBatch(List<Param> pattern)throws CloneNotSupportedException {
         List<List<Param>> result = new LinkedList<>();
         switch (state.phase) {
-            case first:
+            case init:
                 for (int j = 0; j < state.swarm.size(); ++j) {
                     List<Param> setup = Param.cloneParamList(pattern);
                     // setup each dimension of the position
@@ -100,7 +100,7 @@ public class HarmonySearch extends AbstractAlgorithm {
 
     public void setResults(List<IterationResult> results) throws CloneNotSupportedException {
         switch (state.phase) {
-            case first:
+            case init:
                 for (IterationResult res : results) {
                     Solution harmony = getHarmony(res.getConfiguration().get(0).getId());
                     harmony.saveResultAndPosition(res);
@@ -123,7 +123,7 @@ public class HarmonySearch extends AbstractAlgorithm {
 
     public void updateGlobals() {
         switch (state.phase) {
-            case first:
+            case init:
                 state.phase = AlgorithmPhase.iteration;
                 break;
             case iteration:
@@ -136,7 +136,7 @@ public class HarmonySearch extends AbstractAlgorithm {
     }
     
     public enum AlgorithmPhase {
-        first,
+        init,
         iteration
     }
 
@@ -151,7 +151,7 @@ public class HarmonySearch extends AbstractAlgorithm {
 
         public InternalState() {
             super();
-            phase = AlgorithmPhase.first;
+            phase = AlgorithmPhase.init;
             newHarmony = null;
         }
 

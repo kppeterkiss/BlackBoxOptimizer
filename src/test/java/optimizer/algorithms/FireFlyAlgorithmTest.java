@@ -2,10 +2,8 @@ package optimizer.algorithms;
 
 import optimizer.config.TestConfig;
 import optimizer.objective.Objective;
-import optimizer.objective.ObjectiveContainer;
 import optimizer.objective.Relation;
 import optimizer.param.Param;
-import optimizer.trial.IterationResult;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +16,7 @@ import static org.junit.Assert.*;
 public class FireFlyAlgorithmTest {
     FireFlyAlgorithm algo;
     TestConfig config;
-    int swarm_size = 2;
+    int swarm_size = 20;
 
     @Before
     public void setup() throws CloneNotSupportedException {
@@ -32,11 +30,11 @@ public class FireFlyAlgorithmTest {
 
     @Test
     public void test_initialization_phase() {
-        assertTrue(algo.state.firstStep);
+        assertTrue(algo.state.init);
         algo.updateParameters(config.getScriptParametersReference(), config.getLandscapeReference());
 
         // search space
-        assertEquals(algo.state.dimension, algo.state.swarm.size());
+        assertEquals(algo.state.dimension, 2);
         for (int i = 0; i < algo.state.dimension; ++i) {
             assertEquals(algo.state.lowerBounds[i], config.getScriptParametersReference().get(i).getLowerBound());
             assertEquals(algo.state.upperBounds[i], config.getScriptParametersReference().get(i).getUpperBound());
@@ -49,7 +47,7 @@ public class FireFlyAlgorithmTest {
             assertNull(fly.bestFitness);
         }
 
-        assertFalse(algo.state.firstStep);
+        assertFalse(algo.state.init);
     }
 
     private TestConfig initConfig() throws CloneNotSupportedException {

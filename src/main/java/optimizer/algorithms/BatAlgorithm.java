@@ -48,7 +48,7 @@ public class BatAlgorithm extends AbstractAlgorithm{
     @Override
     public void updateParameters(List<Param> parameterMap, List<IterationResult> landscape) throws CloneNotSupportedException {
         int swarmSize = ((Number)optimizerParams.get(0).getValue()).intValue();
-        if (state.firstStep) {
+        if (state.init) {
             initSearchSpace(parameterMap);
             initBats(swarmSize);
         } else {
@@ -102,7 +102,7 @@ public class BatAlgorithm extends AbstractAlgorithm{
 
         for (IterationResult res : results) {
             Bat bat = getBat(res.getConfiguration().get(0).getId());
-            if (state.firstStep) {
+            if (state.init) {
                 bat.saveResultAndPosition(res);
                 state.setBest(bat);
             } else {
@@ -120,7 +120,7 @@ public class BatAlgorithm extends AbstractAlgorithm{
     }
 
     public void updateGlobals() throws CloneNotSupportedException {
-        state.firstStep = false;
+        state.init = false;
     }
 
     Bat getBat(int id) {

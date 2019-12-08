@@ -11,7 +11,7 @@ public class InternalStateBase<T> {
     public float[] swarmBestKnownPosition;
     public IterationResult swarmBestFitness;
 
-    public boolean firstStep = true;
+    public boolean init;
 
     public float[] upperBounds;
     public float[] lowerBounds;
@@ -21,7 +21,7 @@ public class InternalStateBase<T> {
         swarm = new ArrayList<>();
         swarmBestKnownPosition = null;
         swarmBestFitness = null;
-        firstStep = true;
+        init = true;
         upperBounds = null;
         lowerBounds = null;
         dimension = -1;

@@ -49,11 +49,11 @@ public class FlowerPollination extends AbstractAlgorithm {
         int swarm_size = ((Number)optimizerParams.get(0).getValue()).intValue();
         double probability_switch = ((Number)optimizerParams.get(1).getValue()).floatValue();
         switch (state.phase) {
-            case Init:
+            case init:
                 initSearchSpace(parameterMap);
                 initFlowers(swarm_size);
                 break;
-            case Main:
+            case iteration:
                 double beta = ((Number)optimizerParams.get(2).getValue()).floatValue();
                 double alpha = ((Number)optimizerParams.get(3).getValue()).floatValue();
                     if (rand.nextFloat() > probability_switch) {
@@ -85,7 +85,7 @@ public class FlowerPollination extends AbstractAlgorithm {
     public List<List<Param>> getParameterMapBatch(List<Param> pattern)throws CloneNotSupportedException {
         List<List<Param>> result = new LinkedList<>();
         switch (state.phase) {
-            case Init:
+            case init:
                 for(int j = 0; j < state.swarm.size(); ++j) {
                     List<Param> setup = Param.cloneParamList(pattern);
                     // setup each dimension of the position
@@ -96,7 +96,7 @@ public class FlowerPollination extends AbstractAlgorithm {
                     result.add(setup);
                 }
                 break;
-            case Main:
+            case iteration:
                 List<Param> setup = Param.cloneParamList(pattern);
                 // setup each dimension of the position
                 for(int i = 0; i < setup.size(); ++i) {
@@ -121,10 +121,10 @@ public class FlowerPollination extends AbstractAlgorithm {
 
     public void updateGlobals() {
         switch (state.phase) {
-            case Init:
-                state.phase = AlgorithmPhase.Main;
+            case init:
+                state.phase = AlgorithmPhase.iteration;
                 break;
-            case Main:
+            case iteration:
                 if(state.currentFlower < state.swarm.size() - 1) {
                     state.currentFlower +=1;
                 } else {
@@ -139,8 +139,8 @@ public class FlowerPollination extends AbstractAlgorithm {
     }
 
     enum AlgorithmPhase {
-        Init,
-        Main
+        init,
+        iteration
     }
 
     class InternalState extends InternalStateBase<Solution> {
@@ -150,7 +150,7 @@ public class FlowerPollination extends AbstractAlgorithm {
 
         public InternalState() {
             super();
-            phase = AlgorithmPhase.Init;
+            phase = AlgorithmPhase.init;
             currentFlower = 0;
             JK = new ArrayList<>();
         }
