@@ -5,6 +5,10 @@ import optimizer.common.RouletteWheelSelection;
 import optimizer.common.bee.Bee;
 import optimizer.common.bee.Bee.BeeType;
 import optimizer.common.bee.BeeInternalState;
+import optimizer.exception.AlgorithmException;
+import optimizer.main.Main;
+import optimizer.objective.Objective;
+import optimizer.objective.Relation;
 import optimizer.param.Param;
 import optimizer.trial.IterationResult;
 
@@ -28,7 +32,17 @@ public class ArtificialBeeColony extends AbstractAlgorithm{
         state.phase = AlgorithmPhase.first;
     }
 
+    private void checkObjectivePresence() throws AlgorithmException {
+        List<Objective> objectives = this.config.getObjectiveContainerReference().getObjectiveListReference();
+        if (objectives.isEmpty()) {
+            String msg = "No objective is present. The algorithm can not work propery without it.";
+            Main.getLogger().error(msg);
+            throw new AlgorithmException(msg);
+        }
+    }
+
     private void initSearchSpace(List<Param> parameterMap) {
+        checkObjectivePresence();
         state.initSearchSpace(parameterMap);
     }
 
