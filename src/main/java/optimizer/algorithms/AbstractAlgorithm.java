@@ -281,6 +281,7 @@ public abstract class AbstractAlgorithm {
                     try {
                         updateParameters(config.getScriptParametersReference(), config.getLandscapeReference()/*, config.getOptimizerParameters()*/);
                     }  catch (Exception e){
+                        Main.getLogger().info(e);
                         throw new AlgorithmException("Algorithm error");
                     }
                     Main.getLogger().info( "NEW PARAMETERS" + config.getScriptParametersReference().toString());
