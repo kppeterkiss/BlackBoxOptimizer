@@ -1,5 +1,6 @@
 package optimizer.algorithms;
 
+import optimizer.common.Solution;
 import optimizer.config.TestConfig;
 import optimizer.objective.Objective;
 import optimizer.objective.Relation;
@@ -42,10 +43,6 @@ public class FireFlyAlgorithmTest {
 
         // swarm
         assertEquals(algo.state.swarm.size(), swarm_size);
-        for (FireFlyAlgorithm.FireFly fly: algo.state.swarm) {
-            assertEquals(Arrays.toString(fly.position), Arrays.toString(fly.bestKnownPosition));
-            assertNull(fly.bestFitness);
-        }
 
         assertFalse(algo.state.init);
     }

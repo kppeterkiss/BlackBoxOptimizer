@@ -233,7 +233,7 @@ public abstract class AbstractAlgorithm {
                                 List<IterationResult> results = readAndSaveResults(experimetDir, backupDir, saveFileName, set);
 
                                 // order the iteration result as they came in the getParameterMapBatch
-                                Collections.sort(results, new SortbyConfigID());
+                                //Collections.sort(results, new SortbyConfigID());
                                 setResults(results);
                                 updateGlobals();
 

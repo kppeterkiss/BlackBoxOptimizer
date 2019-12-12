@@ -31,10 +31,11 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
     private void initFireFlies(int swarmSize) {
         //initialize the fireflies, and add to firefly array
         for (int i = 0; i < swarmSize; ++i) {
-            state.swarm.add(new FireFly(
+            state.swarm.add(new Solution(
                     state.dimension,
                     state.lowerBounds,
-                    state.upperBounds));
+                    state.upperBounds,
+                    rand));
         }
     }
     @Override
@@ -87,24 +88,12 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
         return result;
     }
 
-    private void updateFireflyAndGlobalState(FireFly fly, IterationResult ir) throws CloneNotSupportedException {
-        fly.actualFitness = ir;
-        fly.position = fly.newPosition.clone();
-        if(ir.betterThan(fly.bestFitness) ){
-            fly.bestKnownPosition = fly.position.clone();
-            fly.bestFitness = ir;
-
-            if(fly.bestFitness.betterThan(state.swarmBestFitness)) {
-                state.swarmBestFitness = fly.bestFitness;
-                state.swarmBestKnownPosition = fly.bestKnownPosition.clone();
-            }
-        }
-    }
-
     public void setResults(List<IterationResult> results) throws CloneNotSupportedException {
-        int i = 0;
-        for(IterationResult res : results) {
-            updateFireflyAndGlobalState(getFirefly(i++),res);
+        for (IterationResult res : results) {
+            Solution firefly = getFirefly(res.getConfiguration().get(0).getId());
+            firefly.saveResultAndPosition(res);
+            state.setBest(firefly);
+
         }
     }
 
@@ -122,22 +111,11 @@ public class FireFlyAlgorithm extends AbstractAlgorithm {
         return (float) Math.sqrt(dist);
     }
 
-    FireFly getFirefly(int id) {
+    Solution getFirefly(int id) {
         return state.swarm.get(id);
     }
 
-    class FireFly extends Solution{
-        float[] bestKnownPosition;
-        IterationResult bestFitness;
-
-        FireFly(int dim, float[] lowerBounds, float[] upperBounds) {
-            super(dim, lowerBounds, upperBounds, rand);
-            this.bestKnownPosition = this.position.clone();
-            this.bestFitness = null;
-        }
-    }
-
-    class InternalState extends InternalStateBase<FireFly> {
+    class InternalState extends InternalStateBase<Solution> {
         public InternalState() {
             super();
         }
