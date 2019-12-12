@@ -29,7 +29,7 @@ public class FlowerPollination extends AbstractAlgorithm {
 
         int swarm_size = ((Number)optimizerParams.get(0).getValue()).intValue();
         for (int i = 0; i < swarm_size; ++i) {
-            state.JK.add(i);
+            state.flowerIds.add(i);
         }
     }
 
@@ -67,14 +67,14 @@ public class FlowerPollination extends AbstractAlgorithm {
                     } else {
                         // if not, then local pollination of neighbor flowers
                         double epsilon = rand.nextDouble();
-                        Collections.shuffle(state.JK);
+                        Collections.shuffle(state.flowerIds);
 
                         getFlower(state.currentFlower).newPosition =
                                 getFlower(state.currentFlower).position.clone();
                         for (int i = 0; i < state.dimension; ++i) {
                             getFlower(state.currentFlower).newPosition[i] +=
-                                    epsilon * (getFlower(state.JK.get(0)).position[i]
-                                            - getFlower(state.JK.get(1)).position[i]);
+                                    epsilon * (getFlower(state.flowerIds.get(0)).position[i]
+                                            - getFlower(state.flowerIds.get(1)).position[i]);
                         }
                     }
 
@@ -146,13 +146,15 @@ public class FlowerPollination extends AbstractAlgorithm {
     class InternalState extends InternalStateBase<Solution> {
         AlgorithmPhase phase;
         int currentFlower;
-        ArrayList<Integer> JK;
+        // an array of numbers from 0 to swarm.size()
+        // for random id selection
+        ArrayList<Integer> flowerIds;
 
         public InternalState() {
             super();
             phase = AlgorithmPhase.init;
             currentFlower = 0;
-            JK = new ArrayList<>();
+            flowerIds = new ArrayList<>();
         }
     }
 }
