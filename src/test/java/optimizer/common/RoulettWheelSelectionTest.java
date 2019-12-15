@@ -81,7 +81,7 @@ public class RoulettWheelSelectionTest {
         }
 
         List<Probability> probs = selection.createProbabilities(3, swarm, swarmBestFitness);
-        assertEquals(-1, probs.get(0).getId());
+        assertEquals(0, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
         assertEquals(0, probs.get(1).getId());
@@ -95,7 +95,7 @@ public class RoulettWheelSelectionTest {
 
         selection.createIntervals(probs);
 
-        assertEquals(-1, probs.get(0).getId());
+        assertEquals(0, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
         assertEquals(0, probs.get(1).getId());
@@ -117,7 +117,7 @@ public class RoulettWheelSelectionTest {
         }
 
         List<Probability> probs = selection.createProbabilities(3, swarm, swarmBestFitness);
-        assertEquals(-1, probs.get(0).getId());
+        assertEquals(2, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
         assertEquals(2, probs.get(1).getId());
@@ -131,7 +131,7 @@ public class RoulettWheelSelectionTest {
 
         selection.createIntervals(probs);
 
-        assertEquals(-1, probs.get(0).getId());
+        assertEquals(2, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
         assertEquals(2, probs.get(1).getId());
@@ -153,7 +153,7 @@ public class RoulettWheelSelectionTest {
         }
 
         List<Probability> probs = selection.createProbabilities(3, swarm, swarmBestFitness);
-        assertEquals(-1, probs.get(0).getId());
+        assertEquals(0, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
         assertEquals(0, probs.get(1).getId());
@@ -167,7 +167,7 @@ public class RoulettWheelSelectionTest {
 
         selection.createIntervals(probs);
 
-        assertEquals(-1, probs.get(0).getId());
+        assertEquals(0, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
         assertEquals(0, probs.get(1).getId());
@@ -190,7 +190,7 @@ public class RoulettWheelSelectionTest {
         }
 
         List<Probability> probs = selection.createProbabilities(3, swarm, swarmBestFitness);
-        assertEquals(-1, probs.get(0).getId());
+        assertEquals(0, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
         assertEquals(0, probs.get(1).getId());
@@ -204,7 +204,7 @@ public class RoulettWheelSelectionTest {
 
         selection.createIntervals(probs);
 
-        assertEquals(-1, probs.get(0).getId());
+        assertEquals(0, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
         assertEquals(0, probs.get(1).getId());
@@ -227,7 +227,7 @@ public class RoulettWheelSelectionTest {
         }
 
         List<Probability> probs = selection.createProbabilities(3, swarm, swarmBestFitness);
-        assertEquals(-1, probs.get(0).getId());
+        assertEquals(2, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
         assertEquals(2, probs.get(1).getId());
@@ -241,7 +241,7 @@ public class RoulettWheelSelectionTest {
 
         selection.createIntervals(probs);
 
-        assertEquals(-1, probs.get(0).getId());
+        assertEquals(2, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
         assertEquals(2, probs.get(1).getId());
@@ -264,7 +264,7 @@ public class RoulettWheelSelectionTest {
         }
 
         List<Probability> probs = selection.createProbabilities(3, swarm, swarmBestFitness);
-        assertEquals(-1, probs.get(0).getId());
+        assertEquals(2, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
         assertEquals(2, probs.get(1).getId());
@@ -278,7 +278,7 @@ public class RoulettWheelSelectionTest {
 
         selection.createIntervals(probs);
 
-        assertEquals(-1, probs.get(0).getId());
+        assertEquals(2, probs.get(0).getId());
         assertEquals(0, probs.get(0).getProbability(), 0.0001);
 
         assertEquals(2, probs.get(1).getId());

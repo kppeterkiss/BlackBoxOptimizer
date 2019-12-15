@@ -60,9 +60,9 @@ public class RouletteWheelSelection {
 
         }
 
-        probs.addFirst(new Probability(-1,0.0));
-
         Collections.sort(probs);
+
+        probs.addFirst(new Probability(probs.get(0).getId(),0.0));
 
         return probs;
     }
