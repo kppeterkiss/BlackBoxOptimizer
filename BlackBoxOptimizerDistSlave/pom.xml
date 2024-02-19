@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~   Copyright 2018 Peter Kiss and David Fonyo
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!--<parent>
+        <groupId>hu.elte.fds</groupId>
+        <artifactId>BlaBoO</artifactId>
+        <version>1.0</version>
+    </parent>-->
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>groupId</groupId>
+    <artifactId>BlackBoxOptimizerDistSlave</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <build>
+        <plugins>
+   <!--         <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>unpack-dependencies</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <excludeScope>system</excludeScope>
+                            <excludes>META-INF/*.SF</excludes>
+                            <excludes>META-INF/*.DSA</excludes>
+                            <excludes>META-INF/*.RSA</excludes>
+                           <excludeGroupIds>com.spotify</excludeGroupIds>
+                            <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+
+                        <configuration>
+                                <filters>
+                                    <filter>
+                                        <artifact>*:*</artifact>
+                                        <excludes>
+                                            <exclude>META-INF/*.SF</exclude>
+                                            <exclude>META-INF/*.DSA</exclude>
+                                            <exclude>META-INF/*.RSA</exclude>
+                                        </excludes>
+                                    </filter>
+                                </filters>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <transformers>
+                                <transformer implementation=
+                                                     "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>BBOSlave</mainClass>
+                                </transformer>
+                            </transformers>
+                            <finalName>${project.artifactId}-${project.version}</finalName>
+                            <outputDirectory>${basedir}${file.separator}target${file.separator}slave</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <configuration>
+                            <tasks>
+
+                                <mkdir dir="${project.build.directory}${file.separator}slave${file.separator}public"/>
+
+                                <mkdir dir="${project.build.directory}${file.separator}slave${file.separator}public/lib"/>
+                                <mkdir dir="${project.build.directory}${file.separator}slave${file.separator}public/lib/optimizer"/>
+                                <!--<mkdir dir="./../../BBCom/modules/coordinator/public/lib/optimizer/algorithms"/>-->
+                                <copy todir="${project.build.directory}${file.separator}slave${file.separator}public/lib/optimizer/algorithms">
+                                    <fileset dir="./../target/classes/optimizer/algorithms"/>
+                                </copy>
+                                <copy todir="${project.build.directory}${file.separator}slave${file.separator}public">
+                                    <fileset dir="./../target/classes/public"/>
+                                </copy>
+                                <copy todir="./../../BBCom/modules/slave${file.separator}">
+                                    <fileset dir="${project.build.directory}${file.separator}slave${file.separator}"/>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                        <!--<configuration>
+                            <tasks>
+
+                                <mkdir dir="./../../BBCom/modules/slave/public"/>
+                                <mkdir dir="./../../BBCom/modules/slave/public/lib"/>
+                                <mkdir dir="./../../BBCom/modules/slave/public/lib/optimizer"/>
+                                <copy todir="./../../BBCom/modules/slave/public/lib/optimizer/algorithms">
+                                    <fileset dir="./../target/classes/optimizer/algorithms"/>
+                                </copy>
+                                <copy todir="./../../BBCom/modules/slave/public">
+                                    <fileset dir="./../target/classes/public"/>
+                                </copy>
+                            </tasks>
+                        </configuration>-->
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions></plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>hu.elte.fds</groupId>
+            <artifactId>BlaBoO</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.docker-java/docker-java -->
+        <!--<dependency>
+            <groupId>com.github.docker-java</groupId>
+            <artifactId>docker-java</artifactId>
+            <version>3.0.14</version>
+        </dependency>-->
+        <dependency>
+            <groupId>com.spotify</groupId>
+            <artifactId>docker-client</artifactId>
+            <version>8.14.5</version>
+        </dependency>
+
+    </dependencies>
+
+
+</project>

@@ -1,0 +1,95 @@
+{
+  "baseCommand": "python Examples/SVM_with_Python/SVM_with_Python.py Examples/SVM_with_Python/heart-disease-processed-hungarian.arff $kernel $gamma $c",
+  "algorithmName": "RandomSearch",
+  "iterationCounter": 0,
+  "optimizerParameters": [],
+
+  "iterationCount": {
+    "value": 100
+  },
+  "savingFrequence": -1,
+  "optimizerClasses": {},
+  "objectiveContainer": {
+    "objectives": [
+      {
+        "relation": "MAXIMIZE",
+        "terminator": false,
+        "typeName": "java.lang.Float",
+
+        "weight": 100.0,
+        "name": "accuracy",
+        "dummy": 0.0,
+        "target": 0.0
+      }
+    ]
+  },
+  "scriptParameters": [
+    {
+      "name": "kernel",
+      "typeName": "java.lang.String",
+      "initValue": "rbf",
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": "linear",
+            "lowerBound": "rbf",
+            "valueArray": [
+              "rbf",
+              "linear"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "gamma",
+      "typeName": "java.lang.Float",
+      "initValue": 0.1,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 10.0,
+            "lowerBound": 0.0
+          },
+          "p": {
+            "name": "kernel",
+            "typeName": "java.lang.String",
+            "initValue": "rbf",
+            "dependencies": [
+              {
+                "rangeOfThis": {
+                  "upperBound": "linear",
+                  "lowerBound": "rbf",
+                  "valueArray": [
+                    "rbf",
+                    "linear"
+                  ]
+                }
+              }
+            ]
+          },
+          "rangeOfOther": {
+            "upperBound": "rbf",
+            "lowerBound": "rbf",
+            "valueArray": [
+              "rbf"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "c",
+      "typeName": "java.lang.Float",
+      "initValue": 0.1,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 10.0,
+            "lowerBound": 0.0
+          }
+        }
+      ]
+    }
+  ]
+}

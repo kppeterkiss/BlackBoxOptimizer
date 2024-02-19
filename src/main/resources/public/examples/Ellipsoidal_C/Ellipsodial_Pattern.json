@@ -1,0 +1,81 @@
+{
+  "baseCommand": "examples/Ellipsoidal_C/ellipsodial $firstParam $secondParam",
+  "algorithmName": "PatternSearch",
+  "iterationCounter": 0,
+  "optimizerParameters": [
+    {
+      "name": "step_size",
+      "typeName": "java.lang.Float",
+      "initValue": 10.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 1000.0,
+            "lowerBound": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "name": "max_number_of_iterations_without_stepping",
+      "typeName": "java.lang.Integer",
+      "initValue": 10,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 1000,
+            "lowerBound": 1
+          }
+        }
+      ]
+    }
+  ],
+  "iterationCount": {
+    "value": 100
+  },
+  "savingFrequence": -1,
+  "optimizerClasses": {},
+  "objectiveContainer": {
+    "objectives": [
+      {
+        "relation": "MINIMIZE",
+        "terminator": false,
+        "weight": 100.0,
+        "name": "ellipsodial",
+        "dummy": 0.0,
+        "value": 65549.1,
+        "target": 0.0,
+        "lastvalue": 60575.6,
+        "typeName": "java.lang.Float"
+      }
+    ]
+  },
+  "scriptParameters": [
+    {
+      "name": "firstParam",
+      "typeName": "java.lang.Float",
+      "initValue": 97.40816,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": -100.0
+          }
+        }
+      ]
+    },
+    {
+      "name": "secondParam",
+      "typeName": "java.lang.Float",
+      "initValue": -66.23254,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": -100.0
+          }
+        }
+      ]
+    }
+  ]
+}

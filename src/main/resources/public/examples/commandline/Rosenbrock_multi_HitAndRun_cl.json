@@ -1,0 +1,91 @@
+{
+  "baseCommand": " python Examples/Rosenbrock/Rosenbrock1.py $firstParam $secondParam",
+  "objectiveFileName": "obj.txt",
+  "algorithmName": "HitAndRun",
+  "iterationCounter": 0,
+  "optimizerParameters": [
+    {
+      "name": "max_step_size",
+      "typeName": "java.lang.Float",
+      "initValue": 1.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100000.0,
+            "lowerBound": 1.4E-45
+          }
+        }
+      ]
+    },
+    {
+      "name": "max_number_of_runs",
+      "typeName": "java.lang.Integer",
+      "initValue": 5,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 2147483647,
+            "lowerBound": -2147483648
+          }
+        }
+      ]
+    }
+  ],
+  "iterationCount": {
+    "value": 10
+  },
+  "savingFrequence": 3,
+  "optimizerClasses": {},
+  "objectiveContainer": {
+    "objectives": [
+      {
+        "relation": "MAXIMIZE",
+        "terminator": false,
+        "weight": 100.0,
+        "name": "rosen",
+        "typeName": "java.lang.Float",
+        "dummy": 0.0,
+        "value": 5.7513568E8,
+        "target": 0.0
+      },
+      {
+        "relation": "MINIMIZE",
+        "terminator": false,
+        "weight": 100.0,
+        "name": "rosen1",
+        "typeName": "java.lang.Float",
+        "dummy": 0.0,
+        "value": 0.0,
+        "target": 0.0
+      }
+    ]
+  },
+  "scriptParameters": [
+    {
+      "name": "firstParam",
+      "typeName": "java.lang.Float",
+      "initValue": 23.520988,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "name": "secondParam",
+      "typeName": "java.lang.Float",
+      "initValue": 41.50514,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": 0.0
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "baseCommand": "python Examples/SVM_with_Python/SVM_with_Python.py Examples/SVM_with_Python/heart-disease-processed-hungarian.arff $kernel $gamma $c",
+  "algorithmName": "GridSearch",
+  "iterationCounter": 0,
+  "optimizerParameters": [
+    {
+      "name": "kernel_step_size",
+      "typeName": "java.lang.Integer",
+      "initValue": 1,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 1,
+            "lowerBound": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "gamma_step_size",
+      "typeName": "java.lang.Float",
+      "initValue": 1.0E-4,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 10.0,
+            "lowerBound": 1.0E-4
+          }
+        }
+      ]
+    },
+    {
+      "name": "c_step_size",
+      "typeName": "java.lang.Float",
+      "initValue": 1.0E-4,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 10.0,
+            "lowerBound": 1.0E-4
+          }
+        }
+      ]
+    }
+  ],
+  "iterationCount": {
+    "value": 10
+  },
+  "savingFrequence": 3,
+  "optimizerClasses": {},
+  "objectiveContainer": {
+    "objectives": [
+      {
+        "relation": "MAXIMIZE",
+        "terminator": false,
+        "weight": 100.0,
+        "name": "accuracy",
+        "typeName": "java.lang.Float",
+        "dummy": 0.0,
+        "value": 0.6450205,
+        "target": 0.0
+      }
+    ]
+  },
+  "scriptParameters": [
+    {
+      "name": "kernel",
+      "typeName": "java.lang.String",
+      "initValue": "rbf",
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": "linear",
+            "lowerBound": "rbf",
+            "valueArray": [
+              "rbf",
+              "linear"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "gamma",
+      "typeName": "java.lang.Float",
+      "initValue": 5.1064777,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 10.0,
+            "lowerBound": 0.0
+          },
+          "p": {
+            "name": "kernel",
+            "typeName": "java.lang.String",
+            "initValue": "rbf",
+            "dependencies": [
+              {
+                "rangeOfThis": {
+                  "upperBound": "linear",
+                  "lowerBound": "rbf",
+                  "valueArray": [
+                    "rbf",
+                    "linear"
+                  ]
+                }
+              }
+            ]
+          },
+          "rangeOfOther": {
+            "upperBound": "rbf",
+            "lowerBound": "rbf",
+            "valueArray": [
+              "rbf"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "c",
+      "typeName": "java.lang.Float",
+      "initValue": 2.0551991,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 10.0,
+            "lowerBound": 0.0
+          }
+        }
+      ]
+    }
+  ]
+}

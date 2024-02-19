@@ -1,0 +1,105 @@
+{
+  "baseCommand": " java -cp examples/Schwefel_java/ Schwefel $firstParam $secondParam",
+  "algorithmName": "SMBO",
+  "iterationCounter": 0,
+  "optimizerParameters": [
+    {
+      "name": "number_of_random_points",
+      "typeName": "java.lang.Integer",
+      "initValue": 5,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 1000,
+            "lowerBound": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "sigma_of_Gaussian_kernel",
+      "typeName": "java.lang.Float",
+      "initValue": 1.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100000.0,
+            "lowerBound": 1.0E-4
+          }
+        }
+      ]
+    },
+    {
+      "name": "lambda",
+      "typeName": "java.lang.Float",
+      "initValue": 0.01,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 1.0,
+            "lowerBound": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "name": "grid_size",
+      "typeName": "java.lang.Integer",
+      "initValue": 1000,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 1,
+            "lowerBound": 1000
+          }
+        }
+      ]
+    }
+  ],
+  "iterationCount": {
+    "value": 20
+  },
+  "savingFrequence": -1,
+  "optimizerClasses": {},
+  "objectiveContainer": {
+    "objectives": [
+      {
+        "relation": "MAXIMIZE",
+        "terminator": false,
+        "weight": 100.0,
+        "name": "schwefel",
+        "dummy": 0.0,
+        "target": 0.0,
+        "typeName": "java.lang.Float"
+      }
+    ]
+  },
+  "scriptParameters": [
+    {
+      "name": "firstParam",
+      "typeName": "java.lang.Float",
+      "initValue": 0.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 500.0,
+            "lowerBound": -500.0
+          }
+        }
+      ]
+    },
+    {
+      "name": "secondParam",
+      "typeName": "java.lang.Float",
+      "initValue": 0.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 500.0,
+            "lowerBound": -500.0
+          }
+        }
+      ]
+    }
+  ]
+}

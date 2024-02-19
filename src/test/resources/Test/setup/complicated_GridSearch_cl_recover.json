@@ -1,0 +1,7093 @@
+{
+  "baseCommand": " python src/test/resources/Test/Rosenbrock1.py $firstParam $secondParam",
+  "algorithmName": "GridSearch",
+  "iterationCounter": 15,
+  "landscape": [
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.776186,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 0.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "4",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 1.4E-45,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 0
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.776286,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 1.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "2",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 1.4E-45,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 0
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.7763863,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 4.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "3",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 1.4E-45,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 1
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.7764864,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 9.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "4",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 1.4E-45,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 1
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.7765865,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 16.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "2",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 1.4E-45,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 1
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.7765865,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 16.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "2",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": false,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 36969.96,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 36970.96,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 0.0,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 742
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.776186,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 0.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "4",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": false,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 36971.504,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 36972.504,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 0.0,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 507
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.776286,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 1.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "2",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": false,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 36971.117,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 36972.117,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 0.0,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 506
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.776186,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 0.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "4",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 36971.504,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 36972.504,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 0.0,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 503
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.7763863,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 4.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "3",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 36970.73,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 36971.73,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 0.0,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 472
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.7765865,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 16.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "2",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 36969.96,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 36970.96,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 0.0,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 742
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.7763863,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 4.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "3",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": false,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 36970.73,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 36971.73,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 0.0,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 490
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.7764864,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 9.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "4",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 36970.348,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 36971.348,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 0.0,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 500
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.776286,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 1.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "2",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 36971.117,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 36972.117,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 0.0,
+            "target": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 493
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.7766867,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 25.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "3",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 1.4E-45,
+            "target": 0.0,
+            "lastvalue": 36969.96,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "lastvalue": 36970.96,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "lastvalue": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 494
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.776787,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 36.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "4",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 1.4E-45,
+            "target": 0.0,
+            "lastvalue": 1.4E-45,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "lastvalue": 3.4028235E38,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "lastvalue": 3.4028235E38,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 494
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.776887,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 49.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "2",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 1.4E-45,
+            "target": 0.0,
+            "lastvalue": 1.4E-45,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "lastvalue": 3.4028235E38,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "lastvalue": 3.4028235E38,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 495
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.776987,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 64.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "3",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 1.4E-45,
+            "target": 0.0,
+            "lastvalue": 1.4E-45,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "lastvalue": 3.4028235E38,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "lastvalue": 3.4028235E38,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 495
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.777087,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 81.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "4",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 1.4E-45,
+            "target": 0.0,
+            "lastvalue": 1.4E-45,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "lastvalue": 3.4028235E38,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 3.4028235E38,
+            "target": 0.0,
+            "lastvalue": 3.4028235E38,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 496
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.777087,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 81.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "4",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 36968.04,
+            "target": 0.0,
+            "lastvalue": 36968.04,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 36969.04,
+            "target": 0.0,
+            "lastvalue": 36969.04,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 0.0,
+            "target": 0.0,
+            "lastvalue": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 1163
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.7766867,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 25.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "3",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": false,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 36969.58,
+            "target": 0.0,
+            "lastvalue": 36968.81,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 36970.58,
+            "target": 0.0,
+            "lastvalue": 36969.81,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 0.0,
+            "target": 0.0,
+            "lastvalue": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 931
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.776887,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 49.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "2",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": false,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 36968.81,
+            "target": 0.0,
+            "lastvalue": 36968.42,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 36969.81,
+            "target": 0.0,
+            "lastvalue": 36969.42,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 0.0,
+            "target": 0.0,
+            "lastvalue": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 926
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.7766867,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 25.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "3",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 36969.58,
+            "target": 0.0,
+            "lastvalue": 1.4E-45,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 36970.58,
+            "target": 0.0,
+            "lastvalue": 3.4028235E38,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 0.0,
+            "target": 0.0,
+            "lastvalue": 3.4028235E38,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 885
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.776787,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 36.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "4",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": false,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 36969.19,
+            "target": 0.0,
+            "lastvalue": 36968.42,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 36970.19,
+            "target": 0.0,
+            "lastvalue": 36969.42,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 0.0,
+            "target": 0.0,
+            "lastvalue": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 919
+    },
+    {
+      "configuration": [
+        {
+          "name": "firstParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 20.0,
+                "lowerBound": 10.0
+              },
+              "p": {
+                "name": "secondParam",
+                "typeName": "java.lang.Float",
+                "initValue": 12.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 10.0,
+                      "lowerBound": 0.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 2.0,
+                "lowerBound": 5.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "secondParam",
+          "typeName": "java.lang.Float",
+          "initValue": 5.776987,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            }
+          ]
+        },
+        {
+          "functionString": "$x*$x",
+          "name": "param0",
+          "typeName": "java.lang.Float",
+          "initValue": 64.0,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 10.0,
+                "lowerBound": 0.0
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": 81.0,
+                "lowerBound": 0.0,
+                "valueArray": [
+                  0.0,
+                  1.0,
+                  4.0,
+                  9.0,
+                  16.0,
+                  25.0,
+                  36.0,
+                  49.0,
+                  64.0,
+                  81.0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "param1",
+          "typeName": "java.lang.Integer",
+          "initValue": 5,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": 6,
+                "lowerBound": 4
+              },
+              "p": {
+                "name": "firstParam",
+                "typeName": "java.lang.Float",
+                "initValue": 5.0,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": 20.0,
+                      "lowerBound": 10.0
+                    },
+                    "p": {
+                      "name": "secondParam",
+                      "typeName": "java.lang.Float",
+                      "initValue": 12.0,
+                      "dependencies": [
+                        {
+                          "rangeOfThis": {
+                            "upperBound": 10.0,
+                            "lowerBound": 0.0
+                          }
+                        }
+                      ]
+                    },
+                    "rangeOfOther": {
+                      "upperBound": 2.0,
+                      "lowerBound": 5.0
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": 5.0,
+                "lowerBound": 3.0
+              }
+            }
+          ]
+        },
+        {
+          "name": "param2",
+          "typeName": "java.lang.String",
+          "initValue": "3",
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": "4",
+                "lowerBound": "2",
+                "valueArray": [
+                  "2",
+                  "3",
+                  "4"
+                ]
+              }
+            },
+            {
+              "rangeOfThis": {
+                "upperBound": "5",
+                "lowerBound": "1",
+                "valueArray": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5"
+                ]
+              },
+              "p": {
+                "name": "param5",
+                "typeName": "java.lang.Boolean",
+                "initValue": true,
+                "dependencies": [
+                  {
+                    "rangeOfThis": {
+                      "upperBound": false,
+                      "lowerBound": false
+                    }
+                  }
+                ]
+              },
+              "rangeOfOther": {
+                "upperBound": true,
+                "lowerBound": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "param5",
+          "typeName": "java.lang.Boolean",
+          "initValue": true,
+          "dependencies": [
+            {
+              "rangeOfThis": {
+                "upperBound": false,
+                "lowerBound": false
+              }
+            }
+          ]
+        }
+      ],
+      "objectives": {
+        "objectives": [
+          {
+            "relation": "MAXIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen",
+            "dummy": 0.0,
+            "value": 36968.42,
+            "target": 0.0,
+            "lastvalue": 36969.19,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "rosen1",
+            "dummy": 0.0,
+            "value": 36969.42,
+            "target": 0.0,
+            "lastvalue": 36970.19,
+            "typeName": "java.lang.Float"
+          },
+          {
+            "relation": "MINIMIZE",
+            "terminator": false,
+            "weight": 100.0,
+            "name": "obj_0",
+            "dummy": 0.0,
+            "value": 0.0,
+            "target": 0.0,
+            "lastvalue": 0.0,
+            "typeName": "java.lang.Float"
+          }
+        ]
+      },
+      "timeStamp": 922
+    }
+  ],
+  "optimizerParameters": [
+    {
+      "name": "firstParam_step_size",
+      "typeName": "java.lang.String",
+      "initValue": "dummy",
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": "dummy",
+            "lowerBound": "dummy"
+          }
+        }
+      ]
+    },
+    {
+      "name": "secondParam_step_size",
+      "typeName": "java.lang.Float",
+      "initValue": 1.0E-4,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 10.0,
+            "lowerBound": 1.0E-4
+          }
+        }
+      ]
+    },
+    {
+      "name": "param0_step_size",
+      "typeName": "java.lang.Integer",
+      "initValue": 1,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 19,
+            "lowerBound": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "param1_step_size",
+      "typeName": "java.lang.String",
+      "initValue": "dummy",
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": "dummy",
+            "lowerBound": "dummy"
+          }
+        }
+      ]
+    },
+    {
+      "name": "param2_step_size",
+      "typeName": "java.lang.Integer",
+      "initValue": 1,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 7,
+            "lowerBound": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "param5_step_size",
+      "typeName": "java.lang.Integer",
+      "initValue": 1,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 1,
+            "lowerBound": 1
+          }
+        }
+      ]
+    }
+  ],
+  "iterationCount": {
+    "value": 10
+  },
+  "savingFrequence": 3,
+  "optimizerClasses": {},
+  "objectiveContainer": {
+    "objectives": [
+      {
+        "relation": "MAXIMIZE",
+        "terminator": false,
+        "weight": 100.0,
+        "name": "rosen",
+        "dummy": 0.0,
+        "value": 36968.04,
+        "target": 0.0,
+        "lastvalue": 36968.04,
+        "typeName": "java.lang.Float"
+      },
+      {
+        "relation": "MINIMIZE",
+        "terminator": false,
+        "weight": 100.0,
+        "name": "rosen1",
+        "dummy": 0.0,
+        "value": 36969.04,
+        "target": 0.0,
+        "lastvalue": 36969.04,
+        "typeName": "java.lang.Float"
+      },
+      {
+        "relation": "MINIMIZE",
+        "terminator": false,
+        "weight": 100.0,
+        "name": "obj_0",
+        "dummy": 0.0,
+        "value": 0.0,
+        "target": 0.0,
+        "lastvalue": 0.0,
+        "typeName": "java.lang.Float"
+      }
+    ]
+  },
+  "scriptParameters": [
+    {
+      "name": "firstParam",
+      "typeName": "java.lang.Float",
+      "initValue": 5.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 20.0,
+            "lowerBound": 10.0
+          },
+          "p": {
+            "name": "secondParam",
+            "typeName": "java.lang.Float",
+            "initValue": 12.0,
+            "dependencies": [
+              {
+                "rangeOfThis": {
+                  "upperBound": 10.0,
+                  "lowerBound": 0.0
+                }
+              }
+            ]
+          },
+          "rangeOfOther": {
+            "upperBound": 2.0,
+            "lowerBound": 5.0
+          }
+        }
+      ]
+    },
+    {
+      "name": "secondParam",
+      "typeName": "java.lang.Float",
+      "initValue": 5.7771873,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 10.0,
+            "lowerBound": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "functionString": "$x*$x",
+      "name": "param0",
+      "typeName": "java.lang.Float",
+      "initValue": 0.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 81.0,
+            "lowerBound": 0.0,
+            "valueArray": [
+              0.0,
+              1.0,
+              4.0,
+              9.0,
+              16.0,
+              25.0,
+              36.0,
+              49.0,
+              64.0,
+              81.0
+            ]
+          },
+          "p": {
+            "name": "firstParam",
+            "typeName": "java.lang.Float",
+            "initValue": 5.0,
+            "dependencies": [
+              {
+                "rangeOfThis": {
+                  "upperBound": 20.0,
+                  "lowerBound": 10.0
+                },
+                "p": {
+                  "name": "secondParam",
+                  "typeName": "java.lang.Float",
+                  "initValue": 12.0,
+                  "dependencies": [
+                    {
+                      "rangeOfThis": {
+                        "upperBound": 10.0,
+                        "lowerBound": 0.0
+                      }
+                    }
+                  ]
+                },
+                "rangeOfOther": {
+                  "upperBound": 2.0,
+                  "lowerBound": 5.0
+                }
+              }
+            ]
+          },
+          "rangeOfOther": {
+            "upperBound": 10.0,
+            "lowerBound": 0.0
+          }
+        },
+        {
+          "rangeOfThis": {
+            "upperBound": 81.0,
+            "lowerBound": 0.0,
+            "valueArray": [
+              0.0,
+              1.0,
+              4.0,
+              9.0,
+              16.0,
+              25.0,
+              36.0,
+              49.0,
+              64.0,
+              81.0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "param1",
+      "typeName": "java.lang.Integer",
+      "initValue": 5,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 6,
+            "lowerBound": 4
+          },
+          "p": {
+            "name": "firstParam",
+            "typeName": "java.lang.Float",
+            "initValue": 5.0,
+            "dependencies": [
+              {
+                "rangeOfThis": {
+                  "upperBound": 20.0,
+                  "lowerBound": 10.0
+                },
+                "p": {
+                  "name": "secondParam",
+                  "typeName": "java.lang.Float",
+                  "initValue": 12.0,
+                  "dependencies": [
+                    {
+                      "rangeOfThis": {
+                        "upperBound": 10.0,
+                        "lowerBound": 0.0
+                      }
+                    }
+                  ]
+                },
+                "rangeOfOther": {
+                  "upperBound": 2.0,
+                  "lowerBound": 5.0
+                }
+              }
+            ]
+          },
+          "rangeOfOther": {
+            "upperBound": 5.0,
+            "lowerBound": 3.0
+          }
+        }
+      ]
+    },
+    {
+      "name": "param2",
+      "typeName": "java.lang.String",
+      "initValue": "2",
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": "4",
+            "lowerBound": "2",
+            "valueArray": [
+              "2",
+              "3",
+              "4"
+            ]
+          }
+        },
+        {
+          "rangeOfThis": {
+            "upperBound": "5",
+            "lowerBound": "1",
+            "valueArray": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ]
+          },
+          "p": {
+            "name": "param5",
+            "typeName": "java.lang.Boolean",
+            "initValue": true,
+            "dependencies": [
+              {
+                "rangeOfThis": {
+                  "upperBound": false,
+                  "lowerBound": false
+                }
+              }
+            ]
+          },
+          "rangeOfOther": {
+            "upperBound": true,
+            "lowerBound": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "param5",
+      "typeName": "java.lang.Boolean",
+      "initValue": false,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": false,
+            "lowerBound": false
+          }
+        }
+      ]
+    }
+  ]
+}

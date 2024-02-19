@@ -1,0 +1,94 @@
+{
+  "baseCommand": " python Examples/Rosenbrock/Rosenbrock.py $firstParam $secondParam",
+  "objectiveFileName": "obj.txt",
+  "algorithmName": "DifferentialEvolution",
+  "iterationCounter": 0,
+  "optimizerParameters": [
+    {
+      "name": "population_size",
+      "typeName": "java.lang.Integer",
+      "initValue": 5,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 2147483647,
+            "lowerBound": -2147483648
+          }
+        }
+      ]
+    },
+    {
+      "name": "phi",
+      "typeName": "java.lang.Double",
+      "initValue": 0.5,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100000.0,
+            "lowerBound": 1.4E-45
+          }
+        }
+      ]
+    },
+    {
+      "name": "kappa",
+      "typeName": "java.lang.Double",
+      "initValue": 0.5,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100000.0,
+            "lowerBound": 1.4E-45
+          }
+        }
+      ]
+    }
+  ],
+  "iterationCount": {
+    "value": 10
+  },
+  "savingFrequence": 3,
+  "optimizerClasses": {},
+  "objectiveContainer": {
+    "objectives": [
+      {
+        "relation": "MAXIMIZE",
+        "terminator": false,
+        "weight": 100.0,
+        "name": "rosen",
+        "typeName": "java.lang.Float",
+        "dummy": 0.0,
+        "value": 7.1132672E9,
+        "target": 0.0
+      }
+    ]
+  },
+  "scriptParameters": [
+    {
+      "name": "firstParam",
+      "typeName": "java.lang.Float",
+      "initValue": 92.14018,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "name": "secondParam",
+      "typeName": "java.lang.Float",
+      "initValue": 55.79883,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": 0.0
+          }
+        }
+      ]
+    }
+  ]
+}

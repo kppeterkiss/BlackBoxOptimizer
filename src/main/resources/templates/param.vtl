@@ -1,0 +1,164 @@
+<!--
+        Copyright 2018 Peter Kiss and David Fonyo
+
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+ -->
+<div id = "cont" class="container-fluid text-left ">
+<div class="row content">
+
+    <h1>BlackBoxOptimizer</h1>
+
+
+    <form action = "/updateconfig" method="post" id = "paramform"  onload = "load();">
+        <div id = "hiddendiv" style="display:none">
+            <input id = "savefilename" name = "savefilename" type = "text" value = "${filename}">
+
+            <input id = "dependency_ids" name = "dependency_ids" type = "text" >
+            <input id = "param_names" name = "param_names" type = "text" >
+            <input id = "object_names" name = "object_names" type = "text" >
+            <input id = "param_range_div_ids" name = "param_range_div_ids" type = "text" >
+            <input id = "name_param_id_map" name = "name_param_id_map" type = "text" >
+
+        </div>
+
+
+        <div id = "commanddiv" name = "commanddiv"><h2>Command</h2></div>
+        <hr class="style2"/>
+        <div id = "paramdiv" name = "paramdiv">
+            <h2>Params</h2>
+            <div id = "paramlistdiv" name = "paramlistdiv"></div>
+            <div id = "paramnewparamdiv" name = "paramnewparamdiv"></div>
+        </div>
+
+        <button type="button" class="btn btn-default" onclick = "addNewParam('paramlistdiv')">Add param</button>
+        <hr class="style2"/>
+        <div id = "obejectivediv" name = "obejectivelistdiv">
+            <h2>Objectives</h2>
+
+
+        </div>
+        <hr class="style2"/>
+        <input type="checkbox" name="safe_mode" value="safe_mode">Safe mode - frequency (iteration) <input type="number" name="frequency" value="10"><br>
+        <hr class="style2"/>
+        <button type="submit" class="btn btn-default">OK</button>
+    </form>
+
+    <script>
+        $( document ).ready(function() {
+
+            param_names = [
+                #foreach( $var in $parameternames )
+                    #if($foreach.index>  0),#end
+                    "$var"
+                #end ]
+            objective_relation_types = [
+                #foreach( $var in $objectivetypes )
+                    #if($foreach.index>  0),#end
+                    "$var"
+                #end ]
+            data_types = [
+                #foreach( $var in $parametertypes )
+                    #if($foreach.index>  0),#end
+                    "$var"
+                #end ]//["Enum","Boolean","Float","Integer"]
+
+            objective_types = [
+                #foreach( $var in $objtypes )
+                    #if($foreach.index>  0),#end
+                    "$var"
+                #end ]//["Enum","Boolean","Float","Integer"]
+
+
+            $("#chosenfile").change(function(){
+                var fp = $(this).val();//.replace(“C\:\\fakepath\\”, “”);
+                $("#cfn").val(fp)
+            })
+            function clear(){
+                $("#dependency_ids" ).val("");
+                $("#param_names").val("");
+                $("#object_names").val("");
+                $("#param_range_div_ids").val("");
+            }
+
+            function load(){
+                clear();
+                var commandline = "";
+                #if ($command)
+                    commandline = "$command";
+                #end
+                addCommandLine(commandline);
+                #if($algorithms)
+                    #foreach ($alg in $algorithms)
+                        addAlgorithmsToControl("$alg")
+                    #end
+                #end
+                #if ($paramlist)
+                    #foreach ($param in $paramlist)
+                        initMaps("$param.getName()","$param.getParamTypeName()","$param.getAllValueString()")
+                    #end
+                    #foreach ($param in $paramlist)
+                        paramdivid = "$param.getName()" + "_div"
+                        addParamDiv("paramlistdiv" ,paramdivid, "$param.getName()","$param.getParamTypeName()","$param.getAllValueString()")
+                        #foreach ($dependency in $param.getDependencies())
+                            #if ($dependency.getP())
+                                addParamWithDependency(
+                                        paramdivid,
+                                        "$param.getName()",
+                                        "$param.getValue()",
+                                        "$dependency.getRangeOfThis().getLowerBound()",
+                                        "$dependency.getRangeOfThis().getUpperBound()",
+                                        "$dependency.getP().getName()",
+                                        "$dependency.getRangeOfOther().getLowerBound()",
+                                        "$dependency.getRangeOfOther().getUpperBound()",
+                                        "$param.getAdditionalInfo()"
+                                )
+                            #else
+                                addEmptyDependency(
+                                        paramdivid,
+                                        "$param.getName()",
+                                        "$param.getValue()",
+                                        "$dependency.getRangeOfThis().getLowerBound()",
+                                        "$dependency.getRangeOfThis().getUpperBound()",
+                                        "$param.getAdditionalInfo()"
+                                )
+                            #end
+
+                        #end
+                        //updateType("$param.getName()")
+                    #end
+                    #foreach ($param in $paramlist)
+                    updateType("$param.getName()")
+                    #end
+                #else
+                <p>No tasks!</p>
+                #end
+                initObjectiveControl("obejectivediv", "$obj_filename",$iteration_count )
+                #if($objlist)
+                    #foreach($obj in $objlist)
+                        addNewObjective("$obj.getName()","$obj.getRelation()","$obj.getTarget()","$obj.isTerminator()","$obj.getTypeName()")
+                    #end
+                #end
+
+            }
+            load();
+
+            $("#savefilenamedisp").removeClass("disabled_link");
+
+            jQuery('.paramname').on('focusin', function(){
+                $(this).data('val', $(this).val());
+            });
+        });
+    </script>
+
+</div>
+</div>

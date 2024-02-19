@@ -1,0 +1,52 @@
+{
+  "baseCommand": "Rscript examples/Katsuura_R/Katsuura.rscript.R $firstParam $secondParam",
+  "algorithmName": "RandomSearch",
+  "iterationCounter": 21,
+  "optimizerParameters": [],
+  "iterationCount": {
+    "value": 20
+  },
+  "savingFrequence": -1,
+  "optimizerClasses": {},
+  "objectiveContainer": {
+    "objectives": [
+      {
+        "relation": "MAXIMIZE",
+        "terminator": false,
+        "weight": 100.0,
+        "name": "Katsuura",
+        "dummy": 0.0,
+        "target": 0.0,
+        "typeName": "java.lang.Float"
+      }
+    ]
+  },
+  "scriptParameters": [
+    {
+      "name": "firstParam",
+      "typeName": "java.lang.Float",
+      "initValue": 12.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "name": "secondParam",
+      "typeName": "java.lang.Float",
+      "initValue": 32.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": 0.0
+          }
+        }
+      ]
+    }
+  ]
+}

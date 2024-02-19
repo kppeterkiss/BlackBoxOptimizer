@@ -1,0 +1,41 @@
+<!--
+        Copyright 2018 Peter Kiss and David Fonyo
+
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+ -->
+<div id = "cont" class="container-fluid text-left">
+    <div class="row content">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="http://localhost:4567/js/rickshaw.css">
+        <link type="text/css" rel="stylesheet" href="http://localhost:4567/js/css/lines.css">
+        <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css">
+        <script src="http://localhost:4567/js/vendor/d3.v3.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js"></script>
+        <div id = "progress"/></div>
+        <div class="progress">
+            <div id = "pbar" class="progress-bar progress-bar-striped active" role="progressbar"
+                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+                0%
+            </div>
+        </div>
+        <script>
+            $('#progress').text( "0 %");
+            checkProgress();
+
+
+        </script>
+
+
+</div>

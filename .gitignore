@@ -1,0 +1,21 @@
+*~
+.classpath
+.project
+target
+.settings
+.DS_Store
+.faces-config.xml.jsfdia
+MANIFEST.MF
+.idea
+*.iml
+*.jar
+*.log
+RemoteSystemsTempFiles
+bin
+backup/*
+experiments/*
+logs/*
+results/*
+upload/*
+examples/Wormhole/*
+examples/Wormhole 2/*

@@ -1,0 +1,138 @@
+<!--
+        Copyright 2018 Peter Kiss and David Fonyo
+
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+ -->
+<div id = "cont" class="container-fluid text-left">
+    <div class="row content">
+            <!--<div class="col-sm-2 sidenav">
+     <p><a href="#">Link</a></p>
+     <p><a href="#">Link</a></p>
+     <p><a href="#">Link</a></p>
+   </div>-->
+    <h1>BlackBoxOptimizer</h1>
+    <!-- <form action = "/updateconfig" method="post" id = "paramform"  onload = "load();">-->
+    <form action = "/run" method="post" id = "paramform" >
+        <div id = "hiddendiv" style="display:none">
+            <input id = "dependency_ids" name = "dependency_ids" type = "text" />
+            <input id = "param_names" name = "param_names" type = "text" />
+            <input id = "object_names" name = "object_names" type = "text" />
+            <input id = "param_range_div_ids" name = "param_range_div_ids" type = "text" />
+        </div>
+        <div id = "algorithmdiv" >
+            <h2>Optimizer algorithm</h2>
+            <select id = "algorithm_names" name = "algorithm_names" ></select>
+        </div>
+        <hr/>
+        <div id = "paramdiv" ></div>
+        <div id = "submit_div">
+            <!--   <button type="submit" formaction="/updatealgorithmconfig">Optimize</button>-->
+            <!-- <button type="button" >Optimize</button>-->
+            <input id="clickMe" type="button" value="RUN" onclick=" enableTypeSelectsAndSubmit();" />          <!-- <button type="submit" value="Submit" formaction="/run">Run</button>-->
+        </div>
+    </form>
+        </div>
+</div>
+<script>
+$( document ).ready(function() {
+
+        param_names = [
+           #foreach( $var in $parameternames )
+               #if($foreach.index>  0),#end
+               "$var"
+               #end ]
+       objective_types = [
+           #foreach( $var in $objectivetypes )
+                     #if($foreach.index>  0),#end
+                     "$var"
+           #end ]
+       data_types = [
+            #foreach( $var in $parametertypes )
+                      #if($foreach.index>  0),#end
+                      "$var"
+            #end ]//["Enum","Boolean","Float","Integer"]
+
+
+       function load_alg(){
+           #foreach($mapEntry in $algParamMap.entrySet())
+               {
+               addAlgorithmsToControl("$mapEntry.key")
+               var alg_divid = "$mapEntry.key"+"_alg_div"
+               var paramlistdivid = "$mapEntry.key"+"_alg_div"
+               $("#algorithmdiv").append("<div id = \""+alg_divid+"\" class=\"$mapEntry.key\" ></div>")
+               #foreach($param in $mapEntry.value)
+                   {
+                   var paramdivid = "$mapEntry.key"+"_$param.getName()" + "_div"
+                   addParamDiv(alg_divid, paramdivid,"$param.getName()","$param.getParamTypeName()","$param.getAllPossibleValueArrayString()",false)
+                   #foreach ($dependency in $param.getDependencies())
+                           #if ($dependency.getP().getName())
+                               addParamWithDependency(
+                               paramdivid,
+                               "$param.getName()",
+                               "$param.getValue()",
+                               "$dependency.getRangeOfThis().getLowerBound()",
+                               "$dependency.getRangeOfThis().getUpperBound()",
+                               "$dependency.getP().getName()",
+                               "$dependency.getRangeOfOther().getLowerBound()",
+                               "$dependency.getRangeOfOther().getUpperBound()",
+                               "$param.getAdditionalInfo()",
+                               false
+                               )
+                           #else
+                               addEmptyDependency(
+                               paramdivid,
+                               "$param.getName()",
+                               "$param.getValue()",
+                               "$dependency.getRangeOfThis().getLowerBound()",
+                               "$dependency.getRangeOfThis().getUpperBound()",
+                               "$param.getAdditionalInfo()",
+                               false)
+                           #end
+                       updateType("$param.getName()")
+                       }
+                   #end
+
+               #end
+
+               }
+           #end
+
+           $('#algorithm_names').val('$algorithmname')
+
+           updateAlgorithmParamVisibility($("#algorithm_names option:selected").text())
+
+            jQuery('.paramname').on('input', function() {
+                paramNameEdited($(this).val(),$(this).data('val'))
+
+            });
+            jQuery('.paramname').on('focusin', function(){
+                $(this).data('val', $(this).val());
+            });
+
+           $('#algorithm_names').change(function(){
+                    var alg_name =$("option:selected", this).text();
+                   updateAlgorithmParamVisibility(alg_name)
+               })
+
+
+       }
+       function addAlgorithmsToControl(name){
+           $("#algorithm_names").append($("<option>").attr("value",name).text(name))
+       }
+       load_alg();
+       });
+       </script>
+        <!--<footer class="container-fluid">
+          <p>Footer Text</p>
+        </footer>-->
+s

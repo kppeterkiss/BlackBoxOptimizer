@@ -1,0 +1,84 @@
+{
+  "baseCommand": " python src/test/resources/Test/Rosenbrock1.py $firstParam $secondParam",
+  "algorithmName": "RandomSearch",
+  "iterationCounter": 0,
+  "optimizerParameters": [],
+  "iterationCount": {
+    "value": 10
+  },
+  "savingFrequence": -1,
+  "optimizerClasses": {},
+  "objectiveContainer": {
+    "objectives": [
+      {
+        "relation": "MAXIMIZE",
+        "terminator": false,
+        "weight": 100.0,
+        "typeName": "java.lang.Float",
+        "name": "rosen",
+        "dummy": 0.0,
+        "target": 0.0
+      },
+      {
+        "relation": "MINIMIZE",
+        "terminator": false,
+        "typeName": "java.lang.Float",
+        "weight": 100.0,
+        "name": "rosen1",
+        "dummy": 0,
+        "target": 0
+      }
+    ]
+  },
+  "scriptParameters": [
+    {
+      "name": "firstParam",
+      "typeName": "java.lang.Float",
+      "initValue": 50.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 200.0,
+            "lowerBound": 100.0
+          }
+        },
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": 0.0
+          },
+          "p": {
+            "name": "secondParam",
+            "typeName": "java.lang.Float",
+            "initValue": 12.0,
+            "dependencies": [
+              {
+                "rangeOfThis": {
+                  "upperBound": 100.0,
+                  "lowerBound": 0.0
+                }
+              }
+            ]
+          },
+          "rangeOfOther": {
+            "upperBound": 50.0,
+            "lowerBound": 12.0
+          }
+        }
+      ]
+    },
+    {
+      "name": "secondParam",
+      "typeName": "java.lang.Float",
+      "initValue": 12.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": 0.0
+          }
+        }
+      ]
+    }
+  ]
+}

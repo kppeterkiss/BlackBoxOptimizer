@@ -1,0 +1,420 @@
+<!--
+        Copyright 2018 Peter Kiss and David Fonyo
+
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+ -->
+<div id = "cont" class="container-fluid text-left">
+    <div class="row content">
+        <!--<div class="col-sm-2 sidenav">
+          <p><a href="#">Link</a></p>
+          <p><a href="#">Link</a></p>
+          <p><a href="#">Link</a></p>
+        </div>-->
+
+        <!--<link rel="stylesheet" href="http://localhost:4567/js/rickshaw.min.css">
+            <script src="http://localhost:4567/js/vendor/d3.min.js"></script>
+            <script src="http://localhost:4567/js/vendor/d3.layout.min.js"></script>
+            <script src="http://localhost:4567/js/rickshaw.min.js"></script>-->
+        <script src="http://localhost:4567/js/rickshaw.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="http://localhost:4567/js/rickshaw.css">
+        <link type="text/css" rel="stylesheet" href="http://localhost:4567/js/css/lines.css">
+        <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css">
+        <script src="http://localhost:4567/js/vendor/d3.v3.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js"></script>
+
+        <script src="http://localhost:4567/js/rickshaw.js"></script>
+        <style>
+            #chart_container {
+                position: relative;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            #chart {
+                position: relative;
+                left: 40px;
+            }
+            #y_axis {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 40px;
+            }
+            .column { display: inline-block }
+            #legend { background: white }
+            #legend .line { color: #333 }
+        </style>
+
+        <div id="chart_container" class = "column">
+            <div id="y_axis"></div>
+            <div id="chart"></div>
+            <!-- <div id="slider"></div>-->
+        </div>
+        <div class="column" id="legend"></div>
+        <div id="failed_experiment_div"</div>
+    <script>
+        $( document ).ready(function() {
+
+            // globals
+
+            var headers , data, text, setup;
+
+
+            var failedfilelist = [    #foreach( $var in $failed )        #if($foreach.index>  0),#end        "$var"        #end ]
+
+            var resfilelist = [    #foreach( $var in $resfilelist )        #if($foreach.index>  0),#end        "$var"        #end ]
+
+            var setupfilelist = [    #foreach( $var in $setupfilelist )        #if($foreach.index>  0),#end        "$var"        #end ]
+
+
+            var experiments = [];
+            var max_iteration_count=0;
+            var max_x = 0;
+
+            // obeject: fn:finename , data:results
+            var readedfilecontents = [];
+
+
+
+            //var csv is the CSV file with headers
+            function csvJSON(csv){
+                var lines=csv.split("\n");
+                var result = [];
+
+                var headers=lines[0].split(",");
+
+                //add a first point to start from 0
+                var obj = {};
+
+                for(var j=0;j<headers.length;j++){
+                    obj[headers[j]] = 0;
+                }
+
+                result.push(obj);
+
+                for(var i=1;i<lines.length;i++){
+
+                    var obj = {};
+                    var currentline=lines[i].split(",");
+                    if(currentline.length != headers.length)
+                        continue;
+
+                   for(var j=0;j<headers.length;j++){
+                        obj[headers[j]] = currentline[j];
+                    }
+                    result.push(obj);
+
+                }
+
+                return JSON.stringify(result); //JSON
+            }
+
+            function csvJSON1(csv){
+
+                var lines=csv.split("\n");
+                var result = [];
+                var headers=lines[0].split(",");
+
+                for(var i=1;i<lines.length;i++){
+                    var obj = {};
+                    var currentline=lines[i].split(",");
+                    obj[headers[0]] = currentline[0];
+                    obj[headers[headers.length-1]] = currentline[headers.length-1];
+                    result.push(obj);
+
+                }
+
+                return JSON.stringify(result); //JSON
+            }
+
+
+            // reads all the files config and res in the same list
+            function readFiles(filelist){
+                if(filelist.length>0){
+                    // always load the first in list, when it is done remove from list and load the next recursive
+                    $.get(filelist[0], function(data) {
+                        if(filelist[0].includes(".csv")) {
+                            //what is the maximum number of iterations
+                            var c = data.split('\n').length-1;
+                            if(c>max_iteration_count){
+                                max_iteration_count = c;
+                            }
+                        }
+                        readedfilecontents.push({ fn: filelist[0] ,d: data});
+                        filelist.splice(0,1);
+                        readFiles(filelist);
+                    }, 'text');
+                }
+                else{
+                    console.log('done');
+                    createDataMap(readedfilecontents,resfilelist);
+                    draw2(experiments);
+
+                }
+            }
+            //creates object data: is the already readed exp data, setup: the json object
+            function readOneExperiment(readedfilecontents,setupfilename){
+                var base1 = setupfilename.split(".")[0];
+                var base1parts = base1.split("/");
+                var base = base1parts[base1parts.length-1];
+                var setup, data,fn;
+                readedfilecontents.forEach(function(e){
+                            fn = e.fn;
+                            var splittedfn = e.fn.split(".");
+                            var splittedfnparts = splittedfn[0].split("/");
+                            var base2 = splittedfnparts[splittedfnparts.length-1]
+                            if(base2===base){
+                                if(splittedfn[1]==="json"){
+                                    setup = JSON.parse(e.d);
+                                    setup['filename'] =  base;
+                                }
+                                else{
+                                    data = e.d;
+                                }
+                            }
+                        }
+                );
+                return {data : data,setup : setup, fn : fn}
+            }
+
+            //for each result files we read the result data and the setup into one object and then push it into experiments list
+            function createDataMap(readedfilecontents,resfilelist ){
+                resfilelist.forEach(function(filename){
+                    var entry = readOneExperiment(readedfilecontents,filename);
+                    experiments.push(entry);
+                });
+
+            }
+
+            //In: emperiments is a list of object compiosed by result data and JSOn objects of experiment setup
+            function draw2(experiments){
+                var series = [];
+                var j =0;
+                experiments.forEach(function(exp){
+                            //data rows to json conversion
+                            var data0 =  JSON.parse(csvJSON(exp.data))
+                            var length_of_data = data0.length;
+                            if(Object.keys(data0).length>=exp.setup.iterationCount.value){
+                                //iterate over objectives specified in the experiment- each of those will be one graph
+                                exp.setup.objectiveContainer.objectives.forEach(function(obj) {
+                                    var color = '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6) + "aa";
+                                    var color1 = '#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6);
+
+                                    var data = Object.assign([], data0);
+                                    var k;
+                                    // timestamps for the iterations
+                                    var time_iter_map = {};
+                                    for (k = 0; k < length_of_data; k++) {
+                                        (function (k) {
+                                            //because of parallelization same timestamp can appear multiple times
+                                            if(k>0&&+data[k]['timestamp'] <= +data[k-1]['timestamp']) {
+                                                data[k]['timestamp'] = '' + (+data[k - 1]['timestamp'] + 1);
+                                            }
+                                            //find the latest iteration timestamp
+                                            if (max_x < +data[k]['timestamp']) {
+                                                max_x = +data[k]['timestamp'];
+                                            }
+                                            //x value will be the timestamp
+                                            data[k]["x"] = +data[k]['timestamp'];
+                                            //y is the column with  name of the objective
+                                            data[k]["y"] = +data[k][obj.name]
+                                            //key: timestamp value:  iteration number
+                                            time_iter_map[data[k]['timestamp']] = k;
+                                        })(k);
+                                    }
+                                    //lastx : furthest value of objective in time
+                                    var last_element = data[k-1]
+                                    var lastx = data[k - 1]["x"];
+                                    var lasty = data[k - 1]["y"];
+                                    // here we add aditional nodes
+                                    for (; k <= max_iteration_count; k++) {
+                                        (function (k) {
+                                            lastx++;
+
+                                            var new_entry = Object.assign({}, last_element);
+                                            new_entry['y']= 0; //add a couple of new x value next to the last one with y=0
+                                            new_entry['x'] = lastx;
+                                            new_entry['timestamp'] = ''+new_entry['x'];
+                                            data.push(new_entry);
+                                            time_iter_map[new_entry['timestamp']] = k;
+                                        })(k);
+                                    }
+
+
+                                    var setup = {};
+                                    var rel =  obj.relation;
+                                    var target = !!(obj.target)?('->'+obj.target):('');
+                                    if(target === undefined)
+                                        alert(target)
+                                    setup['name'] = j + ": "+exp.setup.filename+" -> " + exp.setup.algorithmName + " " + obj.name+"  ("+ rel+target+")";
+                                    setup['data'] = data;
+                                    setup['color'] = color;
+                                    setup['renderer'] = 'area';
+                                    setup['time_iter_map'] = time_iter_map;
+
+                                    //another graph: best value up to now
+                                    var time_iter_map1 = {};
+                                    series.push(setup);
+
+                                    data1 = JSON.parse(csvJSON(exp.data));
+                                    var best = +data1[1][obj.name];
+                                    if(isNaN(best))
+                                        best = 0;
+                                    for (k = 0; k < data1.length; k++) {
+                                        (function (k) {
+                                            var next_value = +(data1[k][obj.name]);
+                                            if((k != 0) && !Number.isNaN(next_value)) {
+                                                if ((obj.relation === 'MINIMIZE' || obj.relation === 'LESS_THAN'  || obj.relation === 'MINIMIZE_TO_CONVERGENCE') && +data1[k][obj.name] < best) {
+                                                    best = next_value;
+                                                }
+                                                else if ((obj.relation === 'MAXIMIZE' || obj.relation === 'GREATER_THAN'|| obj.relation === 'MAXIMIZE_TO_CONVERGENCE') && +data1[k][obj.name] > best) {
+                                                    best = next_value;
+                                                }
+                                            }
+                                            //because of parallelization same timestamp can appear multiple times
+                                            if(k>0 && +data1[k]['timestamp'] <= +data1[k-1]['timestamp']) {
+                                                data1[k]['timestamp'] = '' + (+data1[k - 1]['timestamp'] + 1);
+                                            }
+
+                                            data1[k]["x"] = +(data1[k]['timestamp']);
+                                            data1[k]["y"] = best
+                                            time_iter_map1[data1[k]['timestamp']] = k;
+                                        })(k);
+
+                                    }
+                                    var lastx1 = data1[k - 1]["x"];
+                                    var last_element1 =  data1[k - 1];
+                                    for (; k <= max_iteration_count; k++) {
+                                        (function (k) {
+                                            lastx1++;
+                                            var new_entry =  Object.assign({}, last_element1);
+                                            new_entry['y'] = +best;
+                                            new_entry['x'] = lastx1;
+                                            new_entry['timestamp'] = ''+new_entry['x'];
+                                            data1.push(new_entry);
+                                            time_iter_map1[new_entry['timestamp']] = k;
+                                        })(k);
+                                    }
+
+                                    var setup1 = {};
+                                    var rel =  obj.relation;
+                                    var target = !!(obj.target)?('->'+obj.target):('');
+                                    if(target === undefined)
+                                        alert(target)
+                                    setup1['name'] = j +": "+exp.setup.filename+" -> " + exp.setup.algorithmName + " " + obj.name +"  ("+ rel+target+") best so far";
+                                    setup1['data'] = data1;
+                                    setup1['color'] = color1;
+                                    setup1['renderer'] = 'line';
+                                    setup1['time_iter_map'] = time_iter_map1;
+
+                                    series.push(setup1);
+
+                                    j++;
+
+
+                                })
+                            }
+                            else{
+                                alert("No matching numbers: "+Object.keys(data).length+" vs "+exp.setup.iterationCount.value)
+                                $("#failed_experiment_div").append(exp.fn)
+                            }
+
+
+                        }
+
+                )
+
+                var graph = new Rickshaw.Graph( {
+                    element: document.querySelector("#chart"),
+                    width: 960,
+                    height: 500,
+                    renderer: 'multi',
+                    preserve: true,
+                    series: series
+                } );
+
+                var x_axis = new Rickshaw.Graph.Axis.X( { graph: graph } );
+
+                var y_axis = new Rickshaw.Graph.Axis.Y( {
+                    graph: graph,
+                    orientation: 'left',
+                    tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+                    element: document.getElementById('y_axis')
+                } );
+
+                var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+                    xFormatter: function(x) {
+                        return x;
+                    },
+                    formatter: function(series, x, y, formattedX, formattedY, d) {
+                        var labeltext = "<strong>"+series.name+"<strong><br>"
+                        var data_no = series.time_iter_map[x];
+                        if(typeof data_no=="undefined"){
+                            alert('data_no' + x );
+
+                        }
+                        var data_element = series.data[data_no];
+                        if(typeof data_element=="undefined"){
+                            alert(data_no);
+
+                        }
+
+                        for(var h in data_element){
+                            labeltext += h +':&nbsp;'+data_element[h]+"<br>";
+                        }
+
+                        return labeltext + '<strong>'+x + ':&nbsp;' + formattedY+'<strong>';
+                    },
+                    graph: graph
+                } );
+
+
+                var legend = new Rickshaw.Graph.Legend({
+                    graph: graph,
+                    element: document.querySelector('#legend')
+                });
+
+                var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
+                    graph: graph,
+                    legend: legend,
+                });
+
+
+                var shelving = new Rickshaw.Graph.Behavior.Series.Toggle( {
+                    graph: graph,
+                    legend: legend
+                } );
+
+                var order = new Rickshaw.Graph.Behavior.Series.Order( {
+                    graph: graph,
+                    legend: legend
+                } );
+
+
+                graph.render();
+
+            }
+
+            $("#failed_experiment_div").append("Failed tasks:")
+
+            $("#failed_experiment_div").append(failedfilelist.join(",<br>"))
+
+            // entry point
+            readFiles(resfilelist.concat(setupfilelist));
+
+        });
+
+    </script>
+</div>
+</div>

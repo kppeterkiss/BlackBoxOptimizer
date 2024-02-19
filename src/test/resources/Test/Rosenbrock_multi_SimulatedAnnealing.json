@@ -1,0 +1,207 @@
+{
+  "baseCommand": " python Examples/Rosenbrock/Rosenbrock1.py $firstParam $secondParam",
+  "objectiveFileName": "obj.txt",
+  "algorithmName": "SimulatedAnnealing",
+  "iterationCounter": 11,
+  "optimizerParameters": [
+    {
+      "name": "max_step_size",
+      "typeName": "java.lang.Float",
+      "initValue": 10.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 10.0,
+            "lowerBound": 1.0E-4
+          }
+        }
+      ]
+    },
+    {
+      "name": "max_number_of_runs",
+      "typeName": "java.lang.Integer",
+      "initValue": 3,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 1000,
+            "lowerBound": 1
+          }
+        }
+      ]
+    },
+    {
+      "functionString": "1/(1+$alma)",
+      "name": "temperature",
+      "typeName": "java.lang.Float",
+      "initValue": 0.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 0.01,
+            "lowerBound": 1.0,
+            "valueArray": [
+              1.0,
+              0.5,
+              0.33333334,
+              0.25,
+              0.2,
+              0.16666667,
+              0.14285715,
+              0.125,
+              0.11111111,
+              0.1,
+              0.09090909,
+              0.083333336,
+              0.07692308,
+              0.071428575,
+              0.06666667,
+              0.0625,
+              0.05882353,
+              0.055555556,
+              0.05263158,
+              0.05,
+              0.04761905,
+              0.045454547,
+              0.04347826,
+              0.041666668,
+              0.04,
+              0.03846154,
+              0.037037037,
+              0.035714287,
+              0.03448276,
+              0.033333335,
+              0.032258064,
+              0.03125,
+              0.030303031,
+              0.029411765,
+              0.028571429,
+              0.027777778,
+              0.027027028,
+              0.02631579,
+              0.025641026,
+              0.025,
+              0.024390243,
+              0.023809524,
+              0.023255814,
+              0.022727273,
+              0.022222223,
+              0.02173913,
+              0.021276595,
+              0.020833334,
+              0.020408163,
+              0.02,
+              0.019607844,
+              0.01923077,
+              0.018867925,
+              0.018518519,
+              0.018181818,
+              0.017857144,
+              0.01754386,
+              0.01724138,
+              0.016949153,
+              0.016666668,
+              0.016393442,
+              0.016129032,
+              0.015873017,
+              0.015625,
+              0.015384615,
+              0.015151516,
+              0.014925373,
+              0.014705882,
+              0.014492754,
+              0.014285714,
+              0.014084507,
+              0.013888889,
+              0.01369863,
+              0.013513514,
+              0.013333334,
+              0.013157895,
+              0.012987013,
+              0.012820513,
+              0.012658228,
+              0.0125,
+              0.012345679,
+              0.0121951215,
+              0.012048192,
+              0.011904762,
+              0.011764706,
+              0.011627907,
+              0.011494253,
+              0.011363637,
+              0.011235955,
+              0.011111111,
+              0.010989011,
+              0.010869565,
+              0.010752688,
+              0.010638298,
+              0.010526316,
+              0.010416667,
+              0.010309278,
+              0.010204081,
+              0.01010101,
+              0.01
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "iterationCount": {
+    "value": 10
+  },
+  "savingFrequence": -1,
+  "optimizerClasses": {},
+  "objectiveContainer": {
+    "objectives": [
+      {
+        "relation": "MAXIMIZE",
+        "terminator": false,
+        "weight": 100.0,
+        "typeName": "java.lang.Float",
+        "name": "rosen",
+        "dummy": 0.0,
+        "value": 53844.17,
+        "target": 0.0
+      },
+      {
+        "relation": "MINIMIZE",
+        "terminator": false,
+        "weight": 100.0,
+        "typeName": "java.lang.Float",
+        "name": "rosen1",
+        "dummy": 0.0,
+        "value": 53845.17,
+        "target": 0.0
+      }
+    ]
+  },
+  "scriptParameters": [
+    {
+      "name": "firstParam",
+      "typeName": "java.lang.Float",
+      "initValue": 24.12992,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "name": "secondParam",
+      "typeName": "java.lang.Float",
+      "initValue": 59.147575,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": 0.0
+          }
+        }
+      ]
+    }
+  ]
+}

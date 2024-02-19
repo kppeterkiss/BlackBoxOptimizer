@@ -1,0 +1,141 @@
+{
+  "distribution": false,
+  "publicFolderLocation": "public",
+  "baseCommand": " python examples/Rosenbrock/Rosenbrock.py $firstParam $secondParam $param2 $param3",
+  "algorithmName": "FireFlyAlgorithm",
+  "iterationCounter": 0,
+  "optimizerParameters": [
+    {
+      "name": "swarm_size",
+      "typeName": "java.lang.Integer",
+      "initValue": 20,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 2147483647,
+            "lowerBound": 1
+          }
+        }
+      ],
+      "id": 0
+    },
+    {
+      "name": "beta0",
+      "typeName": "java.lang.Float",
+      "initValue": 30.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": 0.0
+          }
+        }
+      ],
+      "id": 0
+    },
+    {
+      "name": "alpha",
+      "typeName": "java.lang.Float",
+      "initValue": 0.2,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 1.0,
+            "lowerBound": 0.0
+          }
+        }
+      ],
+      "id": 0
+    },
+    {
+      "name": "gamma",
+      "typeName": "java.lang.Float",
+      "initValue": 0.5,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": 0.001
+          }
+        }
+      ],
+      "id": 0
+    }
+  ],
+  "iterationCount": {
+    "value": 60
+  },
+  "savingFrequence": -1,
+  "optimizerClasses": {},
+  "objectiveContainer": {
+    "objectives": [
+      {
+        "relation": "MINIMIZE",
+        "terminator": false,
+        "weight": 100.0,
+        "name": "rosen",
+        "dummy": 0.0,
+        "target": 0.0,
+        "typeName": "java.lang.Float"
+      }
+    ]
+  },
+  "scriptParameters": [
+    {
+      "name": "firstParam",
+      "typeName": "java.lang.Float",
+      "initValue": 50.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": -100.0
+          }
+        }
+      ],
+      "id": 0
+    },
+    {
+      "name": "secondParam",
+      "typeName": "java.lang.Float",
+      "initValue": 12.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": -100.0
+          }
+        }
+      ],
+      "id": 0
+    },
+    {
+      "name": "param2",
+      "typeName": "java.lang.Float",
+      "initValue": 0.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": -100.0
+          }
+        }
+      ],
+      "id": 0
+    },
+    {
+      "name": "param3",
+      "typeName": "java.lang.Float",
+      "initValue": 0.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 100.0,
+            "lowerBound": -100.0
+          }
+        }
+      ],
+      "id": 0
+    }
+  ]
+}

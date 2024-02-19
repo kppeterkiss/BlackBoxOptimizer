@@ -1,0 +1,53 @@
+{
+  "baseCommand": "python3 examples/Lasso_Python/Lasso_poli_reg_on_sinus_curve.py $alpha",
+  "algorithmName": "GridSearch",
+  "iterationCounter": 0,
+  "optimizerParameters": [
+    {
+      "name": "alpha_step_size",
+      "typeName": "java.lang.Float",
+      "initValue": 0.1,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 10.0,
+            "lowerBound": 1.0E-4
+          }
+        }
+      ]
+    }
+  ],
+  "iterationCount": {
+    "value": 100
+  },
+  "savingFrequence": -1,
+  "optimizerClasses": {},
+  "objectiveContainer": {
+    "objectives": [
+      {
+        "relation": "MINIMIZE",
+        "terminator": false,
+        "weight": 100.0,
+        "name": "rss",
+        "dummy": 0.0,
+        "target": 0.0,
+        "typeName": "java.lang.Float"
+      }
+    ]
+  },
+  "scriptParameters": [
+    {
+      "name": "alpha",
+      "typeName": "java.lang.Float",
+      "initValue": 0.0,
+      "dependencies": [
+        {
+          "rangeOfThis": {
+            "upperBound": 10.0,
+            "lowerBound": 0.0
+          }
+        }
+      ]
+    }
+  ]
+}
